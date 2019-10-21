@@ -4,9 +4,9 @@
 				<div class="col-md-4 col-sm-6">
 					<div class="footer-widget about-widget">
 						<a href="#">
-							<img src="<?php echo base_url(); ?>assets/img/resources/footer-logo.png" alt="Awesome Image"/>
+							<img src="<?php echo base_url(); ?>assets/img/resources/logo.png" alt="Awesome Image" />
 						</a>
-						<p>Womenscoop</p>
+						
 						<ul class="contact">
 							<li><i class="fa fa-map-marker"></i> <span>5th Floor FSCT Building, </br>No. 199 Nakornin Rd.(Rama V), Bangsrithong </br>
 							Sub- District,Bangkruay District,Nonthaburi Province 11130</span></li>
@@ -28,11 +28,10 @@
 						<h3 class="title">Pages</h3>
 						<ul>
 							<li><a href="<?php echo base_url(); ?>index.php/About">About Us</a></li>
-							<li><a href="<?php echo base_url(); ?>index.php/Library">Library</a></li>
-							<li><a href="<?php echo base_url(); ?>index.php/Members">Members</a></li>
-							<li><a href="<?php echo base_url(); ?>index.php/Cu_solutions">Cu Solutions</a></li>
-							<li><a href="<?php echo base_url(); ?>index.php/Gallery">Gallery</a></li>
-							<li><a href="<?php echo base_url(); ?>index.php/News/getallnews">News</a></li>
+							<li><a href="<?php echo base_url(); ?>index.php/Members">services</a></li>
+							<li><a href="<?php echo base_url(); ?>index.php/News/getallnews">News and Events</a></li>
+							<li><a href="<?php echo base_url(); ?>index.php/Gallery/photos">Photo Gallery</a></li>
+							<li><a href="<?php echo base_url(); ?>index.php/Gallery/vedio">Video Gallery</a></li>							
 							<li><a href="<?php echo base_url(); ?>index.php/Contact">Contact</a></li>
 						</ul>
 					</div>

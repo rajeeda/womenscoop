@@ -29,7 +29,7 @@
 				        data-transform_in="o:0" 
 				        data-transform_out="o:0" 
 				        data-start="400">
-						Development Education: Deepening commitment to credit union’s purpose.
+						TEXT.
 				    </div>
 					
 				</li>
