@@ -1,0 +1,209 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+a{
+ text-decoration:none;
+}
+.body_boarder{
+	border:solid 1px #83a1be;
+}
+.menubar_font {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11.5px;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-align:center;
+	text-decoration:none
+}
+
+.Index_heading_01{
+	font-family:"Trebuchet MS";
+	font-size: 14px;
+	color: #666666;
+	font-weight: bold;
+	text-align:center;
+}
+.intro_text{
+	font-family:"Trebuchet MS";
+	font-size: 11px;
+	color: #34608b;
+	font-weight:normal;
+	text-align:justify;
+}
+.intro_heading{
+	font-family:Impact;
+	font-size: 13px;
+	color: #929da6;
+	font-weight:normal;
+	text-align:justify;
+}
+.news_index{
+	font-family:"Trebuchet MS";
+	font-size: 11px;
+	color: #021d59;
+	font-weight:bold;
+	text-align:justify;
+	text-decoration:none;
+}
+.banner_text {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11.5px;
+	color: #184E8D;
+	font-weight: bold;
+}
+.linkTest {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration:none;
+}
+.normal_text{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	color: #34608b;
+	font-weight:normal;
+	text-align:justify;
+	margin:15px
+}
+
+.border {
+	border:dashed 1px #000000;
+}
+.cls_border {border:solid 1px #666666;
+}
+.downloadlink {
+	font-family: "Trebuchet MS";
+	font-size: 12px;
+	font-weight:bold;
+	color: #666666;
+	text-decoration:none;	
+	}
+.text{
+	font-family:"Trebuchet MS";
+	font-size: 11px;
+	color: #34608b;
+	font-weight:normal;
+	
+}
+
+.aboutus_text{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	color: #34608b;
+	font-weight:normal;
+	text-align:justify;
+	margin:15px
+}
+.AboutUS_index{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	color: #021d59;
+	font-weight:bold;
+	text-align:justify;
+}
+
+.About_US_link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000;
+	text-decoration:none;
+}
+
+.About_US_link_This {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11.5px;
+	font-weight: bold;
+	color: #000066;
+	text-decoration:none;
+}
+
+.txt_boxes{
+height:17px;
+border: 1px solid #34608b;
+font-family:"Trebuchet MS";
+font-size: 12px;
+text-align:left;
+vertical-align:super;
+}
+
+.side_bartext{
+	font-family:"Verdana, Arial, Helvetica, sans-serif";
+	font-size: 12px;
+	color: #666666;
+	font-weight: bold;
+	background-image:url(../images/accu_03_03.jpg);
+	height:29px;
+}
+
+.side_bartext_name{
+	font-family:"Verdana, Arial, Helvetica, sans-serif";
+	font-size: 12px;
+	color: #666666;
+	font-weight: bold;
+}
+
+.side_bartext0{
+	font-family:"Verdana, Arial, Helvetica, sans-serif";
+	font-size: 12px;
+	color: #666666;
+	font-weight: bold;
+	background-image:url(../images/accu_03_03.jpg);
+	height:5px;
+}
+
+.side_bartext2{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666666;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+.IntroText_new{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000066;
+	font-weight:bold;
+	text-align:left;
+}
+.img_border{
+	border:solid 1px #999999;
+}
+
+.visionText {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #666666;
+	font-weight:bold;
+	text-align:center;
+}
+
+.aboutus_text2{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	color: #34608b;
+	border:thick 5px #CCCCCC;
+	font-weight:normal;
+	text-align:justify;
+	margin:15px
+}
+
+.aboutusbod{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	color: #021d59;
+	font-weight:bold;
+	text-align:justify;
+}
+
+.news_index_new_N{
+	font-family:"Trebuchet MS";
+	font-size: 11px;
+	color: #021d59;
+	font-weight:normal;
+	text-align:justify;
+	text-decoration:none;
+}

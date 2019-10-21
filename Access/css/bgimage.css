@@ -1,0 +1,114 @@
+@charset "utf-8";
+/* CSS Document */
+BODY{
+	background-image:url(../images/whole_page_bg.jpg);
+	background-repeat:repeat-y;
+}
+
+.menuubar_image{
+	background-image:url(../images/heading_02.jpg);
+	background-repeat:no-repeat;
+	width:843px;
+}
+.Footter_image{
+	background-image:url(../images/footter.jpg);
+	background-repeat:no-repeat;
+	width:843px;
+}
+.Index_body_img1{
+	background-image:url(../images/leftside_02.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img2{
+	background-image:url(../images/leftside_04.jpg);
+	background-repeat: repeat-y;
+}
+.Index_body_img3{
+	background-image:url(../images/leftside_06.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img4{
+	background-image:url(../images/leftside_08.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img5{
+	background-image:url(../images/leftside_09.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img6{
+	background-image:url(../images/leftside_11.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img7{
+	background-image:url(../images/leftside_13.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img8{
+	background-image:url(../images/rightside_02.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img9{
+	background-image:url(../images/rightside_03.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img10{
+	background-image:url(../images/rightside_05.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img11{
+	background-image:url();
+	background-repeat:repeat-y;
+}
+.Index_body_img12{
+	background-image:url(../images/rightside_07.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img13{
+	background-image:url(../images/rightside_08.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img14{
+	background-image:url(../images/rightside_10.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img15{
+	background-image:url(../images/rightside_12.jpg);
+	background-repeat:no-repeat;
+}
+.Index_body_img16{
+	background-image:url(../images/rightside_13.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img17{
+	background-image:url(../images/rightside_15.jpg);
+	background-repeat:repeat-y;
+}
+.Index_body_img18{
+	background-image:url(../images/rightside_16.jpg);
+	background-repeat:no-repeat;
+}
+
+.body_img1{
+	background-image:url(../images/accu_03_01.jpg);
+	background-repeat:repeat-y;
+}
+.body_img2{
+	background-image:url(../images/accu_03_03.jpg);
+	background-repeat: repeat-y;
+}
+.body_img3{
+	background-image:url(../images/accu_03_07.jpg);
+	background-repeat:repeat-y;
+}
+.body_img4{
+	background-image:url(../images/accu_03_05.jpg);
+	background-repeat:repeat-y;
+}
+.body_img5{
+	background-image:url(../images/index_body2_17.jpg);
+	background-repeat:repeat-y;
+}
+.body_img6{
+	background-image:url(../images/accu_03_03_01.jpg);
+	background-repeat:repeat-y;
+}

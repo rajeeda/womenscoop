@@ -1,0 +1,278 @@
+.txt_bigornge {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	color: #ff6633;
+}
+.txt_big1 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	color: #2B2B2B;
+}
+.txt_bigBlue {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	color: #154E7B;
+}
+.txt_bigwht {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	color:#FFFFFF;
+}
+.txt_bigRed {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	color: #ff0000;
+}
+.txt_tin {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 10px;
+	color: #000000;
+}
+
+.txtstyle {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	color: #666666;
+}
+.txtstyle2 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	color:#333333;
+}
+.txtstyle3 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	color:#154E7B;
+}
+.txtstyle4 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	color:#FFFFFF;
+}
+
+
+.txtstyle5 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	color:#E40101;
+}
+
+.txtstyle6 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 12px;
+	color:#000000;
+}
+
+.txtstyle6sp {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 12px;
+	color:#000000;
+	background:#FFF5DD;
+}
+
+.txtstyle7 {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 12px;
+	color:#E40101;
+}
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	scrollbar-arrow-color:#000000;
+    scrollbar-face-color:#D69C00;
+    scrollbar-shadow-color:#FFD45F; 
+}
+.style2 {font-size: 16px}
+
+
+
+
+
+a.lin1:link,
+a.lin1:visited,
+a.lin1:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#000000;
+	text-decoration: none;
+	
+	font-weight:200;
+	line-height: normal;
+}
+a.lin1:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#666666;
+	text-decoration: none;
+	
+	line-height: normal;
+
+}
+
+a.lin4:link,
+a.lin4:visited,
+a.lin4:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#666666;
+	text-decoration: none;
+	
+	font-weight:200;
+	line-height: normal;
+}
+a.lin4:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#333333;
+	text-decoration: none;
+	
+	line-height: normal;
+}
+
+
+a.lin2:link,
+a.lin2:visited,
+a.lin2:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#E10000;
+	text-decoration: none;
+	
+	font-weight:200;
+	line-height: normal;
+}
+a.lin2:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#666666;
+	text-decoration: none;
+	
+	line-height: normal;
+}
+
+
+a.lin3:link,
+a.lin3:visited,
+a.lin3:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	font-style: normal;
+	color:#ff0000;
+	text-decoration: none;
+	
+	font-weight:bold;
+	line-height: normal;
+}
+a.lin3:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 14px;
+	font-style: normal;
+	color:#666666;
+	text-decoration: none;
+	
+	line-height: normal;
+}
+
+a.whtline:link,
+a.whtline:visited,
+a.whtline:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#ffffff;
+	text-decoration:underline;
+	
+	font-weight:200;
+	line-height: normal;
+}
+a.whtline:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#000000;
+	text-decoration:underline;
+	
+	line-height: normal;
+}
+a.gtline:link,
+a.gtline:visited,
+a.gtline:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#CC0000;
+	text-decoration:underline;
+	
+	font-weight:200;
+	line-height: normal;
+}
+a.gtline:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 11px;
+	font-style: normal;
+	color:#0066FF;
+	text-decoration:underline;
+	
+	line-height: normal;
+}
+a.lindyna:link,
+a.lindyna:visited,
+a.lindyna:active {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#883F00;
+	text-decoration: underline;
+	font-weight:bold;
+	line-height: normal;
+}
+a.lindyna:hover {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;
+	font-style: normal;
+	color:#883F00;
+	text-decoration: none;
+	font-weight:bold;
+	line-height: normal;
+}
+
+.tablebg {
+	background-color: #FFD76C;
+}
+.tablewhitebg {
+	background-color: #FFFFFF;
+}
+
+.titletext {	
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 13px;	
+	font-weight: bold;
+	color:#883F00;
+	background-color: #FFD76C;
+}
+
+.txtboxes {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 12px;
+	color: #000000;
+	background-color: #FFFFFF;
+	border: 1px ridge #883F00;
+}
+
+.buttons {
+	font-family: Trebuchet MS, Verdana, Arial;
+	font-size: 12px;
+	color: #883F00;
+	font-weight: bold;
+	background-color: #FFD76C;
+	border: 1px ridge #883F00;
+}

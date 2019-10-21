@@ -1,0 +1,196 @@
+body {
+margin:0px;
+font-size: 75.01%;
+line-height: 1em;
+font-family: Tahoma, Helvetica, sans-serif;
+}
+
+img{
+border:0px;
+}
+
+div#header_title{
+color:#fff;
+font-size:14px;
+font-weight:bold;
+padding-left:5px;
+}
+
+div#header_version{
+font-size:11px;
+}
+
+div#header_logout,
+div#header_logout a{
+font-size: 11px;
+color:#AB0000;
+text-decoration: none;
+}
+
+div#header_logout a:hover{
+text-decoration: underline;
+}
+
+div#control_panel_header{
+font-size: 14px;
+font-weight:bold;
+color: #007CC3;
+}
+
+div#footer{
+text-align:center;
+font-size:11px;
+color:#434343;
+}
+
+div#footer a{
+text-decoration:underline;
+color:#434343;
+}
+
+div#footer a:hover{
+text-decoration:none;
+}
+
+div#login
+div#login_title{
+font-size: 12px;
+font-weight:bold;
+}
+
+div#login p,
+div#lable{
+font-size: 11px;
+}
+
+div#error{
+color:#DA3628;
+font-size:12px
+}
+
+.login_boxes{
+width:120px;
+height:17px; 
+border:1px solid black;
+}
+
+.button{
+border: 1px solid black;
+font-size:12px;
+}
+
+/**************************************************************/
+.dynamic-tab-pane-control .tab-page {
+	height:		200px;
+}
+
+.dynamic-tab-pane-control .tab-page .dynamic-tab-pane-control .tab-page {
+	height:		100px;
+}
+.dynamic-tab-pane-control h2 {
+	text-align:	center;
+	width:		auto;
+}
+
+.dynamic-tab-pane-control h2 a {
+	display:	inline;
+	width:		auto;
+}
+
+.dynamic-tab-pane-control a:hover {
+	background: transparent;
+}
+/****************************************************************/
+
+div#content{
+font-size:12px;
+line-height:1.3em;
+}
+
+div#content a{
+text-decoration:underline;
+color:#000;
+}
+
+div#content a:hover{
+text-decoration:none;
+}
+
+div#title{
+background-color:#999;
+color:#000;
+font-size:14px;
+font-weight:bold;
+padding-top:2px;
+padding-bottom:2px;
+text-align:center;
+height:30px;
+}
+
+.txt_boxes{
+border: 1px solid black;
+}
+
+.cls_border {border:solid 1px #666666;}
+.imgBox{
+	border:solid 1px #999999;
+}
+.linkText {
+	text-decoration:none;
+	color:#000066;
+	font-weight:bold;
+}
+
+.table_row_color{
+	background:#DFDFDF;
+}
+
+.adminlist {
+	background-color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+	border: 0px solid #ddd;
+	border-spacing: 0px;
+	/*width: 100%;*/
+	border-collapse: collapse;
+	margin: 0px;
+	/*padding: 6px 4px 2px 4px;*/
+	height: 30px;
+	background: url(../images/background.jpg);
+	background-repeat:repeat-x;
+	font-size: 11px;
+	color: #000;
+	text-align: left;
+}
+
+
+.cmbcountry{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	width:180px;
+	height:20px;
+}
+.texboxes{
+	font-family:"Trebuchet MS";
+	font-size: 12px;
+	height:20px;
+}
+
+/*table.adminlist th {
+	margin: 0px;
+	padding: 6px 4px 2px 4px;
+	height: 25px;
+	background: url(../images/background.jpg);
+	background-repeat: repeat;
+	font-size: 11px;
+	color: #000;
+	text-align: left;
+}
+table.adminlist th.title {
+	text-align: left;
+}*/
+
+.home_box{
+	border:solid 1px #999999;
+	border-collapse:collapse;
+}

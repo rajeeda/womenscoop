@@ -1,0 +1,107 @@
+.regular {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-weight:normal}
+
+.smallgrey 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal ; color: #999999
+}
+
+.regulargreen 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal ; color: #75A60E 
+}
+
+.regularblue 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal ; color: #244B76
+}
+
+.bigblue 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal ; color: #244B76
+}
+
+.biggreen 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal ; color: #75A60E 
+}
+
+li { margin-top: 5px}
+
+.big 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal 
+}
+
+/*input 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; font-weight: normal; background-color:#FFFFFF; width:103px; border:1px solid #999999; 
+}*/
+
+.inputnews 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; font-weight: normal; background-color:#FFFFFF; width:120px; border:1px solid #999999; 
+}
+
+.inputbig 
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; font-weight: normal; background-color:#FFFFFF; width:300px; border:1px solid #999999; 
+}
+
+.login { 
+font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; font-weight: normal; background-color:#FFFFFF; height:18px; width:18px; border:0px;
+}
+
+.button 
+{
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #FFFFFF; font-weight: bold; background-color: #E8E8E8; width:110px; border:1px solid #E8E8E8; 
+}
+
+.contractbox
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 11px; border: 1px solid #75A60E;
+}
+
+.norisk 
+{
+ font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; color: #75A60E 
+}
+ 
+/*.formlabel 
+{  
+padding-left:10px;padding-right:10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bolder; color: 000000; line-height: 30px; 
+}*/
+
+.button 
+{ 
+color: #FFFFFF; background-color: #5986BD; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bolder; border-color:#333333; height:30px;
+}
+
+.headline
+{ 
+font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bolder; color: #244B76 
+}
+
+.infobox
+{
+background-color:E1FCA7;
+width:500px;
+border:1px solid;
+border-color:75A60E;
+padding:8px;
+}
+
+.infotext
+{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: 4F573F;
+}
+
+.errortext
+{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #FF0000;
+}

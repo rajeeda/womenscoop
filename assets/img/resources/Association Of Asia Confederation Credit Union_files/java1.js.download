@@ -1,0 +1,3338 @@
+(function ($) {
+    if (typeof ($.fi) == 'undefined') {
+        $.fi = {};
+    }
+
+    $.fi.languageId = 1;
+    $.fi.languageCode = 'en-GB';
+    $.fi.virtualPath = '/portal';
+    $.fi.isAccessibility = false;
+    $.fi.form = {
+            // This helper creates object that could be send to WebServices. Since WebService uses JSON, we can use strongly typed 
+            // arguments for the WebMethods. Please note that you have to use objects that are based on IC.Proxy classes. The name of
+            // proxy object property should be same as the name of the form element.
+            objectHelper: {
+                // create object based on controlSelector string and options
+                create: function (controlSelector, options) {
+                    var obj = {};
+                    var opt = $.extend({}, { namePrefix: '', removePrefix: true }, options);
+                    // namePrefix could be used to make objects that contain array/object inside.
+                    var elements = $(controlSelector);
+                    if (opt.namePrefix.length > 0) elements = elements.filter('[name*=' + opt.namePrefix + ']');
+                    elements.each(function () {
+                        var key = $(this).attr('name');
+                        if (typeof (key) == 'undefined' || $.trim(key).length == 0) return;
+                        var value = $(this).val();
+                        var dataType = $(this).attr('dataType');
+                        if (typeof (dataType) == 'undefined' || $.trim(dataType).lenght == 0 || dataType == 'string') {
+                        } else {
+                            if (dataType == 'int') {
+                                if ($.trim(value).length == 0) value = 0;
+                                else {
+                                    value = parseInt(value);
+                                }
+                            } else if (dataType == 'bool') {
+                                value = (value == true);
+                            }
+                        }
+                        if (opt.namePrefix.length > 0 && opt.removePrefix) {
+                            obj[key.replace(opt.namePrefix, '')] = value;
+                        } else {
+                            obj[key] = value;
+                        }
+                    });
+                    return obj;
+                },
+                // Loads object and set values to the form elements
+                load: function (obj, controlSelector, options) {
+                    var opt = $.extend({}, { callback: false, clearValidation: true, namePrefix: '', removePrefix: true }, options);
+                    var elements = $(controlSelector);
+                    if (opt.namePrefix.length > 0) elements = elements.filter('[name*=' + opt.namePrefix + ']');
+                    elements.each(function () {
+                        var key = $(this).attr('name');
+                        if (opt.namePrefix.length > 0 && opt.removePrefix) key = key.replace(opt.namePrefix, '');
+                        var value = obj[key];
+                        if (typeof (value) != 'undefined') {
+                            var dataType = $(this).attr('dataType');
+                            if (dataType == 'bool') {
+                                value = (value == true) ? "1" : "0";
+                            }
+                            if(value == null) return;
+                            $(this).attr('initVal', value);
+                            $(this).val(value);
+                        }
+                    });
+
+                    if ($.isFunction(opt.callback)) {
+                        opt.callback(obj);
+                    }
+
+                    if (opt.clearValidation) {
+                        $.fi.form.validationHelper.clear(elements);
+                    }
+                }
+            }
+    };
+    $.fi.helpers = {
+        validators: {
+            requriedFieldValidator: function (element) {
+                var v = element.val();
+                if (v == null || $.trim(v).length == 0 || v == '0') {
+                    return false;
+                }
+
+                if(element.hasClass('watermark')){
+                    if(v == element.attr('title')){
+                        return false;
+                    }
+                }
+                return true;
+            },
+            emailValidator: function (element) {
+                if ($.fi.helpers.validators.requriedFieldValidator(element)) {
+                    var v = element.val();
+                    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                    return (reg.test(v) == true);
+                }
+                return true;
+            },
+            urlValidator: function (element) {
+                if ($.fi.helpers.validators.requriedFieldValidator(element)) {
+                    var v = element.val();
+                    var reg = /^[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#!]*[\w\-\@?^=%&amp;/~\+#!])?/;
+                    return (reg.test(v) == true);
+                }
+                return true;
+            }
+
+        }
+    };
+
+    $.fi.resources = {
+        utilities: {
+            close: { 'en-GB': 'Close', 'ar-AE': 'إغلاق' }
+        },
+        forms: {
+            charsLeft: {
+                'en-GB': '<span>{0}</span> characters left',
+                'ar-AE': 'باقى <span>{0}</span> حرف'
+            },
+            wordsLeft: {
+                'en-GB': '<span>{0}</span> words left',
+                'ar-AE': 'باقى <span>{0}</span> حرف'
+            },
+            invalidEmailAddress: {
+                'en-GB': 'Invalid email address',
+                'ar-AE': 'عنوان البريد غير صحيح'
+            },
+            invalidURLAddress: {
+                'en-GB': 'Invalid URL. Please do not include http://',
+                'ar-AE': 'عنوان البريد غير صحيح'
+            },
+            generalError: {
+                'en-GB': 'System was not able to process your request. Please try again.'
+            }
+        },
+        weekdays: {
+            saturday: { 'en-GB': 'Saturday', 'ar-AE': 'السبت' },
+            sunday: { 'en-GB': 'Sunday', 'ar-AE': 'الأحد' },
+            monday: { 'en-GB': 'Monday', 'ar-AE': 'الإثنين' },
+            tuesday: { 'en-GB': 'Tuesday', 'ar-AE': 'الثلاثاء' },
+            wednesday: { 'en-GB': 'Wednesday', 'ar-AE': 'الأربعاء' },
+            thursday: { 'en-GB': 'Thursday', 'ar-AE': 'الخميس' },
+            friday: { 'en-GB': 'Friday', 'ar-AE': 'الجمعة' },
+            sat: { 'en-GB': 'Sat', 'ar-AE': 'السبت' },
+            sun: { 'en-GB': 'Sun', 'ar-AE': 'الأحد' },
+            mon: { 'en-GB': 'Mon', 'ar-AE': 'الإثنين' },
+            tue: { 'en-GB': 'Tue', 'ar-AE': 'الثلاثاء' },
+            wed: { 'en-GB': 'Wed', 'ar-AE': 'الأربعاء' },
+            thu: { 'en-GB': 'Thu', 'ar-AE': 'الخميس' },
+            fri: { 'en-GB': 'Fri', 'ar-AE': 'الجمعة' },
+            fullOrder: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+            shortOrder: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            getDayName: function (i) {
+                return $.fi.resources.weekdays[$.fi.resources.weekdays.fullOrder[i]][$.fi.languageCode];
+            },
+            getDayNameAbbr: function (i) {
+                return $.fi.resources.weekdays[$.fi.resources.weekdays.shortOrder[i]][$.fi.languageCode];
+            }
+        },
+        months: {
+            january: { 'en-GB': 'January', 'ar-AE': 'يناير' },
+            february: { 'en-GB': 'February', 'ar-AE': 'فبراير' },
+            march: { 'en-GB': 'March', 'ar-AE': 'مارس' },
+            april: { 'en-GB': 'April', 'ar-AE': 'أبريل' },
+            may: { 'en-GB': 'May', 'ar-AE': 'مايو' },
+            june: { 'en-GB': 'June', 'ar-AE': 'يونيو' },
+            july: { 'en-GB': 'July', 'ar-AE': 'يوليو' },
+            august: { 'en-GB': 'August', 'ar-AE': 'أغسطس' },
+            september: { 'en-GB': 'September', 'ar-AE': 'سبتمبر' },
+            october: { 'en-GB': 'October', 'ar-AE': 'أكتوبر' },
+            november: { 'en-GB': 'November', 'ar-AE': 'نوفمبر' },
+            december: { 'en-GB': 'December', 'ar-AE': 'ديسمبر' },
+
+            jan: { 'en-GB': 'Jan', 'ar-AE': 'يناير' },
+            feb: { 'en-GB': 'Feb', 'ar-AE': 'فبراير' },
+            mar: { 'en-GB': 'Mar', 'ar-AE': 'مارس' },
+            apr: { 'en-GB': 'Apr', 'ar-AE': 'أبريل' },
+            may: { 'en-GB': 'May', 'ar-AE': 'مايو' },
+            jun: { 'en-GB': 'Jun', 'ar-AE': 'يونيو' },
+            jul: { 'en-GB': 'Jul', 'ar-AE': 'يوليو' },
+            aug: { 'en-GB': 'Aug', 'ar-AE': 'أغسطس' },
+            sep: { 'en-GB': 'Sep', 'ar-AE': 'سبتمبر' },
+            oct: { 'en-GB': 'Oct', 'ar-AE': 'أكتوبر' },
+            nov: { 'en-GB': 'Nov', 'ar-AE': 'نوفمبر' },
+            dec: { 'en-GB': 'Dec', 'ar-AE': 'ديسمبر' },
+
+            fullOrder: ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'],
+            shortOrder: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+
+            getMonthName: function (i) {
+                return $.fi.resources.months[$.fi.resources.months.fullOrder[i]][$.fi.languageCode];
+            },
+            getMonthNameAbbr: function (i) {
+                return $.fi.resources.months[$.fi.resources.months.shortOrder[i]][$.fi.languageCode];
+            }
+
+        }
+    };
+
+    String.prototype.limit = function (len) {
+        var result = $.trim(this);
+        if (this.length > len) {
+            result = this.substring(0, len + 1);
+            while (result.substring(result.length - 1, result.length) !== " " && result.length > 0) {
+                result = result.substring(0, result.length - 1);
+            }
+            result = $.trim(result) + '&hellip;';
+        }
+        return result;
+    };
+
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+      ? args[number]
+      : '{' + number + '}'
+    ;
+        });
+    };
+
+    $(document).ready(function () {
+        $(document).ready(function () {
+            $('blockquote p').each(function () {
+                var qc = '<span class="quote-close">&#8221;</span>';
+                var t = $(this).html();
+                var i = t.lastIndexOf(' ');
+                $(this).html('<span class="quote-open">&#8220</span>' + t.substring(0, i) + ' <nobr>' + t.substring(i + 1) + qc + '</nobr>');
+                //if ($.browser.msie && parseFloat($.browser.version) < 8) $(this).addClass('ie7fix');
+                //$(this).parent().append('<span class="clear"></span>');
+            });
+        });
+
+        $('a[rel=external]').attr('target', '_blank');
+
+        // BOX
+        $('div.box h2.box a.title').click(function (event) {
+            event.preventDefault();
+            if ($(this).hasClass('working')) return;
+            var th = $(this);
+            var to = th.parents('div.box').find(th.attr('href'));
+            if ($(this).parent().hasClass('expanded')) {
+                th.addClass('working');
+                to.slideUp(500, function () {
+                    th.removeClass('working').parent().removeClass('expanded').addClass('collapsed')
+                });
+            } else {
+                th.addClass('working');
+                to.slideDown(500, function () { th.removeClass('working'); });
+                $(this).parent().removeClass('collapsed').addClass('expanded');
+            }
+        });
+    });
+})(jQuery);
+/*
+ * jQuery Easing v1.3 - http://gsgd.co.uk/sandbox/jquery/easing/
+ *
+ * Uses the built in easing capabilities added In jQuery 1.1
+ * to offer multiple easing options
+ *
+ * TERMS OF USE - jQuery Easing
+ * 
+ * Open source under the BSD License. 
+ * 
+ * Copyright © 2008 George McGinley Smith
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
+ * conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
+ * provided with the distribution.
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
+ * or promote products derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+*/
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+jQuery.easing['jswing'] = jQuery.easing['swing'];
+
+jQuery.extend( jQuery.easing,
+{
+	def: 'easeOutQuad',
+	swing: function (x, t, b, c, d) {
+		//alert(jQuery.easing.default);
+		return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
+	},
+	easeInQuad: function (x, t, b, c, d) {
+		return c*(t/=d)*t + b;
+	},
+	easeOutQuad: function (x, t, b, c, d) {
+		return -c *(t/=d)*(t-2) + b;
+	},
+	easeInOutQuad: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t + b;
+		return -c/2 * ((--t)*(t-2) - 1) + b;
+	},
+	easeInCubic: function (x, t, b, c, d) {
+		return c*(t/=d)*t*t + b;
+	},
+	easeOutCubic: function (x, t, b, c, d) {
+		return c*((t=t/d-1)*t*t + 1) + b;
+	},
+	easeInOutCubic: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t*t + b;
+		return c/2*((t-=2)*t*t + 2) + b;
+	},
+	easeInQuart: function (x, t, b, c, d) {
+		return c*(t/=d)*t*t*t + b;
+	},
+	easeOutQuart: function (x, t, b, c, d) {
+		return -c * ((t=t/d-1)*t*t*t - 1) + b;
+	},
+	easeInOutQuart: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
+		return -c/2 * ((t-=2)*t*t*t - 2) + b;
+	},
+	easeInQuint: function (x, t, b, c, d) {
+		return c*(t/=d)*t*t*t*t + b;
+	},
+	easeOutQuint: function (x, t, b, c, d) {
+		return c*((t=t/d-1)*t*t*t*t + 1) + b;
+	},
+	easeInOutQuint: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
+		return c/2*((t-=2)*t*t*t*t + 2) + b;
+	},
+	easeInSine: function (x, t, b, c, d) {
+		return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
+	},
+	easeOutSine: function (x, t, b, c, d) {
+		return c * Math.sin(t/d * (Math.PI/2)) + b;
+	},
+	easeInOutSine: function (x, t, b, c, d) {
+		return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+	},
+	easeInExpo: function (x, t, b, c, d) {
+		return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
+	},
+	easeOutExpo: function (x, t, b, c, d) {
+		return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+	},
+	easeInOutExpo: function (x, t, b, c, d) {
+		if (t==0) return b;
+		if (t==d) return b+c;
+		if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
+		return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+	},
+	easeInCirc: function (x, t, b, c, d) {
+		return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+	},
+	easeOutCirc: function (x, t, b, c, d) {
+		return c * Math.sqrt(1 - (t=t/d-1)*t) + b;
+	},
+	easeInOutCirc: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b;
+		return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b;
+	},
+	easeInElastic: function (x, t, b, c, d) {
+		var s=1.70158;var p=0;var a=c;
+		if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+		if (a < Math.abs(c)) { a=c; var s=p/4; }
+		else var s = p/(2*Math.PI) * Math.asin (c/a);
+		return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+	},
+	easeOutElastic: function (x, t, b, c, d) {
+		var s=1.70158;var p=0;var a=c;
+		if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+		if (a < Math.abs(c)) { a=c; var s=p/4; }
+		else var s = p/(2*Math.PI) * Math.asin (c/a);
+		return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+	},
+	easeInOutElastic: function (x, t, b, c, d) {
+		var s=1.70158;var p=0;var a=c;
+		if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
+		if (a < Math.abs(c)) { a=c; var s=p/4; }
+		else var s = p/(2*Math.PI) * Math.asin (c/a);
+		if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+		return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+	},
+	easeInBack: function (x, t, b, c, d, s) {
+		if (s == undefined) s = 1.70158;
+		return c*(t/=d)*t*((s+1)*t - s) + b;
+	},
+	easeOutBack: function (x, t, b, c, d, s) {
+		if (s == undefined) s = 1.70158;
+		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+	},
+	easeInOutBack: function (x, t, b, c, d, s) {
+		if (s == undefined) s = 1.70158; 
+		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+	},
+	easeInBounce: function (x, t, b, c, d) {
+		return c - jQuery.easing.easeOutBounce (x, d-t, 0, c, d) + b;
+	},
+	easeOutBounce: function (x, t, b, c, d) {
+		if ((t/=d) < (1/2.75)) {
+			return c*(7.5625*t*t) + b;
+		} else if (t < (2/2.75)) {
+			return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+		} else if (t < (2.5/2.75)) {
+			return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+		} else {
+			return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+		}
+	},
+	easeInOutBounce: function (x, t, b, c, d) {
+		if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
+		return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
+	}
+});
+
+/*
+ *
+ * TERMS OF USE - EASING EQUATIONS
+ * 
+ * Open source under the BSD License. 
+ * 
+ * Copyright © 2001 Robert Penner
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
+ * conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
+ * provided with the distribution.
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
+ * or promote products derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+ */
+(function ($) {
+    var Slider = function (element, options) {
+
+        //---------------------------------------- initializing
+        var me = this;
+        me.e = element;
+        me.options = options;
+        me.pager = {};
+        me.pager.e = me.e.find(me.options.pager);
+        me.list = me.e.find(me.options.pageSelector);
+        me.pager.pageIndex = me.options.pageIndex;
+        me.pager.totalPages = me.options.totalPages;
+
+        //---------------------------------------- next and previous logic
+        me.pager.next = me.pager.e.find('a.next');
+        me.pager.prev = me.pager.e.find('a.previous');
+        me.pager.info = me.pager.e.find('li.info');
+
+        me.pager.next.click(function (event) {
+            event.preventDefault();
+
+            if ($(this).hasClass('disabled')) return;
+            me.loadPage(me.pager.pageIndex + 1);
+        });
+
+        me.pager.prev.click(function (event) {
+            event.preventDefault();
+
+            if ($(this).hasClass('disabled')) return;
+            me.loadPage(me.pager.pageIndex - 1);
+        });
+
+
+        me.goToPage = function (pageIndex,lcallback) {
+            // CreateNewPage is for automatically creating new page on each load and it is useful when you have pagination ul first and then item inside,
+            // if you want to reduce markup and you just need fade effect, you can disable this option to add new items directly to the parent ul item,
+            // in this case the logic for calculating height might be a little bit different.
+            if (me.options.createNewPage) {
+                var li = me.list.find('li[rel=' + pageIndex + ']');
+                if(li.length == 0){
+li = me.list.find('li[data-page=' + pageIndex + ']');
+}
+                li.width(me.itemWidth);
+                var h = li.outerHeight(1);
+                if (me.options.containerHeightSelector) {
+                    if (me.e.find(me.options.containerHeightSelector).hasClass('absolute')) {
+                        var hi = me.e.find(me.options.containerHeightSelector);
+                        var th = hi.height();
+                        hi.removeClass('absolute').css({ height: 'auto' });
+                        h = me.e.find(me.options.containerHeightSelector).outerHeight(1);
+                        hi.addClass('absolute').height(th);
+                    } else {
+                        h = me.e.find(me.options.containerHeightSelector).outerHeight(1);
+                    }
+                }
+                me.list.height(h);
+                if (me.options.effect == 'slide') {
+                    me.list.width(me.list.children().length * li.outerWidth(1) + 5);
+                    if (me.options.direction == 'left') {
+                        me.list.animate({ left: (1 - pageIndex) * li.outerWidth(1) }, me.options.speed, me.options.easing,lcallback);
+                    } else {
+                        me.list.animate({ left: (pageIndex - me.list.children().length) * li.outerWidth(1) - 5 }, me.options.speed, me.options.easing,lcallback);
+                    }
+                } else if (me.options.effect == 'fade') {
+                    li.hide().fadeIn(me.options.speed, me.options.easing, lcallback);
+                }
+            } else {
+                if (me.options.isTableMode) {
+                    
+                } else {
+                    var li = me.list.find('li');
+                    li.width(me.itemWidth);
+                    var h = li.outerHeight(1);
+                    if (me.options.containerHeightSelector) {
+                        if (me.e.find(me.options.containerHeightSelector).hasClass('absolute')) {
+                            var hi = me.e.find(me.options.containerHeightSelector);
+                            var th = hi.height();
+                            hi.removeClass('absolute').css({ height: 'auto' });
+                            h = me.e.find(me.options.containerHeightSelector).outerHeight(1);
+                            hi.addClass('absolute').height(th);
+                        } else {
+                            h = me.e.find(me.options.containerHeightSelector).outerHeight(1);
+                        }
+                    }
+                    me.list.height(h);
+                    if (me.options.effect == 'fade') {
+                        li.hide().fadeIn(me.options.speed, me.options.easing, lcallback);
+                    }
+                }
+            }
+
+            me.updatePager();
+            if (me.options.loadCompleted) {
+                me.options.loadCompleted(li);
+            }
+            me.e.removeClass('loading');
+        };
+
+        //----------------------------------------- Load Page
+        me.loadPage = function (pageIndex, lcallback) {
+            if (me.e.hasClass('loading')) {
+                return;
+            }
+
+            if (me.pager.pageIndex == pageIndex) return;
+            if (me.options.loadingCallback) {
+                me.options.loadingCallback(me.e);
+            } else {
+                me.e.addClass('loading');
+            }
+            if (me.options.effect == 'fade') {
+                // no need to cache items, 
+                me.list.empty();
+            } else {
+
+                if (me.list.find('li[rel=' + pageIndex + '],li[data-page=' + pageIndex + ']').length > 0) {
+                    me.pager.pageIndex = pageIndex;
+                    // page exists
+                    me.goToPage(pageIndex,lcallback);
+                    return;
+                }
+            }
+
+            var postData = me.options.postParams();
+            postData.pageIndex = pageIndex;
+            postData.pageSize = me.options.pageSize;
+
+            $.ajax({
+                url: me.options.feeder,
+                data: $.toJSON(postData),
+                success: function (response) {
+                    var d = response.d;
+                    me.pager.totalPages = d.total;
+                    me.pager.pageIndex = d.page;
+                    if (me.options.createNewPage) {
+                        var li = $('<li/>').addClass('page').attr('rel', me.pager.pageIndex);
+                        me.options.renderCallback(li, d);
+                        me.list.append(li);
+                        if (me.options.direction == "right") {
+                            me.list.css({ left: -me.itemWidth - 5 });
+                        }
+                    } else {
+                        me.options.renderCallback(me.list, d);
+                    }
+                    me.goToPage(me.pager.pageIndex,lcallback);
+                },
+                error: function () {
+
+                },
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json'
+            });
+
+
+        };
+
+
+        //--------------------------------------------------------------------- Update pager
+        me.updatePager = function () {
+            if (me.options.showInfo) {
+                me.pager.info.text(me.options.resources.pagerFormat.replace('{0}', me.pager.pageIndex).replace('{1}', me.pager.totalPages));
+            } else if (me.options.showViewAll) {
+                //
+            }
+
+            if (me.pager.pageIndex > 1) {
+                me.pager.prev.removeClass('disabled');
+            } else {
+                me.pager.prev.addClass('disabled');
+            }
+
+            if (me.pager.pageIndex < Math.min(me.pager.totalPages, me.options.maxPages)) {
+                me.pager.next.removeClass('disabled');
+            } else {
+                me.pager.next.addClass('disabled');
+            }
+
+
+            if (me.options.showPageNumbers) {
+                // check page numbers
+                me.pager.e.find('li[rel=page],li.hidden-pages').remove();
+
+                if (me.pager.totalPages < me.options.pagerGroupSize * 2 + 1) {
+                    var p = me.pager.prev.parent();
+                    for (var i = 1, ii = me.pager.totalPages; i <= ii; i++) {
+                        p.after('<li id="page_' + i + '" rel="page"><a href="#' + i + '">' + i + '</a></li>');
+                        p = p.next();
+                    }
+
+
+
+                } else {
+                    var p = me.pager.prev.parent();
+                    // add first group
+                    var m = 0;
+
+                    var b = Math.ceil((me.options.pagerGroupSize - 1.0) / 2);
+                    var a = me.options.pagerGroupSize - b - 1;
+
+                    for (var i = 1, ii = Math.min(me.options.pagerGroupSize, me.pager.totalPages); i <= ii; i++) {
+                        if (i <= m) continue;
+                        p.after('<li id="page_' + i + '" rel="page"><a href="#' + i + '">' + i + '</a></li>');
+                        p = p.next();
+                        m = i;
+                    }
+
+
+                    if (me.pager.pageIndex - b > me.options.pagerGroupSize + 1) {
+                        p.after('<li class="hidden-pages">&hellip;</li>');
+                        p = p.next();
+                    }
+
+                    if (me.pager.pageIndex - b < me.pager.totalPages - me.options.pagerGroupSize + 1) {
+                        for (var i = me.pager.pageIndex - b, ii = Math.min(me.pager.pageIndex + a, me.pager.totalPages); i <= ii; i++) {
+                            if (i <= m) continue;
+                            p.after('<li id="page_' + i + '" rel="page"><a href="#' + i + '">' + i + '</a></li>');
+                            p = p.next();
+                            m = i;
+                        }
+
+                        if (me.pager.pageIndex + a < me.pager.totalPages - me.options.pagerGroupSize) {
+                            p.after('<li class="hidden-pages">&hellip;</li>');
+                            p = p.next();
+                        }
+                    }
+
+                    for (var i = me.pager.totalPages - me.options.pagerGroupSize + 1, ii = me.pager.totalPages; i <= ii; i++) {
+                        if (i <= m) continue;
+                        p.after('<li id="page_' + i + '" rel="page"><a href="#' + i + '">' + i + '</a></li>');
+                        p = p.next();
+                        m = i;
+                    }
+                }
+
+                me.pager.e.find('li[rel=page] a').removeClass('current');
+
+                me.pager.e.find('li#page_' + me.pager.pageIndex + ' a').addClass('current');
+
+                me.pager.e.find('li[rel=page] a').click(function (event) {
+                    event.preventDefault();
+                    me.loadPage(parseInt($(this).attr('href').replace('#', '')));
+                });
+            } else if (me.options.useDottedPages) {
+                if (me.pager.e.find('li.meta-dotted-pages').length == 0) {
+                    for (var i = 0; i < me.options.maxPages; i++) {
+                        me.pager.e.prepend('<li class="meta-dotted-pages"><a href="#' + (i + 1) + '" title="Go to page ' + (i + 1) + '" class="icons gray-bullet-icon">Page ' + (i + 1) + '</a></li>');
+                    }
+                    me.pager.e.find('li.meta-dotted-pages a').click(function (event) {
+                        event.preventDefault();
+                        me.loadPage(parseInt($(this).attr('href').replace('#', '')));
+                    });
+                }
+
+                me.pager.e.find('li.meta-dotted-pages').removeClass('current');
+                me.pager.e.find('li.meta-dotted-pages a[href*="#' + me.pager.pageIndex + '"]').parent().addClass('current');
+            }
+            if (me.list.outerHeight(1) > 0) {
+                me.list.parent().animate({ height: me.list.outerHeight(1) }, me.options.speed, me.options.easing);
+            }
+        };
+
+        //------------------------------------------------------------------- initialize
+        me.initalize = function () {
+            if (!me.list.hasClass('absolute')) {
+                me.list.addClass('absolute');
+                if (me.options.containerHeightSelector) {
+                    me.list.height(me.e.find(me.options.containerHeightSelector).outerHeight(1));
+                } else {
+                    me.list.height(me.list.children().outerHeight(1));
+                }
+                me.itemWidth = me.list.parent().width();
+                me.list.children().width(me.itemWidth);
+
+                me.updatePager();
+            }
+        };
+
+
+        if (me.options.delayedInitialize) {
+            me.options.delayedInitialize(me.initalize);
+        } else {
+            me.initalize();
+        }
+
+        if (me.pager.pageIndex < 1) {
+            me.loadPage(1);
+        } else {
+            me.updatePager();
+        }
+
+        if (me.options.updateUrl) {
+            $(window).bind('hashchange', function () {
+                if (window.location.hash.indexOf('#page=') == 0) {
+                    var v = window.location.hash.replace('#page=', '');
+                    if (!isNaN(v)) {
+                        v = parseInt(v);
+                        me.loadPage(v);
+                    }
+                }
+            });
+
+            // process hash
+            if (window.location.hash.indexOf('#page=') == 0) {
+                var v = window.location.hash.replace('#page=', '');
+                if (!isNaN(v)) {
+                    v = parseInt(v);
+                    me.loadPage(v);
+                }
+            }
+        }
+
+        me.auto = {};
+        me.auto.timer = null;
+
+        me.auto.tick = function () {
+            me.auto.timer = null;
+            var np = me.pager.pageIndex + 1;
+            if (np > me.options.maxPages || np > me.pager.totalPages) {
+                np = 1;
+            }
+            me.loadPage(np, function(){
+				me.auto.setTimer();
+			});
+        };
+
+        me.auto.setTimer = function () {
+            me.auto.clearTimer();
+            me.auto.timer = window.setTimeout(function () { me.auto.tick(); }, me.options.autoSlideDelay);
+        };
+
+        me.auto.clearTimer = function () {
+            if (me.auto.timer == null) return;
+            clearTimeout(me.auto.timer);
+            me.auto.timer = null;
+        }
+
+        if (me.options.autoSlide) {
+            me.auto.setTimer();
+            me.list.hover(function () { me.auto.clearTimer(); }, function () { me.auto.setTimer(); });
+            me.pager.e.hover(function () { me.auto.clearTimer(); }, function () { me.auto.setTimer(); });
+        }
+
+        if (me.options.triggerOnClick) {
+            $(me.options.triggerOnClick).click(function (event) {
+                event.preventDefault();
+                me.loadPage(1);
+            });
+        }
+    };
+
+    $.fn.slippy = function (options) {
+        var opts = $.extend({}, $.fn.slippy.defaults, options);
+
+        return this.each(function () {
+            new Slider($(this), opts);
+        });
+    };
+
+    $.fn.slippy.defaults = {
+        feeder: '',
+
+        // callbacks
+        postParams: false,
+        renderCallback: false,
+        loadCompleted: false,
+
+        pageIndex: 1,
+        totalPages: 5,
+        maxPages: 5,
+        pageSize: 3,
+        pager: 'ul.pager',
+        pageSelector: 'ul.pagination',
+        effect: 'slide',
+        direction: 'left',
+        speed: 500,
+        easing: 'easeOutQuad',
+        autoSlide: false,
+        autoSlideDelay: 3000,
+        showPageNumbers: false,
+        useDottedPages: false,
+        showViewAll: false,
+        viewAllLink: '',
+        showInfo: false,
+        containerHeightSelector: '',
+        pagerGroupSize: 3,
+        createNewPage: true,
+        isTableMode: false,
+        triggerOnClick: false,
+        updateUrl: false,
+        delayedInitialize: false,
+        loadingCallback: false,
+        resources: {
+            pagerFormat: 'Page {0} of {1}'
+        }
+    };
+})(jQuery);
+(function ($) {
+    var elemenObejcts = {};
+    var Dialog = function (element, options) {
+        var me = this;
+        me.e = element;
+        me.dialog = {};
+
+        me.options = options;
+
+        me.set = function (n, v) {
+            if (n == "title") {
+                me.dialog.h.find('h2 span.title').text(v);
+            }
+        };
+
+        me.createDialog = function () {
+            var d = $('<div/>').addClass('dialog').hide();
+            me.dialog.e = d;
+            $('body').append(d);
+
+            var header = $('<div/>').addClass('dialog-header');
+            me.dialog.e.append(header);
+            me.dialog.h = header;
+            me.dialog.h.append('<h2><span class="title"></span><a href="#" class="close">' + $.fi.resources.utilities['close'][$.fi.languageCode] + '</a></h2>');
+
+            if (me.options.title.length > 0) {
+                me.set('title', me.options.title);
+            } else {
+                if (me.e.attr('title')) {
+                    me.set('title', me.e.attr('title'));
+                }
+            }
+
+            me.dialog.h.find('a.close').click(function (event) {
+                event.preventDefault();
+                me.hide();
+            });
+
+            me.e.removeAttr('title');
+
+            var content = $('<div/>').addClass('dialog-body');
+            me.dialog.e.append(content);
+            me.dialog.c = content;
+            me.dialog.c.append(me.e.clone());
+            me.e.remove();
+        };
+
+        me.show = function (content) {
+            me.dialog.e.show();
+            me.dialog.c.width(me.options.width);
+            me.dialog.c.removeClass('scroll');
+            if (me.options.height != 'auto') {
+                me.dialog.c.height('auto');
+                if (me.options.height < me.dialog.c.outerHeight(1)) {
+                    me.dialog.c.addClass('scroll');
+                }
+            }
+            me.dialog.c.height(me.options.height);
+
+            var l = Math.max($(document).width(), $(window).width()) - me.dialog.e.outerWidth(1);
+            var t = $(window).height() - me.dialog.e.outerHeight(1);
+            me.dialog.e.css({ left: l / 2, top: t / 2 });
+
+        };
+
+        me.hide = function () {
+            me.dialog.e.hide();
+        };
+
+        me.createDialog();
+        if (me.options.autoOpen) {
+            me.show();
+        }
+
+
+        me.invokeAction = function (args) {
+            var f = args[0];
+            if (f == "show") {
+                if (args.length > 1) {
+                    me.show(args[1]);
+                } else {
+                    me.show();
+                }
+            }
+            else if (f == "hide") {
+                me.hide();
+            } else if (f == "set") {
+                me.set(args[1], args[2]);
+            } else if (f == "render") {
+                args[1](me.dialog.e);
+            }
+        };
+    };
+
+    $.fn.dialog = function (options) {
+        var args = arguments;
+        if (typeof ('options') == 'object' || typeof ('options') == 'undefined' || options == null || typeof (options.indexOf) == 'undefined') {
+            var opts = $.extend(true, {}, $.fn.dialog.Defaults, options);
+            return this.each(function () {
+                var e = $(this);
+                var obj = new Dialog(e, opts);
+                elemenObejcts[e.attr('id')] = obj;
+            });
+        } else {
+            var result = [];
+            this.each(function () {
+                var e = $(this);
+                var obj = elemenObejcts[e.attr('id')];
+                if (typeof (obj) != 'undefined') {
+                    result.push(obj.invokeAction(args));
+                }
+            });
+            return result;
+        }
+
+    };
+
+    $.fn.dialog.Defaults = {
+        modal: false,
+        title: '',
+        showClose: true,
+        content: '',
+        autoOpen: false,
+        width: '990',
+        height: '40'
+    };
+})(jQuery);
+/*********************
+//* jQuery Multi Level CSS Menu V1.1
+//* Author: Future Internet 
+//* Last update: Dec 27 2010': Add delay to prevent from displaying sub menus because of mouse movements or hiding sub menus because of fast movement of mouse
+//* Support/Questions: support@fi.ae
+*********************/
+var jqueryslidemenu = {
+
+    animateduration: { over: 100, out: 100, delay: 100, hoverDelay: 1 }, //duration of slide in/ out animation / delay before displaying or hiding menu, in milliseconds
+
+    buildmenu: function (menuid, isArabic) {
+        var me = this;
+
+        me.fitMainMenu = function (step) {
+            if (typeof (step) == 'undefined') {
+                // fit menu
+                var totalWidth = me.e.find('ul.primary-navigation').width();
+                totalWidth = 1000;
+                // calculate item width
+                var ct = 0;
+                var totalItems = 0;
+                me.e.find('ul.primary-navigation').children().each(function () {
+                    //$(this).css({ paddingLeft: 0, paddingRight: 0 });
+                    //ct += $(this).outerWidth(100);
+                    totalItems++;
+                });
+                var diff = totalWidth - ct;
+                var additionToEachItem = diff / totalItems;
+                me.e.find('ul.primary-navigation').children().each(function () {
+                    if (diff > 0) {
+                        var p = ($(this).outerWidth(1) - $(this).width());
+                        var av = p;
+                        p += additionToEachItem;
+                        var pl = Math.floor(p / 2);
+                        var pr = Math.ceil(p / 2);
+                        diff -= pl + pr - av;
+                        if (diff < 0) {
+                            pl += diff / 2;
+                            pr += diff / 2;
+                            diff = 0;
+                        }
+
+                        if ($(this).hasClass('last') && diff > 0) {
+                            pl += Math.floor(diff / 2);
+                            pr += Math.floor(diff / 2);
+                            diff = 0;
+                        }
+
+                        $(this).css({ paddingLeft: pl, paddingRight: pr });
+                    }
+                });
+            } else {
+                var everythingIsLoaded = true;
+                me.e.find('ul.primary-navigation a.first-level').each(function () { everythingIsLoaded = $(this).hasClass('loaded') ? everythingIsLoaded : false });
+                if (everythingIsLoaded) {
+                    me.e.find('ul.primary-navigation').children().find('a.first-level').addClass('checked').find('span.toi').remove();
+                    me.fitMainMenu();
+                } else {
+                    window.setTimeout(function () { me.fitMainMenu(1); }, 100);
+                }
+            }
+        };
+
+
+
+        jQuery(document).ready(function ($) {
+            me.e = $('#' + menuid);
+            me.fitMainMenu(1);
+
+            var $mainmenu = $("#" + menuid + " ul.primary-navigation");
+
+            $('#' + menuid + ' ul.primary-navigation ul').css({ opacity: '0.95' });
+
+            var $headers = $mainmenu.children();
+
+            function bindDisplaySubItems(item) {
+                var $curobj = $(item);
+                var $subul = $(item).find('ul:eq(0)');
+
+                // fix the width
+                $subul.width(1000);
+                var w = 0;
+                $subul.find('li').each(function () {
+                    var wi = $(this).css({ float: 'left' }).width();
+                    $(this).css({ float: 'none' });
+                    if (wi > w) w = wi;
+                });
+                $subul.find('li').width(w).find('a').css({ display: 'block' });
+                $subul.width($subul.find('li:first').outerWidth(1));
+                var self = item;
+                self.timer = null;
+                self._dimensions = { w: self.offsetWidth, h: self.offsetHeight, subulw: $subul.outerWidth(), subulh: $subul.outerHeight() };
+                $subul.css({ top: self._dimensions.h + "px" });
+                $curobj.hover(
+				    function (e) {
+				        var thisItem = $(this);
+				        if (self.timer != null) {
+				            window.clearTimeout(self.timer);
+				            self.timer = null;
+				        }
+				        if (!thisItem.hasClass('hover')) {
+				            self.timer = window.setTimeout(function () {
+				                self.timer = null;
+				                thisItem.addClass("hover");
+				                var $targetul = thisItem.children("ul:eq(0)");
+
+				                // fix the position
+				                var l = self.offset().left + self.width() + 5;
+				                var w = 340;
+
+				                var ml = $('#' + menuid).offset().left;
+				                var mw = $('#' + menuid).width();
+
+				                if (l < ml) {
+				                    $targetul.removeClass('position-left');
+				                } else {
+				                    if (l - ml + w > mw) {
+				                        $targetul.addClass('position-left');
+				                    }
+				                }
+
+				                try {
+				                    if ($targetul.queue().length <= 1) //if 1 or less queued animations
+				                        $targetul.css({ width: self._dimensions.subulw + 'px' }).slideDown(jqueryslidemenu.animateduration.over);
+				                } catch (er) { $targetul.css({ width: self._dimensions.subulw + 'px' }).slideDown(jqueryslidemenu.animateduration.over); }
+				            }, jqueryslidemenu.animateduration.delay, function () {
+				                $(thisItem).find('ul').show();
+				            });
+				        }
+				    },
+				    function (e) {
+				        var thisItem = $(this);
+				        if (self.timer != null) {
+				            window.clearTimeout(self.timer);
+				            self.timer = null;
+				        }
+				        if (thisItem.hasClass('hover')) {
+				            self.timer = window.setTimeout(function () {
+				                self.timer = null;
+				                thisItem.removeClass("hover");
+				                var $targetul = thisItem.children("ul:eq(0)")
+				                $targetul.slideUp(jqueryslidemenu.animateduration.out)
+				            }, jqueryslidemenu.animateduration.delay);
+				        }
+				    }
+			    );
+
+                // bind sub-sub-....
+                if ($subul.find('ul').length > 0) {
+                    $subul.children().each(function () { bindDisplaySubItems($(this)); });
+                }
+            }
+
+            $headers.each(function (i) {
+                bindDisplaySubItems($(this));
+            }); //end $headers.each()
+            $mainmenu.find("ul").hide();
+        }) //end document.ready
+    }
+};
+
+(function ($) {
+    $.fn.textToImage = function (options) {
+        var opt = $.extend({}, $.fn.textToImage.defaults, options);
+        return this.each(function () {
+            var e = $(this);
+
+            var t = e.text();
+            var html = '<img class="text-to-image" src="' + opt.handler + "?text=" + encodeURIComponent(t) + "&st=" + opt.styleName + "." + opt.languageCode + "&rtl=" + (opt.direction == 'rtl' ? "1" : "0") + '" alt="' + t + '" />';
+            if (opt.enableHover) {
+                html = html.replace('/>', ' rel="' + opt.handler + "?text=" + t + "&st=" + opt.styleName + "-h." + opt.languageCode + "&rtl=" + (opt.direction == 'rtl' ? "1" : "0") + '" />');
+            }
+
+            if (opt.keepText) {
+                e.html('<span class="toi">' + t + '</span>' + html);
+            } else {
+                e.html(html);
+            }
+            if (opt.callback) {
+                e.find('img').load(function () {
+                    opt.callback($(this));
+                });
+            }
+        });
+
+    };
+
+    $.fn.textToImage.defaults = {
+        handler: 'toi.ashx',
+        styleName: 'mainmenu',
+        languageCode: 'ar-ae',
+        direction: 'rtl',
+        enableHover: false,
+        keepText: false,
+        callback: false
+    };
+})(jQuery);
+(function ($) {
+
+    var LimitedTextArea = function (element, options) {
+        var me = this;
+        me.e = element;
+        me.options = options;
+        if (me.options.wordLimit) {
+            me.maxLength = 150;
+            if (isNaN(me.options.maxLength)) {
+                me.maxLength = me.e.attr('rel');
+                if (isNaN(me.maxLength)) {
+                    me.maxLength = 500;
+                } else {
+                    me.maxLength = parseInt(me.maxLength);
+                }
+            } else {
+                me.maxLength = parseInt(me.options.maxLength);
+            }
+            me.span = me.e.parent().find('.textarea-limit');
+            if (me.span.length == 0) {
+                me.span = $('<span/>').addClass('textarea-limit');
+                me.e.after(me.span);
+            }
+            me.span.html($.fi.resources.forms.wordsLeft[$.fi.languageCode].replace('{0}', me.maxLength));
+        } else {
+            me.maxLength = 100;
+            if (isNaN(me.options.maxLength)) {
+                me.maxLength = me.e.attr('maxlength');
+                if (isNaN(me.maxLength)) {
+                    me.maxLength = 500;
+                } else {
+                    me.maxLength = parseInt(me.maxLength);
+                }
+            } else {
+                me.maxLength = parseInt(me.options.maxLength);
+            }
+
+            me.span = me.e.parent().find('.textarea-limit');
+            if (me.span.length == 0) {
+                me.span = $('<span/>').addClass('textarea-limit');
+                me.e.after(me.span);
+            }
+            me.span.html($.fi.resources.forms.charsLeft[$.fi.languageCode].replace('{0}', me.maxLength));
+        }
+
+        me.e.keyup(function () {
+            me.check();
+        }).mouseup(function () {
+            me.check();
+        }).change(function () {
+            me.check();
+        });
+
+        me.check = function () {
+            if (me.options.wordLimit) {
+                var words = me.e.val().match(/\S+/g);
+                var length = words && words.length || 0;
+                while (length > me.maxLength) {
+                    me.e.val(me.e.val().substring(0, me.e.val().lastIndexOf(' ')));
+                    words = me.e.val().match(/\S+/g);
+                    length = words && words.length || 0;
+                }
+                me.span.find('span').text(me.maxLength - length);
+            } else {
+                if (me.e.val().length > me.maxLength) {
+                    me.e.val(me.e.val().substring(0, me.maxLength));
+                }
+                me.span.find('span').text(me.maxLength - me.e.val().length);
+            }
+        };
+
+        me.check();
+
+        me.grow = function () {
+            var linesCount = 0;
+            var obj = me.e.get(0);
+            var lines = obj.value.split('\n');
+            for (var i = lines.length - 1; i >= 0; --i) {
+                linesCount += Math.floor((lines[i].length / me.colsDefault) + 1);
+            }
+
+            if (linesCount >= me.rowsDefault) {
+                obj.rows = linesCount + 1;
+            } else {
+                obj.rows = me.rowsDefault;
+            }
+        }
+
+        me.initAutoGrow = function () {
+            me.colsDefault = me.e.attr('cols');
+            me.e.css({ minHeight: me.e.height(), height: 'auto', maxHeight: me.options.maxHeight });
+            me.rowsDefault = me.e.attr('rows');
+            me.e.keyup(function () { me.grow(); })
+                .focus(function () { me.grow(); })
+                .change(function () { me.grow(); })
+                .mouseup(function () { me.grow(); });
+        };
+
+        if (me.e.hasClass('auto-grow')) {
+            me.initAutoGrow();
+            me.grow();
+        }
+    };
+
+    $.fn.limitedTextArea = function (options) {
+        var opt = $.extend({}, $.fn.limitedTextArea.defaults, options);
+        return this.each(function () {
+            new LimitedTextArea($(this), opt);
+        });
+    };
+
+    $.fn.limitedTextArea.defaults = {
+        maxLength: 'auto',
+        autoGrow: true,
+        maxHeight: 300,
+        wordLimit: false
+    };
+})(jQuery);
+//v1.7
+// Flash Player Version Detection
+// Detect Client Browser type
+// Copyright 2005-2007 Adobe Systems Incorporated.  All rights reserved.
+var isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
+var isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+
+function ControlVersion()
+{
+	var version;
+	var axo;
+	var e;
+
+	// NOTE : new ActiveXObject(strFoo) throws an exception if strFoo isn't in the registry
+
+	try {
+		// version will be set for 7.X or greater players
+		axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+		version = axo.GetVariable("$version");
+	} catch (e) {
+	}
+
+	if (!version)
+	{
+		try {
+			// version will be set for 6.X players only
+			axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+			
+			// installed player is some revision of 6.0
+			// GetVariable("$version") crashes for versions 6.0.22 through 6.0.29,
+			// so we have to be careful. 
+			
+			// default to the first public version
+			version = "WIN 6,0,21,0";
+
+			// throws if AllowScripAccess does not exist (introduced in 6.0r47)		
+			axo.AllowScriptAccess = "always";
+
+			// safe to call for 6.0r47 or greater
+			version = axo.GetVariable("$version");
+
+		} catch (e) {
+		}
+	}
+
+	if (!version)
+	{
+		try {
+			// version will be set for 4.X or 5.X player
+			axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
+			version = axo.GetVariable("$version");
+		} catch (e) {
+		}
+	}
+
+	if (!version)
+	{
+		try {
+			// version will be set for 3.X player
+			axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
+			version = "WIN 3,0,18,0";
+		} catch (e) {
+		}
+	}
+
+	if (!version)
+	{
+		try {
+			// version will be set for 2.X player
+			axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
+			version = "WIN 2,0,0,11";
+		} catch (e) {
+			version = -1;
+		}
+	}
+	
+	return version;
+}
+
+// JavaScript helper required to detect Flash Player PlugIn version information
+function GetSwfVer(){
+	// NS/Opera version >= 3 check for Flash plugin in plugin array
+	var flashVer = -1;
+	
+	if (navigator.plugins != null && navigator.plugins.length > 0) {
+		if (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]) {
+			var swVer2 = navigator.plugins["Shockwave Flash 2.0"] ? " 2.0" : "";
+			var flashDescription = navigator.plugins["Shockwave Flash" + swVer2].description;
+			var descArray = flashDescription.split(" ");
+			var tempArrayMajor = descArray[2].split(".");			
+			var versionMajor = tempArrayMajor[0];
+			var versionMinor = tempArrayMajor[1];
+			var versionRevision = descArray[3];
+			if (versionRevision == "") {
+				versionRevision = descArray[4];
+			}
+			if (versionRevision[0] == "d") {
+				versionRevision = versionRevision.substring(1);
+			} else if (versionRevision[0] == "r") {
+				versionRevision = versionRevision.substring(1);
+				if (versionRevision.indexOf("d") > 0) {
+					versionRevision = versionRevision.substring(0, versionRevision.indexOf("d"));
+				}
+			}
+			var flashVer = versionMajor + "." + versionMinor + "." + versionRevision;
+		}
+	}
+	// MSN/WebTV 2.6 supports Flash 4
+	else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.6") != -1) flashVer = 4;
+	// WebTV 2.5 supports Flash 3
+	else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.5") != -1) flashVer = 3;
+	// older WebTV supports Flash 2
+	else if (navigator.userAgent.toLowerCase().indexOf("webtv") != -1) flashVer = 2;
+	else if ( isIE && isWin && !isOpera ) {
+		flashVer = ControlVersion();
+	}	
+	return flashVer;
+}
+
+// When called with reqMajorVer, reqMinorVer, reqRevision returns true if that version or greater is available
+function DetectFlashVer(reqMajorVer, reqMinorVer, reqRevision)
+{
+	versionStr = GetSwfVer();
+	if (versionStr == -1 ) {
+		return false;
+	} else if (versionStr != 0) {
+		if(isIE && isWin && !isOpera) {
+			// Given "WIN 2,0,0,11"
+			tempArray         = versionStr.split(" "); 	// ["WIN", "2,0,0,11"]
+			tempString        = tempArray[1];			// "2,0,0,11"
+			versionArray      = tempString.split(",");	// ['2', '0', '0', '11']
+		} else {
+			versionArray      = versionStr.split(".");
+		}
+		var versionMajor      = versionArray[0];
+		var versionMinor      = versionArray[1];
+		var versionRevision   = versionArray[2];
+
+        	// is the major.revision >= requested major.revision AND the minor version >= requested minor
+		if (versionMajor > parseFloat(reqMajorVer)) {
+			return true;
+		} else if (versionMajor == parseFloat(reqMajorVer)) {
+			if (versionMinor > parseFloat(reqMinorVer))
+				return true;
+			else if (versionMinor == parseFloat(reqMinorVer)) {
+				if (versionRevision >= parseFloat(reqRevision))
+					return true;
+			}
+		}
+		return false;
+	}
+}
+
+function AC_AddExtension(src, ext)
+{
+  if (src.indexOf('?') != -1)
+    return src.replace(/\?/, ext+'?'); 
+  else
+    return src + ext;
+}
+
+function AC_Generateobj(objAttrs, params, embedAttrs) 
+{ 
+  var str = '';
+  if (isIE && isWin && !isOpera)
+  {
+    str += '<object ';
+    for (var i in objAttrs)
+    {
+      str += i + '="' + objAttrs[i] + '" ';
+    }
+    str += '>';
+    for (var i in params)
+    {
+      str += '<param name="' + i + '" value="' + params[i] + '" /> ';
+    }
+    str += '</object>';
+  }
+  else
+  {
+    str += '<embed ';
+    for (var i in embedAttrs)
+    {
+      str += i + '="' + embedAttrs[i] + '" ';
+    }
+    str += '> </embed>';
+  }
+
+  document.write(str);
+}
+
+function AC_FL_RunContent(){
+  var ret = 
+    AC_GetArgs
+    (  arguments, ".swf", "movie", "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+     , "application/x-shockwave-flash"
+    );
+  AC_Generateobj(ret.objAttrs, ret.params, ret.embedAttrs);
+}
+
+function AC_SW_RunContent(){
+  var ret = 
+    AC_GetArgs
+    (  arguments, ".dcr", "src", "clsid:166B1BCA-3F9C-11CF-8075-444553540000"
+     , null
+    );
+  AC_Generateobj(ret.objAttrs, ret.params, ret.embedAttrs);
+}
+
+function AC_GetArgs(args, ext, srcParamName, classid, mimeType){
+  var ret = new Object();
+  ret.embedAttrs = new Object();
+  ret.params = new Object();
+  ret.objAttrs = new Object();
+  for (var i=0; i < args.length; i=i+2){
+    var currArg = args[i].toLowerCase();    
+
+    switch (currArg){	
+      case "classid":
+        break;
+      case "pluginspage":
+        ret.embedAttrs[args[i]] = args[i+1];
+        break;
+      case "src":
+      case "movie":	
+        args[i+1] = AC_AddExtension(args[i+1], ext);
+        ret.embedAttrs["src"] = args[i+1];
+        ret.params[srcParamName] = args[i+1];
+        break;
+      case "onafterupdate":
+      case "onbeforeupdate":
+      case "onblur":
+      case "oncellchange":
+      case "onclick":
+      case "ondblclick":
+      case "ondrag":
+      case "ondragend":
+      case "ondragenter":
+      case "ondragleave":
+      case "ondragover":
+      case "ondrop":
+      case "onfinish":
+      case "onfocus":
+      case "onhelp":
+      case "onmousedown":
+      case "onmouseup":
+      case "onmouseover":
+      case "onmousemove":
+      case "onmouseout":
+      case "onkeypress":
+      case "onkeydown":
+      case "onkeyup":
+      case "onload":
+      case "onlosecapture":
+      case "onpropertychange":
+      case "onreadystatechange":
+      case "onrowsdelete":
+      case "onrowenter":
+      case "onrowexit":
+      case "onrowsinserted":
+      case "onstart":
+      case "onscroll":
+      case "onbeforeeditfocus":
+      case "onactivate":
+      case "onbeforedeactivate":
+      case "ondeactivate":
+      case "type":
+      case "codebase":
+      case "id":
+        ret.objAttrs[args[i]] = args[i+1];
+        break;
+      case "width":
+      case "height":
+      case "align":
+      case "vspace": 
+      case "hspace":
+      case "class":
+      case "title":
+      case "accesskey":
+      case "name":
+      case "tabindex":
+        ret.embedAttrs[args[i]] = ret.objAttrs[args[i]] = args[i+1];
+        break;
+      default:
+        ret.embedAttrs[args[i]] = ret.params[args[i]] = args[i+1];
+    }
+  }
+  ret.objAttrs["classid"] = classid;
+  if (mimeType) ret.embedAttrs["type"] = mimeType;
+  return ret;
+}
+
+/*!
+ * Marquee jQuery Plug-in
+ *
+ * Copyright 2009 Giva, Inc. (http://www.givainc.com/labs/) 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * 	http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Date: 2009-05-20
+ * Rev:  1.0.01
+ */
+;(function($){
+	// set the version of the link select
+	$.marquee = {version: "1.0.01"};
+	
+	$.fn.marquee = function(options) {
+		var method = typeof arguments[0] == "string" && arguments[0];
+		var args = method && Array.prototype.slice.call(arguments, 1) || arguments;
+		// get a reference to the first marquee found
+		var self = (this.length == 0) ? null : $.data(this[0], "marquee");
+		
+		// if a method is supplied, execute it for non-empty results
+		if( self && method && this.length ){
+
+			// if request a copy of the object, return it			
+			if( method.toLowerCase() == "object" ) return self;
+			// if method is defined, run it and return either it's results or the chain
+			else if( self[method] ){
+				// define a result variable to return to the jQuery chain
+				var result;
+				this.each(function (i){
+					// apply the method to the current element
+					var r = $.data(this, "marquee")[method].apply(self, args);
+					// if first iteration we need to check if we're done processing or need to add it to the jquery chain
+					if( i == 0 && r ){
+						// if this is a jQuery item, we need to store them in a collection
+						if( !!r.jquery ){
+							result = $([]).add(r);
+						// otherwise, just store the result and stop executing
+						} else {
+							result = r;
+							// since we're a non-jQuery item, just cancel processing further items
+							return false;
+						}
+					// keep adding jQuery objects to the results
+					} else if( !!r && !!r.jquery ){
+						result = result.add(r);
+					}
+				});
+
+				// return either the results (which could be a jQuery object) or the original chain
+				return result || this;
+			// everything else, return the chain
+			} else return this;
+		// initializing request
+		} else {
+			// create a new marquee for each object found
+			return this.each(function (){
+				new $.Marquee(this, options);
+			});
+		};
+	};
+
+	$.Marquee = function (marquee, options){
+		options = $.extend({}, $.Marquee.defaults, options);
+		
+		var self = this, $marquee = $(marquee), $lis = $marquee.find("> li"), current = -1, hard_paused = false, paused = false, loop_count = 0;
+
+		// store a reference to this marquee
+		$.data($marquee[0], "marquee", self);
+		
+		// pause the marquee
+		this.pause = function (){
+			// mark as hard pause (no resume on hover)
+			hard_paused = true;
+			// pause scrolling
+			pause();
+		}
+		
+		// resume the marquee
+		this.resume = function (){
+			// mark as hard pause (no resume on hover)
+			hard_paused = false;
+			// resume scrolling
+			resume();
+		}
+		
+		// update the marquee
+		this.update = function (){
+			var iCurrentCount = $lis.length;
+
+			// update the line items
+			$lis = $marquee.find("> li");
+			
+			// if we only have one item, show the next item by resuming playback (which will scroll to the next item)
+			if( iCurrentCount <= 1 ) resume();
+		}
+
+		// code to introduce the new marquee message
+		function show(i){
+			// if we're already scrolling an item, stop processing
+			if( $lis.filter("." + options.cssShowing).length > 0 ) return false;
+			
+			var $li = $lis.eq(i);
+			
+			// run the beforeshow callback
+			if( $.isFunction(options.beforeshow) ) options.beforeshow.apply(self, [$marquee, $li]);
+
+			var params = {
+				top: (options.yScroll == "top" ? "-" : "+") + $li.outerHeight() + "px"
+			};
+			
+			if(options.xScroll == 'left') {
+				params.left = 0;
+			} else {
+				params.right = 0;
+			}
+			
+			$marquee.data("marquee.showing", true);
+			$li.addClass(options.cssShowing);
+	
+			$li.css(params).animate({top: "0px"}, options.showSpeed, options.fxEasingShow, function (){ 
+				// run the show callback
+				if( $.isFunction(options.show) ) options.show.apply(self, [$marquee, $li]);
+				$marquee.data("marquee.showing", false);
+				scroll($li);
+			});
+		}
+
+		// keep the message on the screen for the user to read, scrolling long messages
+		function scroll($li, delay){
+			// if paused, stop processing
+			if( paused == true ) return false;
+
+			// get the delay speed
+			delay = delay || options.pauseSpeed;
+			// if	item is wider than marquee, then scroll
+			if( doScroll($li) ){
+				setTimeout(function (){
+					// if paused, stop processing (we need to check to see if the pause state has changed)
+					if( paused == true ) return false;
+
+					var width = $li.outerWidth(), endPos = width * -1, curPos = parseInt($li.css(options.xScroll), 10);
+
+					// scroll the message to the left
+					if(options.xScroll == 'left') {
+						$li.animate({left: endPos + "px"}, ((width + curPos) * options.scrollSpeed), options.fxEasingScroll, function (){ finish($li); });
+					} else {
+						$li.animate({right: endPos + "px"}, ((width + curPos) * options.scrollSpeed), options.fxEasingScroll, function (){ finish($li); });
+					}
+				}, delay);
+			} else if ( $lis.length > 1 ){
+				setTimeout(function (){
+					// if paused, stop processing (we need to check to see if the pause state has changed)
+					if( paused == true ) return false;
+
+					// scroll the message down
+					$li.animate({top: (options.yScroll == "top" ? "+" : "-") + $marquee.innerHeight() + "px"}, options.showSpeed, options.fxEasingScroll);
+					// finish showing this message
+					finish($li);
+				}, delay);
+			}
+			
+		}
+		
+		function finish($li){
+			// run the aftershow callback, only after we've displayed the first option
+			if( $.isFunction(options.aftershow) ) options.aftershow.apply(self, [$marquee, $li]);
+			
+			// mark that we're done scrolling this element
+			$li.removeClass(options.cssShowing);
+			
+			// show the next message
+			showNext();
+		}
+
+		// this function will pause the current animation
+		function pause(){
+			// mark the message as paused
+			paused = true;
+			// don't stop animation if we're just beginning to show the marquee message
+			if( $marquee.data("marquee.showing") != true ){
+				// we must dequeue() the animation to ensure that it does indeed stop animation
+				$lis.filter("." + options.cssShowing).dequeue().stop();
+			}
+		}
+		
+		// this function will resume the previous animation
+		function resume(){
+			// mark the message as resumed
+			paused = false;
+			// don't resume animation if we haven't completed introducing the message
+			if( $marquee.data("marquee.showing") != true ) scroll($lis.filter("." + options.cssShowing), 1);
+		}
+
+		// determine if we should pause on hover
+		if( options.pauseOnHover ){
+			$marquee.hover(
+				function (){
+					// if hard paused, prevent hover events
+					if( hard_paused ) return false;
+					// pause scrolling
+					pause();
+				}
+				, function (){
+					// if hard paused, prevent hover events
+					if( hard_paused ) return false;
+					// resume scrolling
+					resume();
+				}
+			);
+		}
+		
+		// determines if the message needs to be scrolled to read
+		function doScroll($li){
+			return ($li.outerWidth() > $marquee.innerWidth());
+		}
+
+		// show the next message in the queue		
+		function showNext(){
+			// increase the current counter (starts at -1, to indicate a new marquee beginning)
+			current++;
+			
+			// if we only have 1 entry and it doesn't need to scroll, just cancel processing
+			if( current >= $lis.length ){
+				// if we've reached our loop count, cancel processing
+				if( !isNaN(options.loop) && options.loop > 0 && (++loop_count >= options.loop ) ) return false;
+				current = 0;
+			} 
+			
+			// show the next message
+			show(current);
+		}
+		
+		// run the init callback
+		if( $.isFunction(options.init) ) options.init.apply(self, [$marquee, options]);
+		
+		// show the first item
+		showNext();
+	};
+
+	$.Marquee.defaults = {
+		xScroll: "left"
+		,  yScroll: "top"                          // the position of the marquee initially scroll (can be either "top" or "bottom")
+		, showSpeed: 850                          // the speed of to animate the initial dropdown of the messages
+		, scrollSpeed: 12                         // the speed of the scrolling (keep number low)
+		, pauseSpeed: 5000                        // the time to wait before showing the next message or scrolling current message
+		, pauseOnHover: true                      // determine if we should pause on mouse hover
+		, loop: -1                                // determine how many times to loop through the marquees (#'s < 0 = infinite)
+		, fxEasingShow: "swing"                   // the animition easing to use when showing a new marquee
+		, fxEasingScroll: "linear"                // the animition easing to use when showing a new marquee
+
+		// define the class statements
+		, cssShowing: "marquee-showing"
+
+		// event handlers
+		, init: null                              // callback that occurs when a marquee is initialized
+		, beforeshow: null                        // callback that occurs before message starts scrolling on screen
+		, show: null                              // callback that occurs when a new marquee message is displayed
+		, aftershow: null                         // callback that occurs after the message has scrolled
+	};
+})(jQuery);
+/*!
+ * jQuery Cycle Plugin (with Transition Definitions)
+ * Examples and documentation at: http://jquery.malsup.com/cycle/
+ * Copyright (c) 2007-2009 M. Alsup
+ * Version: 2.73 (04-NOV-2009)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ * Requires: jQuery v1.2.6 or later
+ *
+ * Originally based on the work of:
+ *	1) Matt Oakes
+ *	2) Torsten Baldes (http://medienfreunde.com/lab/innerfade/)
+ *	3) Benjamin Sterling (http://www.benjaminsterling.com/experiments/jqShuffle/)
+ */
+;(function($) {
+
+var ver = '2.73';
+
+// if $.support is not defined (pre jQuery 1.3) add what I need
+if ($.support == undefined) {
+	$.support = {
+		opacity: !($.browser.msie)
+	};
+}
+
+function debug(s) {
+	if ($.fn.cycle.debug)
+		log(s);
+}		
+function log() {
+	if (window.console && window.console.log)
+		window.console.log('[cycle] ' + Array.prototype.join.call(arguments,' '));
+	//$('body').append('<div>'+Array.prototype.join.call(arguments,' ')+'</div>');
+};
+
+// the options arg can be...
+//   a number  - indicates an immediate transition should occur to the given slide index
+//   a string  - 'stop', 'pause', 'resume', or the name of a transition effect (ie, 'fade', 'zoom', etc)
+//   an object - properties to control the slideshow
+//
+// the arg2 arg can be...
+//   the name of an fx (only used in conjunction with a numeric value for 'options')
+//   the value true (only used in conjunction with a options == 'resume') and indicates
+//	 that the resume should occur immediately (not wait for next timeout)
+
+$.fn.cycle = function(options, arg2) {
+	var o = { s: this.selector, c: this.context };
+
+	// in 1.3+ we can fix mistakes with the ready state
+	if (this.length === 0 && options != 'stop') {
+		if (!$.isReady && o.s) {
+			log('DOM not ready, queuing slideshow');
+			$(function() {
+				$(o.s,o.c).cycle(options,arg2);
+			});
+			return this;
+		}
+		// is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+		log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
+		return this;
+	}
+
+	// iterate the matched nodeset
+	return this.each(function() {
+		var opts = handleArguments(this, options, arg2);
+		if (opts === false)
+			return;
+
+		// stop existing slideshow for this container (if there is one)
+		if (this.cycleTimeout)
+			clearTimeout(this.cycleTimeout);
+		this.cycleTimeout = this.cyclePause = 0;
+
+		var $cont = $(this);
+		var $slides = opts.slideExpr ? $(opts.slideExpr, this) : $cont.children();
+		var els = $slides.get();
+		if (els.length < 2) {
+			log('terminating; too few slides: ' + els.length);
+			return;
+		}
+
+		var opts2 = buildOptions($cont, $slides, els, opts, o);
+		if (opts2 === false)
+			return;
+
+		var startTime = opts2.continuous ? 10 : getTimeout(opts2.currSlide, opts2.nextSlide, opts2, !opts2.rev);
+
+		// if it's an auto slideshow, kick it off
+		if (startTime) {
+			startTime += (opts2.delay || 0);
+			if (startTime < 10)
+				startTime = 10;
+			debug('first timeout: ' + startTime);
+			this.cycleTimeout = setTimeout(function(){go(els,opts2,0,!opts2.rev)}, startTime);
+		}
+	});
+};
+
+// process the args that were passed to the plugin fn
+function handleArguments(cont, options, arg2) {
+	if (cont.cycleStop == undefined)
+		cont.cycleStop = 0;
+	if (options === undefined || options === null)
+		options = {};
+	if (options.constructor == String) {
+		switch(options) {
+		case 'stop':
+			cont.cycleStop++; // callbacks look for change
+			if (cont.cycleTimeout)
+				clearTimeout(cont.cycleTimeout);
+			cont.cycleTimeout = 0;
+			$(cont).removeData('cycle.opts');
+			return false;
+		case 'pause':
+			cont.cyclePause = 1;
+			return false;
+		case 'resume':
+			cont.cyclePause = 0;
+			if (arg2 === true) { // resume now!
+				options = $(cont).data('cycle.opts');
+				if (!options) {
+					log('options not found, can not resume');
+					return false;
+				}
+				if (cont.cycleTimeout) {
+					clearTimeout(cont.cycleTimeout);
+					cont.cycleTimeout = 0;
+				}
+				go(options.elements, options, 1, 1);
+			}
+			return false;
+		case 'prev':
+		case 'next':
+			var opts = $(cont).data('cycle.opts');
+			if (!opts) {
+				log('options not found, "prev/next" ignored');
+				return false;
+			}
+			$.fn.cycle[options](opts);
+			return false;
+		default:
+			options = { fx: options };
+		};
+		return options;
+	}
+	else if (options.constructor == Number) {
+		// go to the requested slide
+		var num = options;
+		options = $(cont).data('cycle.opts');
+		if (!options) {
+			log('options not found, can not advance slide');
+			return false;
+		}
+		if (num < 0 || num >= options.elements.length) {
+			log('invalid slide index: ' + num);
+			return false;
+		}
+		options.nextSlide = num;
+		if (cont.cycleTimeout) {
+			clearTimeout(cont.cycleTimeout);
+			cont.cycleTimeout = 0;
+		}
+		if (typeof arg2 == 'string')
+			options.oneTimeFx = arg2;
+		go(options.elements, options, 1, num >= options.currSlide);
+		return false;
+	}
+	return options;
+};
+
+function removeFilter(el, opts) {
+	if (!$.support.opacity && opts.cleartype && el.style.filter) {
+		try { el.style.removeAttribute('filter'); }
+		catch(smother) {} // handle old opera versions
+	}
+};
+
+// one-time initialization
+function buildOptions($cont, $slides, els, options, o) {
+	// support metadata plugin (v1.0 and v2.0)
+	var opts = $.extend({}, $.fn.cycle.defaults, options || {}, $.metadata ? $cont.metadata() : $.meta ? $cont.data() : {});
+	if (opts.autostop)
+		opts.countdown = opts.autostopCount || els.length;
+
+	var cont = $cont[0];
+	$cont.data('cycle.opts', opts);
+	opts.$cont = $cont;
+	opts.stopCount = cont.cycleStop;
+	opts.elements = els;
+	opts.before = opts.before ? [opts.before] : [];
+	opts.after = opts.after ? [opts.after] : [];
+	opts.after.unshift(function(){ opts.busy=0; });
+
+	// push some after callbacks
+	if (!$.support.opacity && opts.cleartype)
+		opts.after.push(function() { removeFilter(this, opts); });
+	if (opts.continuous)
+		opts.after.push(function() { go(els,opts,0,!opts.rev); });
+
+	saveOriginalOpts(opts);
+
+	// clearType corrections
+	if (!$.support.opacity && opts.cleartype && !opts.cleartypeNoBg)
+		clearTypeFix($slides);
+
+	// container requires non-static position so that slides can be position within
+	if ($cont.css('position') == 'static')
+		$cont.css('position', 'relative');
+	if (opts.width)
+		$cont.width(opts.width);
+	if (opts.height && opts.height != 'auto')
+		$cont.height(opts.height);
+
+	if (opts.startingSlide)
+		opts.startingSlide = parseInt(opts.startingSlide);
+
+	// if random, mix up the slide array
+	if (opts.random) {
+		opts.randomMap = [];
+		for (var i = 0; i < els.length; i++)
+			opts.randomMap.push(i);
+		opts.randomMap.sort(function(a,b) {return Math.random() - 0.5;});
+		opts.randomIndex = 0;
+		opts.startingSlide = opts.randomMap[0];
+	}
+	else if (opts.startingSlide >= els.length)
+		opts.startingSlide = 0; // catch bogus input
+	opts.currSlide = opts.startingSlide = opts.startingSlide || 0;
+	var first = opts.startingSlide;
+
+	// set position and zIndex on all the slides
+	$slides.css({position: 'absolute', top:0, left:0}).hide().each(function(i) {
+		var z = first ? i >= first ? els.length - (i-first) : first-i : els.length-i;
+		$(this).css('z-index', z)
+	});
+
+	// make sure first slide is visible
+	$(els[first]).css('opacity',1).show(); // opacity bit needed to handle restart use case
+	removeFilter(els[first], opts);
+
+	// stretch slides
+	if (opts.fit && opts.width)
+		$slides.width(opts.width);
+	if (opts.fit && opts.height && opts.height != 'auto')
+		$slides.height(opts.height);
+
+	// stretch container
+	var reshape = opts.containerResize && !$cont.innerHeight();
+	if (reshape) { // do this only if container has no size http://tinyurl.com/da2oa9
+		var maxw = 0, maxh = 0;
+		for(var j=0; j < els.length; j++) {
+			var $e = $(els[j]), e = $e[0], w = $e.outerWidth(), h = $e.outerHeight();
+			if (!w) w = e.offsetWidth;
+			if (!h) h = e.offsetHeight;
+			maxw = w > maxw ? w : maxw;
+			maxh = h > maxh ? h : maxh;
+		}
+		if (maxw > 0 && maxh > 0)
+			$cont.css({width:maxw+'px',height:maxh+'px'});
+	}
+
+	if (opts.pause)
+		$cont.hover(function(){this.cyclePause++;},function(){this.cyclePause--;});
+
+	if (supportMultiTransitions(opts) === false)
+		return false;
+
+	// apparently a lot of people use image slideshows without height/width attributes on the images.
+	// Cycle 2.50+ requires the sizing info for every slide; this block tries to deal with that.
+	var requeue = false;
+	options.requeueAttempts = options.requeueAttempts || 0;
+	$slides.each(function() {
+		// try to get height/width of each slide
+		var $el = $(this);
+		this.cycleH = (opts.fit && opts.height) ? opts.height : $el.height();
+		this.cycleW = (opts.fit && opts.width) ? opts.width : $el.width();
+
+		if ( $el.is('img') ) {
+			// sigh..  sniffing, hacking, shrugging...  this crappy hack tries to account for what browsers do when
+			// an image is being downloaded and the markup did not include sizing info (height/width attributes);
+			// there seems to be some "default" sizes used in this situation
+			var loadingIE	= ($.browser.msie  && this.cycleW == 28 && this.cycleH == 30 && !this.complete);
+			var loadingFF	= ($.browser.mozilla && this.cycleW == 34 && this.cycleH == 19 && !this.complete);
+			var loadingOp	= ($.browser.opera && ((this.cycleW == 42 && this.cycleH == 19) || (this.cycleW == 37 && this.cycleH == 17)) && !this.complete);
+			var loadingOther = (this.cycleH == 0 && this.cycleW == 0 && !this.complete);
+			// don't requeue for images that are still loading but have a valid size
+			if (loadingIE || loadingFF || loadingOp || loadingOther) {
+				if (o.s && opts.requeueOnImageNotLoaded && ++options.requeueAttempts < 100) { // track retry count so we don't loop forever
+					log(options.requeueAttempts,' - img slide not loaded, requeuing slideshow: ', this.src, this.cycleW, this.cycleH);
+					setTimeout(function() {$(o.s,o.c).cycle(options)}, opts.requeueTimeout);
+					requeue = true;
+					return false; // break each loop
+				}
+				else {
+					log('could not determine size of image: '+this.src, this.cycleW, this.cycleH);
+				}
+			}
+		}
+		return true;
+	});
+
+	if (requeue)
+		return false;
+
+	opts.cssBefore = opts.cssBefore || {};
+	opts.animIn = opts.animIn || {};
+	opts.animOut = opts.animOut || {};
+
+	$slides.not(':eq('+first+')').css(opts.cssBefore);
+	if (opts.cssFirst)
+		$($slides[first]).css(opts.cssFirst);
+
+	if (opts.timeout) {
+		opts.timeout = parseInt(opts.timeout);
+		// ensure that timeout and speed settings are sane
+		if (opts.speed.constructor == String)
+			opts.speed = $.fx.speeds[opts.speed] || parseInt(opts.speed);
+		if (!opts.sync)
+			opts.speed = opts.speed / 2;
+		while((opts.timeout - opts.speed) < 250) // sanitize timeout
+			opts.timeout += opts.speed;
+	}
+	if (opts.easing)
+		opts.easeIn = opts.easeOut = opts.easing;
+	if (!opts.speedIn)
+		opts.speedIn = opts.speed;
+	if (!opts.speedOut)
+		opts.speedOut = opts.speed;
+
+	opts.slideCount = els.length;
+	opts.currSlide = opts.lastSlide = first;
+	if (opts.random) {
+		opts.nextSlide = opts.currSlide;
+		if (++opts.randomIndex == els.length)
+			opts.randomIndex = 0;
+		opts.nextSlide = opts.randomMap[opts.randomIndex];
+	}
+	else
+		opts.nextSlide = opts.startingSlide >= (els.length-1) ? 0 : opts.startingSlide+1;
+
+	// run transition init fn
+	if (!opts.multiFx) {
+		var init = $.fn.cycle.transitions[opts.fx];
+		if ($.isFunction(init))
+			init($cont, $slides, opts);
+		else if (opts.fx != 'custom' && !opts.multiFx) {
+			log('unknown transition: ' + opts.fx,'; slideshow terminating');
+			return false;
+		}
+	}
+
+	// fire artificial events
+	var e0 = $slides[first];
+	if (opts.before.length)
+		opts.before[0].apply(e0, [e0, e0, opts, true]);
+	if (opts.after.length > 1)
+		opts.after[1].apply(e0, [e0, e0, opts, true]);
+
+	if (opts.next)
+		$(opts.next).bind(opts.prevNextEvent,function(){return advance(opts,opts.rev?-1:1)});
+	if (opts.prev)
+		$(opts.prev).bind(opts.prevNextEvent,function(){return advance(opts,opts.rev?1:-1)});
+	if (opts.pager)
+		buildPager(els,opts);
+
+	exposeAddSlide(opts, els);
+
+	return opts;
+};
+
+// save off original opts so we can restore after clearing state
+function saveOriginalOpts(opts) {
+	opts.original = { before: [], after: [] };
+	opts.original.cssBefore = $.extend({}, opts.cssBefore);
+	opts.original.cssAfter  = $.extend({}, opts.cssAfter);
+	opts.original.animIn	= $.extend({}, opts.animIn);
+	opts.original.animOut   = $.extend({}, opts.animOut);
+	$.each(opts.before, function() { opts.original.before.push(this); });
+	$.each(opts.after,  function() { opts.original.after.push(this); });
+};
+
+function supportMultiTransitions(opts) {
+	var i, tx, txs = $.fn.cycle.transitions;
+	// look for multiple effects
+	if (opts.fx.indexOf(',') > 0) {
+		opts.multiFx = true;
+		opts.fxs = opts.fx.replace(/\s*/g,'').split(',');
+		// discard any bogus effect names
+		for (i=0; i < opts.fxs.length; i++) {
+			var fx = opts.fxs[i];
+			tx = txs[fx];
+			if (!tx || !txs.hasOwnProperty(fx) || !$.isFunction(tx)) {
+				log('discarding unknown transition: ',fx);
+				opts.fxs.splice(i,1);
+				i--;
+			}
+		}
+		// if we have an empty list then we threw everything away!
+		if (!opts.fxs.length) {
+			log('No valid transitions named; slideshow terminating.');
+			return false;
+		}
+	}
+	else if (opts.fx == 'all') {  // auto-gen the list of transitions
+		opts.multiFx = true;
+		opts.fxs = [];
+		for (p in txs) {
+			tx = txs[p];
+			if (txs.hasOwnProperty(p) && $.isFunction(tx))
+				opts.fxs.push(p);
+		}
+	}
+	if (opts.multiFx && opts.randomizeEffects) {
+		// munge the fxs array to make effect selection random
+		var r1 = Math.floor(Math.random() * 20) + 30;
+		for (i = 0; i < r1; i++) {
+			var r2 = Math.floor(Math.random() * opts.fxs.length);
+			opts.fxs.push(opts.fxs.splice(r2,1)[0]);
+		}
+		debug('randomized fx sequence: ',opts.fxs);
+	}
+	return true;
+};
+
+// provide a mechanism for adding slides after the slideshow has started
+function exposeAddSlide(opts, els) {
+	opts.addSlide = function(newSlide, prepend) {
+		var $s = $(newSlide), s = $s[0];
+		if (!opts.autostopCount)
+			opts.countdown++;
+		els[prepend?'unshift':'push'](s);
+		if (opts.els)
+			opts.els[prepend?'unshift':'push'](s); // shuffle needs this
+		opts.slideCount = els.length;
+
+		$s.css('position','absolute');
+		$s[prepend?'prependTo':'appendTo'](opts.$cont);
+
+		if (prepend) {
+			opts.currSlide++;
+			opts.nextSlide++;
+		}
+
+		if (!$.support.opacity && opts.cleartype && !opts.cleartypeNoBg)
+			clearTypeFix($s);
+
+		if (opts.fit && opts.width)
+			$s.width(opts.width);
+		if (opts.fit && opts.height && opts.height != 'auto')
+			$slides.height(opts.height);
+		s.cycleH = (opts.fit && opts.height) ? opts.height : $s.height();
+		s.cycleW = (opts.fit && opts.width) ? opts.width : $s.width();
+
+		$s.css(opts.cssBefore);
+
+		if (opts.pager)
+			$.fn.cycle.createPagerAnchor(els.length-1, s, $(opts.pager), els, opts);
+
+		if ($.isFunction(opts.onAddSlide))
+			opts.onAddSlide($s);
+		else
+			$s.hide(); // default behavior
+	};
+}
+
+// reset internal state; we do this on every pass in order to support multiple effects
+$.fn.cycle.resetState = function(opts, fx) {
+	fx = fx || opts.fx;
+	opts.before = []; opts.after = [];
+	opts.cssBefore = $.extend({}, opts.original.cssBefore);
+	opts.cssAfter  = $.extend({}, opts.original.cssAfter);
+	opts.animIn	= $.extend({}, opts.original.animIn);
+	opts.animOut   = $.extend({}, opts.original.animOut);
+	opts.fxFn = null;
+	$.each(opts.original.before, function() { opts.before.push(this); });
+	$.each(opts.original.after,  function() { opts.after.push(this); });
+
+	// re-init
+	var init = $.fn.cycle.transitions[fx];
+	if ($.isFunction(init))
+		init(opts.$cont, $(opts.elements), opts);
+};
+
+// this is the main engine fn, it handles the timeouts, callbacks and slide index mgmt
+function go(els, opts, manual, fwd) {
+	// opts.busy is true if we're in the middle of an animation
+	if (manual && opts.busy && opts.manualTrump) {
+		// let manual transitions requests trump active ones
+		$(els).stop(true,true);
+		opts.busy = false;
+	}
+	// don't begin another timeout-based transition if there is one active
+	if (opts.busy)
+		return;
+
+	var p = opts.$cont[0], curr = els[opts.currSlide], next = els[opts.nextSlide];
+
+	// stop cycling if we have an outstanding stop request
+	if (p.cycleStop != opts.stopCount || p.cycleTimeout === 0 && !manual)
+		return;
+
+	// check to see if we should stop cycling based on autostop options
+	if (!manual && !p.cyclePause &&
+		((opts.autostop && (--opts.countdown <= 0)) ||
+		(opts.nowrap && !opts.random && opts.nextSlide < opts.currSlide))) {
+		if (opts.end)
+			opts.end(opts);
+		return;
+	}
+
+	// if slideshow is paused, only transition on a manual trigger
+	if (manual || !p.cyclePause) {
+		var fx = opts.fx;
+		// keep trying to get the slide size if we don't have it yet
+		curr.cycleH = curr.cycleH || $(curr).height();
+		curr.cycleW = curr.cycleW || $(curr).width();
+		next.cycleH = next.cycleH || $(next).height();
+		next.cycleW = next.cycleW || $(next).width();
+
+		// support multiple transition types
+		if (opts.multiFx) {
+			if (opts.lastFx == undefined || ++opts.lastFx >= opts.fxs.length)
+				opts.lastFx = 0;
+			fx = opts.fxs[opts.lastFx];
+			opts.currFx = fx;
+		}
+
+		// one-time fx overrides apply to:  $('div').cycle(3,'zoom');
+		if (opts.oneTimeFx) {
+			fx = opts.oneTimeFx;
+			opts.oneTimeFx = null;
+		}
+
+		$.fn.cycle.resetState(opts, fx);
+
+		// run the before callbacks
+		if (opts.before.length)
+			$.each(opts.before, function(i,o) {
+				if (p.cycleStop != opts.stopCount) return;
+				o.apply(next, [curr, next, opts, fwd]);
+			});
+
+		// stage the after callacks
+		var after = function() {
+			$.each(opts.after, function(i,o) {
+				if (p.cycleStop != opts.stopCount) return;
+				o.apply(next, [curr, next, opts, fwd]);
+			});
+		};
+
+		if (opts.nextSlide != opts.currSlide) {
+			// get ready to perform the transition
+			opts.busy = 1;
+			if (opts.fxFn) // fx function provided?
+				opts.fxFn(curr, next, opts, after, fwd);
+			else if ($.isFunction($.fn.cycle[opts.fx])) // fx plugin ?
+				$.fn.cycle[opts.fx](curr, next, opts, after);
+			else
+				$.fn.cycle.custom(curr, next, opts, after, manual && opts.fastOnEvent);
+		}
+
+		// calculate the next slide
+		opts.lastSlide = opts.currSlide;
+		if (opts.random) {
+			opts.currSlide = opts.nextSlide;
+			if (++opts.randomIndex == els.length)
+				opts.randomIndex = 0;
+			opts.nextSlide = opts.randomMap[opts.randomIndex];
+		}
+		else { // sequence
+			var roll = (opts.nextSlide + 1) == els.length;
+			opts.nextSlide = roll ? 0 : opts.nextSlide+1;
+			opts.currSlide = roll ? els.length-1 : opts.nextSlide-1;
+		}
+
+		if (opts.pager)
+			$.fn.cycle.updateActivePagerLink(opts.pager, opts.currSlide);
+	}
+
+	// stage the next transtion
+	var ms = 0;
+	if (opts.timeout && !opts.continuous)
+		ms = getTimeout(curr, next, opts, fwd);
+	else if (opts.continuous && p.cyclePause) // continuous shows work off an after callback, not this timer logic
+		ms = 10;
+	if (ms > 0)
+		p.cycleTimeout = setTimeout(function(){ go(els, opts, 0, !opts.rev) }, ms);
+};
+
+// invoked after transition
+$.fn.cycle.updateActivePagerLink = function(pager, currSlide) {
+	$(pager).each(function() {
+		$(this).find('a').removeClass('activeSlide').filter('a:eq('+currSlide+')').addClass('activeSlide');
+	});
+};
+
+// calculate timeout value for current transition
+function getTimeout(curr, next, opts, fwd) {
+	if (opts.timeoutFn) {
+		// call user provided calc fn
+		var t = opts.timeoutFn(curr,next,opts,fwd);
+		while ((t - opts.speed) < 250) // sanitize timeout
+			t += opts.speed;
+		debug('calculated timeout: ' + t + '; speed: ' + opts.speed);
+		if (t !== false)
+			return t;
+	}
+	return opts.timeout;
+};
+
+// expose next/prev function, caller must pass in state
+$.fn.cycle.next = function(opts) { advance(opts, opts.rev?-1:1); };
+$.fn.cycle.prev = function(opts) { advance(opts, opts.rev?1:-1);};
+
+// advance slide forward or back
+function advance(opts, val) {
+	var els = opts.elements;
+	var p = opts.$cont[0], timeout = p.cycleTimeout;
+	if (timeout) {
+		clearTimeout(timeout);
+		p.cycleTimeout = 0;
+	}
+	if (opts.random && val < 0) {
+		// move back to the previously display slide
+		opts.randomIndex--;
+		if (--opts.randomIndex == -2)
+			opts.randomIndex = els.length-2;
+		else if (opts.randomIndex == -1)
+			opts.randomIndex = els.length-1;
+		opts.nextSlide = opts.randomMap[opts.randomIndex];
+	}
+	else if (opts.random) {
+		if (++opts.randomIndex == els.length)
+			opts.randomIndex = 0;
+		opts.nextSlide = opts.randomMap[opts.randomIndex];
+	}
+	else {
+		opts.nextSlide = opts.currSlide + val;
+		if (opts.nextSlide < 0) {
+			if (opts.nowrap) return false;
+			opts.nextSlide = els.length - 1;
+		}
+		else if (opts.nextSlide >= els.length) {
+			if (opts.nowrap) return false;
+			opts.nextSlide = 0;
+		}
+	}
+
+	if ($.isFunction(opts.prevNextClick))
+		opts.prevNextClick(val > 0, opts.nextSlide, els[opts.nextSlide]);
+	go(els, opts, 1, val>=0);
+	return false;
+};
+
+function buildPager(els, opts) {
+	var $p = $(opts.pager);
+	$.each(els, function(i,o) {
+		$.fn.cycle.createPagerAnchor(i,o,$p,els,opts);
+	});
+   $.fn.cycle.updateActivePagerLink(opts.pager, opts.startingSlide);
+};
+
+$.fn.cycle.createPagerAnchor = function(i, el, $p, els, opts) {
+	var a;
+	if ($.isFunction(opts.pagerAnchorBuilder))
+		a = opts.pagerAnchorBuilder(i,el);
+	else
+		a = '<a href="#">'+(i+1)+'</a>';
+		
+	if (!a)
+		return;
+	var $a = $(a);
+	// don't reparent if anchor is in the dom
+	if ($a.parents('body').length === 0) {
+		var arr = [];
+		if ($p.length > 1) {
+			$p.each(function() {
+				var $clone = $a.clone(true);
+				$(this).append($clone);
+				arr.push($clone[0]);
+			});
+			$a = $(arr);
+		}
+		else {
+			$a.appendTo($p);
+		}
+	}
+
+	$a.bind(opts.pagerEvent, function(e) {
+		e.preventDefault();
+		opts.nextSlide = i;
+		var p = opts.$cont[0], timeout = p.cycleTimeout;
+		if (timeout) {
+			clearTimeout(timeout);
+			p.cycleTimeout = 0;
+		}
+		if ($.isFunction(opts.pagerClick))
+			opts.pagerClick(opts.nextSlide, els[opts.nextSlide]);
+		go(els,opts,1,opts.currSlide < i); // trigger the trans
+		return false;
+	});
+	
+	if (opts.pagerEvent != 'click')
+		$a.click(function(){return false;}); // supress click
+	
+	if (opts.pauseOnPagerHover)
+		$a.hover(function() { opts.$cont[0].cyclePause++; }, function() { opts.$cont[0].cyclePause--; } );
+};
+
+// helper fn to calculate the number of slides between the current and the next
+$.fn.cycle.hopsFromLast = function(opts, fwd) {
+	var hops, l = opts.lastSlide, c = opts.currSlide;
+	if (fwd)
+		hops = c > l ? c - l : opts.slideCount - l;
+	else
+		hops = c < l ? l - c : l + opts.slideCount - c;
+	return hops;
+};
+
+// fix clearType problems in ie6 by setting an explicit bg color
+// (otherwise text slides look horrible during a fade transition)
+function clearTypeFix($slides) {
+	function hex(s) {
+		s = parseInt(s).toString(16);
+		return s.length < 2 ? '0'+s : s;
+	};
+	function getBg(e) {
+		for ( ; e && e.nodeName.toLowerCase() != 'html'; e = e.parentNode) {
+			var v = $.css(e,'background-color');
+			if (v.indexOf('rgb') >= 0 ) {
+				var rgb = v.match(/\d+/g);
+				return '#'+ hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
+			}
+			if (v && v != 'transparent')
+				return v;
+		}
+		return '#ffffff';
+	};
+	$slides.each(function() { $(this).css('background-color', getBg(this)); });
+};
+
+// reset common props before the next transition
+$.fn.cycle.commonReset = function(curr,next,opts,w,h,rev) {
+	$(opts.elements).not(curr).hide();
+	opts.cssBefore.opacity = 1;
+	opts.cssBefore.display = 'block';
+	if (w !== false && next.cycleW > 0)
+		opts.cssBefore.width = next.cycleW;
+	if (h !== false && next.cycleH > 0)
+		opts.cssBefore.height = next.cycleH;
+	opts.cssAfter = opts.cssAfter || {};
+	opts.cssAfter.display = 'none';
+	$(curr).css('zIndex',opts.slideCount + (rev === true ? 1 : 0));
+	$(next).css('zIndex',opts.slideCount + (rev === true ? 0 : 1));
+};
+
+// the actual fn for effecting a transition
+$.fn.cycle.custom = function(curr, next, opts, cb, speedOverride) {
+	var $l = $(curr), $n = $(next);
+	var speedIn = opts.speedIn, speedOut = opts.speedOut, easeIn = opts.easeIn, easeOut = opts.easeOut;
+	$n.css(opts.cssBefore);
+	if (speedOverride) {
+		if (typeof speedOverride == 'number')
+			speedIn = speedOut = speedOverride;
+		else
+			speedIn = speedOut = 1;
+		easeIn = easeOut = null;
+	}
+	var fn = function() {$n.animate(opts.animIn, speedIn, easeIn, cb)};
+	$l.animate(opts.animOut, speedOut, easeOut, function() {
+		if (opts.cssAfter) $l.css(opts.cssAfter);
+		if (!opts.sync) fn();
+	});
+	if (opts.sync) fn();
+};
+
+// transition definitions - only fade is defined here, transition pack defines the rest
+$.fn.cycle.transitions = {
+	fade: function($cont, $slides, opts) {
+		$slides.not(':eq('+opts.currSlide+')').css('opacity',0);
+		opts.before.push(function(curr,next,opts) {
+			$.fn.cycle.commonReset(curr,next,opts);
+			opts.cssBefore.opacity = 0;
+		});
+		opts.animIn	   = { opacity: 1 };
+		opts.animOut   = { opacity: 0 };
+		opts.cssBefore = { top: 0, left: 0 };
+	}
+};
+
+$.fn.cycle.ver = function() { return ver; };
+
+// override these globally if you like (they are all optional)
+$.fn.cycle.defaults = {
+	fx:			  'fade', // name of transition effect (or comma separated names, ex: fade,scrollUp,shuffle)
+	timeout:	   4000,  // milliseconds between slide transitions (0 to disable auto advance)
+	timeoutFn:	 null,  // callback for determining per-slide timeout value:  function(currSlideElement, nextSlideElement, options, forwardFlag)
+	continuous:	   0,	  // true to start next transition immediately after current one completes
+	speed:		   1000,  // speed of the transition (any valid fx speed value)
+	speedIn:	   null,  // speed of the 'in' transition
+	speedOut:	   null,  // speed of the 'out' transition
+	next:		   null,  // selector for element to use as click trigger for next slide
+	prev:		   null,  // selector for element to use as click trigger for previous slide
+	prevNextClick: null,  // callback fn for prev/next clicks:	function(isNext, zeroBasedSlideIndex, slideElement)
+	prevNextEvent:'click',// event which drives the manual transition to the previous or next slide
+	pager:		   null,  // selector for element to use as pager container
+	pagerClick:	   null,  // callback fn for pager clicks:	function(zeroBasedSlideIndex, slideElement)
+	pagerEvent:	  'click', // name of event which drives the pager navigation
+	pagerAnchorBuilder: null, // callback fn for building anchor links:  function(index, DOMelement)
+	before:		   null,  // transition callback (scope set to element to be shown):	 function(currSlideElement, nextSlideElement, options, forwardFlag)
+	after:		   null,  // transition callback (scope set to element that was shown):  function(currSlideElement, nextSlideElement, options, forwardFlag)
+	end:		   null,  // callback invoked when the slideshow terminates (use with autostop or nowrap options): function(options)
+	easing:		   null,  // easing method for both in and out transitions
+	easeIn:		   null,  // easing for "in" transition
+	easeOut:	   null,  // easing for "out" transition
+	shuffle:	   null,  // coords for shuffle animation, ex: { top:15, left: 200 }
+	animIn:		   null,  // properties that define how the slide animates in
+	animOut:	   null,  // properties that define how the slide animates out
+	cssBefore:	   null,  // properties that define the initial state of the slide before transitioning in
+	cssAfter:	   null,  // properties that defined the state of the slide after transitioning out
+	fxFn:		   null,  // function used to control the transition: function(currSlideElement, nextSlideElement, options, afterCalback, forwardFlag)
+	height:		  'auto', // container height
+	startingSlide: 0,	  // zero-based index of the first slide to be displayed
+	sync:		   1,	  // true if in/out transitions should occur simultaneously
+	random:		   0,	  // true for random, false for sequence (not applicable to shuffle fx)
+	fit:		   0,	  // force slides to fit container
+	containerResize: 1,	  // resize container to fit largest slide
+	pause:		   0,	  // true to enable "pause on hover"
+	pauseOnPagerHover: 0, // true to pause when hovering over pager link
+	autostop:	   0,	  // true to end slideshow after X transitions (where X == slide count)
+	autostopCount: 0,	  // number of transitions (optionally used with autostop to define X)
+	delay:		   0,	  // additional delay (in ms) for first transition (hint: can be negative)
+	slideExpr:	   null,  // expression for selecting slides (if something other than all children is required)
+	cleartype:	   !$.support.opacity,  // true if clearType corrections should be applied (for IE)
+	cleartypeNoBg: false, // set to true to disable extra cleartype fixing (leave false to force background color setting on slides)
+	nowrap:		   0,	  // true to prevent slideshow from wrapping
+	fastOnEvent:   0,	  // force fast transitions when triggered manually (via pager or prev/next); value == time in ms
+	randomizeEffects: 1,  // valid when multiple effects are used; true to make the effect sequence random
+	rev:		   0,	 // causes animations to transition in reverse
+	manualTrump:   true,  // causes manual transition to stop an active transition instead of being ignored
+	requeueOnImageNotLoaded: true, // requeue the slideshow if any image slides are not yet loaded
+	requeueTimeout: 250   // ms delay for requeue
+};
+
+})(jQuery);
+
+
+/*!
+ * jQuery Cycle Plugin Transition Definitions
+ * This script is a plugin for the jQuery Cycle Plugin
+ * Examples and documentation at: http://malsup.com/jquery/cycle/
+ * Copyright (c) 2007-2008 M. Alsup
+ * Version:	 2.72
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ */
+(function($) {
+
+//
+// These functions define one-time slide initialization for the named
+// transitions. To save file size feel free to remove any of these that you
+// don't need.
+//
+$.fn.cycle.transitions.none = function($cont, $slides, opts) {
+	opts.fxFn = function(curr,next,opts,after){
+		$(next).show();
+		$(curr).hide();
+		after();
+	};
+}
+
+// scrollUp/Down/Left/Right
+$.fn.cycle.transitions.scrollUp = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden');
+	opts.before.push($.fn.cycle.commonReset);
+	var h = $cont.height();
+	opts.cssBefore ={ top: h, left: 0 };
+	opts.cssFirst = { top: 0 };
+	opts.animIn	  = { top: 0 };
+	opts.animOut  = { top: -h };
+};
+$.fn.cycle.transitions.scrollDown = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden');
+	opts.before.push($.fn.cycle.commonReset);
+	var h = $cont.height();
+	opts.cssFirst = { top: 0 };
+	opts.cssBefore= { top: -h, left: 0 };
+	opts.animIn	  = { top: 0 };
+	opts.animOut  = { top: h };
+};
+$.fn.cycle.transitions.scrollLeft = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden');
+	opts.before.push($.fn.cycle.commonReset);
+	var w = $cont.width();
+	opts.cssFirst = { left: 0 };
+	opts.cssBefore= { left: w, top: 0 };
+	opts.animIn	  = { left: 0 };
+	opts.animOut  = { left: 0-w };
+};
+$.fn.cycle.transitions.scrollRight = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden');
+	opts.before.push($.fn.cycle.commonReset);
+	var w = $cont.width();
+	opts.cssFirst = { left: 0 };
+	opts.cssBefore= { left: -w, top: 0 };
+	opts.animIn	  = { left: 0 };
+	opts.animOut  = { left: w };
+};
+$.fn.cycle.transitions.scrollHorz = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden').width();
+	opts.before.push(function(curr, next, opts, fwd) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		opts.cssBefore.left = fwd ? (next.cycleW-1) : (1-next.cycleW);
+		opts.animOut.left = fwd ? -curr.cycleW : curr.cycleW;
+	});
+	opts.cssFirst = { left: 0 };
+	opts.cssBefore= { top: 0 };
+	opts.animIn   = { left: 0 };
+	opts.animOut  = { top: 0 };
+};
+$.fn.cycle.transitions.scrollVert = function($cont, $slides, opts) {
+	$cont.css('overflow','hidden');
+	opts.before.push(function(curr, next, opts, fwd) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		opts.cssBefore.top = fwd ? (1-next.cycleH) : (next.cycleH-1);
+		opts.animOut.top = fwd ? curr.cycleH : -curr.cycleH;
+	});
+	opts.cssFirst = { top: 0 };
+	opts.cssBefore= { left: 0 };
+	opts.animIn   = { top: 0 };
+	opts.animOut  = { left: 0 };
+};
+
+// slideX/slideY
+$.fn.cycle.transitions.slideX = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$(opts.elements).not(curr).hide();
+		$.fn.cycle.commonReset(curr,next,opts,false,true);
+		opts.animIn.width = next.cycleW;
+	});
+	opts.cssBefore = { left: 0, top: 0, width: 0 };
+	opts.animIn	 = { width: 'show' };
+	opts.animOut = { width: 0 };
+};
+$.fn.cycle.transitions.slideY = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$(opts.elements).not(curr).hide();
+		$.fn.cycle.commonReset(curr,next,opts,true,false);
+		opts.animIn.height = next.cycleH;
+	});
+	opts.cssBefore = { left: 0, top: 0, height: 0 };
+	opts.animIn	 = { height: 'show' };
+	opts.animOut = { height: 0 };
+};
+
+// shuffle
+$.fn.cycle.transitions.shuffle = function($cont, $slides, opts) {
+	var i, w = $cont.css('overflow', 'visible').width();
+	$slides.css({left: 0, top: 0});
+	opts.before.push(function(curr,next,opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,true,true);
+	});
+	// only adjust speed once!
+	if (!opts.speedAdjusted) {
+		opts.speed = opts.speed / 2; // shuffle has 2 transitions
+		opts.speedAdjusted = true;
+	}
+	opts.random = 0;
+	opts.shuffle = opts.shuffle || {left:-w, top:15};
+	opts.els = [];
+	for (i=0; i < $slides.length; i++)
+		opts.els.push($slides[i]);
+
+	for (i=0; i < opts.currSlide; i++)
+		opts.els.push(opts.els.shift());
+
+	// custom transition fn (hat tip to Benjamin Sterling for this bit of sweetness!)
+	opts.fxFn = function(curr, next, opts, cb, fwd) {
+		var $el = fwd ? $(curr) : $(next);
+		$(next).css(opts.cssBefore);
+		var count = opts.slideCount;
+		$el.animate(opts.shuffle, opts.speedIn, opts.easeIn, function() {
+			var hops = $.fn.cycle.hopsFromLast(opts, fwd);
+			for (var k=0; k < hops; k++)
+				fwd ? opts.els.push(opts.els.shift()) : opts.els.unshift(opts.els.pop());
+			if (fwd) {
+				for (var i=0, len=opts.els.length; i < len; i++)
+					$(opts.els[i]).css('z-index', len-i+count);
+			}
+			else {
+				var z = $(curr).css('z-index');
+				$el.css('z-index', parseInt(z)+1+count);
+			}
+			$el.animate({left:0, top:0}, opts.speedOut, opts.easeOut, function() {
+				$(fwd ? this : curr).hide();
+				if (cb) cb();
+			});
+		});
+	};
+	opts.cssBefore = { display: 'block', opacity: 1, top: 0, left: 0 };
+};
+
+// turnUp/Down/Left/Right
+$.fn.cycle.transitions.turnUp = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,false);
+		opts.cssBefore.top = next.cycleH;
+		opts.animIn.height = next.cycleH;
+	});
+	opts.cssFirst  = { top: 0 };
+	opts.cssBefore = { left: 15, height: 0 };
+	opts.animIn	   = { top: 0 };
+	opts.animOut   = { height: 0 };
+};
+$.fn.cycle.transitions.turnDown = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,false);
+		opts.animIn.height = next.cycleH;
+		opts.animOut.top   = curr.cycleH;
+	});
+	opts.cssFirst  = { top: 0 };
+	opts.cssBefore = { left: 15, top: 0, height: 0 };
+	opts.animOut   = { height: 0 };
+};
+$.fn.cycle.transitions.turnLeft = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,true);
+		opts.cssBefore.left = next.cycleW;
+		opts.animIn.width = next.cycleW;
+	});
+	opts.cssBefore = { top: 0, width: 0  };
+	opts.animIn	   = { left: 15 };
+	opts.animOut   = { width: 0 };
+};
+$.fn.cycle.transitions.turnRight = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,true);
+		opts.animIn.width = next.cycleW;
+		opts.animOut.left = curr.cycleW;
+	});
+	opts.cssBefore = { top: 0, left: 0, width: 0 };
+	opts.animIn	   = { left: 15 };
+	opts.animOut   = { width: 0 };
+};
+
+// zoom
+$.fn.cycle.transitions.zoom = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,false,true);
+		opts.cssBefore.top = next.cycleH/2;
+		opts.cssBefore.left = next.cycleW/2;
+		opts.animIn	   = { top: 0, left: 0, width: next.cycleW, height: next.cycleH };
+		opts.animOut   = { width: 0, height: 0, top: curr.cycleH/2, left: curr.cycleW/2 };
+	});
+	opts.cssFirst = { top:0, left: 0 };
+	opts.cssBefore = { width: 0, height: 0 };
+};
+
+// fadeZoom
+$.fn.cycle.transitions.fadeZoom = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,false);
+		opts.cssBefore.left = next.cycleW/2;
+		opts.cssBefore.top = next.cycleH/2;
+		opts.animIn	= { top: 0, left: 0, width: next.cycleW, height: next.cycleH };
+	});
+	opts.cssBefore = { width: 0, height: 0 };
+	opts.animOut  = { opacity: 0 };
+};
+
+// blindX
+$.fn.cycle.transitions.blindX = function($cont, $slides, opts) {
+	var w = $cont.css('overflow','hidden').width();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		opts.animIn.width = next.cycleW;
+		opts.animOut.left   = curr.cycleW;
+	});
+	opts.cssBefore = { left: w, top: 0 };
+	opts.animIn = { left: 0 };
+	opts.animOut  = { left: w };
+};
+// blindY
+$.fn.cycle.transitions.blindY = function($cont, $slides, opts) {
+	var h = $cont.css('overflow','hidden').height();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		opts.animIn.height = next.cycleH;
+		opts.animOut.top   = curr.cycleH;
+	});
+	opts.cssBefore = { top: h, left: 0 };
+	opts.animIn = { top: 0 };
+	opts.animOut  = { top: h };
+};
+// blindZ
+$.fn.cycle.transitions.blindZ = function($cont, $slides, opts) {
+	var h = $cont.css('overflow','hidden').height();
+	var w = $cont.width();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		opts.animIn.height = next.cycleH;
+		opts.animOut.top   = curr.cycleH;
+	});
+	opts.cssBefore = { top: h, left: w };
+	opts.animIn = { top: 0, left: 0 };
+	opts.animOut  = { top: h, left: w };
+};
+
+// growX - grow horizontally from centered 0 width
+$.fn.cycle.transitions.growX = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,true);
+		opts.cssBefore.left = this.cycleW/2;
+		opts.animIn = { left: 0, width: this.cycleW };
+		opts.animOut = { left: 0 };
+	});
+	opts.cssBefore = { width: 0, top: 0 };
+};
+// growY - grow vertically from centered 0 height
+$.fn.cycle.transitions.growY = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,false);
+		opts.cssBefore.top = this.cycleH/2;
+		opts.animIn = { top: 0, height: this.cycleH };
+		opts.animOut = { top: 0 };
+	});
+	opts.cssBefore = { height: 0, left: 0 };
+};
+
+// curtainX - squeeze in both edges horizontally
+$.fn.cycle.transitions.curtainX = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,false,true,true);
+		opts.cssBefore.left = next.cycleW/2;
+		opts.animIn = { left: 0, width: this.cycleW };
+		opts.animOut = { left: curr.cycleW/2, width: 0 };
+	});
+	opts.cssBefore = { top: 0, width: 0 };
+};
+// curtainY - squeeze in both edges vertically
+$.fn.cycle.transitions.curtainY = function($cont, $slides, opts) {
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,false,true);
+		opts.cssBefore.top = next.cycleH/2;
+		opts.animIn = { top: 0, height: next.cycleH };
+		opts.animOut = { top: curr.cycleH/2, height: 0 };
+	});
+	opts.cssBefore = { left: 0, height: 0 };
+};
+
+// cover - curr slide covered by next slide
+$.fn.cycle.transitions.cover = function($cont, $slides, opts) {
+	var d = opts.direction || 'left';
+	var w = $cont.css('overflow','hidden').width();
+	var h = $cont.height();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts);
+		if (d == 'right')
+			opts.cssBefore.left = -w;
+		else if (d == 'up')
+			opts.cssBefore.top = h;
+		else if (d == 'down')
+			opts.cssBefore.top = -h;
+		else
+			opts.cssBefore.left = w;
+	});
+	opts.animIn = { left: 0, top: 0};
+	opts.animOut = { opacity: 1 };
+	opts.cssBefore = { top: 0, left: 0 };
+};
+
+// uncover - curr slide moves off next slide
+$.fn.cycle.transitions.uncover = function($cont, $slides, opts) {
+	var d = opts.direction || 'left';
+	var w = $cont.css('overflow','hidden').width();
+	var h = $cont.height();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,true,true);
+		if (d == 'right')
+			opts.animOut.left = w;
+		else if (d == 'up')
+			opts.animOut.top = -h;
+		else if (d == 'down')
+			opts.animOut.top = h;
+		else
+			opts.animOut.left = -w;
+	});
+	opts.animIn = { left: 0, top: 0 };
+	opts.animOut = { opacity: 1 };
+	opts.cssBefore = { top: 0, left: 0 };
+};
+
+// toss - move top slide and fade away
+$.fn.cycle.transitions.toss = function($cont, $slides, opts) {
+	var w = $cont.css('overflow','visible').width();
+	var h = $cont.height();
+	opts.before.push(function(curr, next, opts) {
+		$.fn.cycle.commonReset(curr,next,opts,true,true,true);
+		// provide default toss settings if animOut not provided
+		if (!opts.animOut.left && !opts.animOut.top)
+			opts.animOut = { left: w*2, top: -h/2, opacity: 0 };
+		else
+			opts.animOut.opacity = 0;
+	});
+	opts.cssBefore = { left: 0, top: 0 };
+	opts.animIn = { left: 0 };
+};
+
+// wipe - clip animation
+$.fn.cycle.transitions.wipe = function($cont, $slides, opts) {
+	var w = $cont.css('overflow','hidden').width();
+	var h = $cont.height();
+	opts.cssBefore = opts.cssBefore || {};
+	var clip;
+	if (opts.clip) {
+		if (/l2r/.test(opts.clip))
+			clip = 'rect(0px 0px '+h+'px 0px)';
+		else if (/r2l/.test(opts.clip))
+			clip = 'rect(0px '+w+'px '+h+'px '+w+'px)';
+		else if (/t2b/.test(opts.clip))
+			clip = 'rect(0px '+w+'px 0px 0px)';
+		else if (/b2t/.test(opts.clip))
+			clip = 'rect('+h+'px '+w+'px '+h+'px 0px)';
+		else if (/zoom/.test(opts.clip)) {
+			var top = parseInt(h/2);
+			var left = parseInt(w/2);
+			clip = 'rect('+top+'px '+left+'px '+top+'px '+left+'px)';
+		}
+	}
+
+	opts.cssBefore.clip = opts.cssBefore.clip || clip || 'rect(0px 0px 0px 0px)';
+
+	var d = opts.cssBefore.clip.match(/(\d+)/g);
+	var t = parseInt(d[0]), r = parseInt(d[1]), b = parseInt(d[2]), l = parseInt(d[3]);
+
+	opts.before.push(function(curr, next, opts) {
+		if (curr == next) return;
+		var $curr = $(curr), $next = $(next);
+		$.fn.cycle.commonReset(curr,next,opts,true,true,false);
+		opts.cssAfter.display = 'block';
+
+		var step = 1, count = parseInt((opts.speedIn / 13)) - 1;
+		(function f() {
+			var tt = t ? t - parseInt(step * (t/count)) : 0;
+			var ll = l ? l - parseInt(step * (l/count)) : 0;
+			var bb = b < h ? b + parseInt(step * ((h-b)/count || 1)) : h;
+			var rr = r < w ? r + parseInt(step * ((w-r)/count || 1)) : w;
+			$next.css({ clip: 'rect('+tt+'px '+rr+'px '+bb+'px '+ll+'px)' });
+			(step++ <= count) ? setTimeout(f, 13) : $curr.css('display', 'none');
+		})();
+	});
+	opts.cssBefore = { display: 'block', opacity: 1, top: 0, left: 0 };
+	opts.animIn	   = { left: 0 };
+	opts.animOut   = { left: 0 };
+};
+
+})(jQuery);
+
+(function ($) {
+    var AJAXFormSubmit = function (element, options) {
+        var me = this;
+        me.e = element;
+        me.options = options;
+
+        me.submit = me.e.find('input.submit');
+        me.reset = me.e.find('input.reset');
+        me.message = me.e.find('div.message');
+
+        me.message.hide();
+        me.reset.click(function () {
+            me.e.find('textarea.limit').val('').change();
+            window.setTimeout(function () { me.e.find('select.custom').change(); me.e.find('div.field-value small').hide(); }, 1);
+            me.e.find('div.field-value small').hide();
+        });
+        me.enableLiveValidation = function () {
+            var controls = me.e.find('input.required,select.required,textarea.required');
+            controls.bind('change blur', function () {
+                var el = $(this);
+                me.validateElement(el);
+            });
+        };
+
+        me.validateElement = function (el) {
+            var result = $.fi.helpers.validators.requriedFieldValidator(el);
+            if (result && el.hasClass('email')) {
+                result = $.fi.helpers.validators.emailValidator(el);
+                if (!result) {
+                    el.parents('div.field-value').find('small').text($.fi.resources.forms.invalidEmailAddress[$.fi.languageCode]);
+                } else {
+                    el.parents('div.field-value').find('small').text(el.parents('li').find('label small').text());
+                }
+            } else {
+                el.parents('div.field-value').find('small').text(el.parents('li').find('label small').text());
+            }
+
+            if (result) {
+                el.parents('div.field-value').find('small').hide();
+            } else {
+                el.parents('div.field-value').find('small').show();
+            }
+            return result;
+        }
+
+        me.validateForm = function () {
+            var isValid = true;
+            var focus = false;
+            var controls = me.e.find('input.required,select.required,textarea.required');
+            controls.each(function () {
+                var el = $(this);
+                var result = me.validateElement(el);
+
+                if (!result) {
+                    isValid = false;
+                    if (!focus) {
+                        el.focus();
+                        focus = true;
+                    }
+                }
+            });
+            return isValid;
+        };
+        me.e.find('textarea.limit').limitedTextArea();
+        /*me.e.find('input[type=file]').fileUploadify({
+            resources: me.options.resources,
+            onSelect: function (file) {
+                if (file != null) {
+                    var phi = file.swfu.settings.button_placeholder_id;
+                    var sm = $('#' + phi).parents('div.field-value').find('small');
+                    if (sm.data('timer') != null) {
+                        window.clearTimeout(sm.data('timer'));
+                        sm.data('timer', null);
+                    }
+                    sm.hide();
+                    $('#' + phi).uploadifyDisable(true);
+
+                    $('#' + phi).parents('div.field-value').find('div.uploadifyQueueItem .cancel a').click(function () {
+                        $('#' + phi).uploadifyDisable(false);
+                        me.pendingFiles = false;
+                        me.uploadedFile = '';
+                    });
+
+                    me.pendingFiles = true;
+                }
+            },
+            onCancel: function (args) {
+            },
+            onSelectError: function (file, errorCode, errorMsg) {
+                if (file != null) {
+                    // show error message
+                    switch (errorCode) {
+                        case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
+                            var phi = file.swfu.settings.button_placeholder_id;
+                            var sm = $('#' + phi).parents('div.field-value').find('small');
+                            sm.html(me.options.resources.sizeError.replace("{0}", file.name).replace("{1}", file.swfu.settings.file_size_limit).replace("{2}", Math.round(file.size / 1024)));
+                            sm.show();
+                            var timer = window.setTimeout(function () { sm.hide(); sm.data('timer', null); }, 10000);
+                            sm.data('timer', timer);
+                            me.pendingFiles = false;
+                            me.uploadedFile = '';
+                            $('#' + phi).uploadifyDisable(false);
+                            break;
+                    }
+                }
+            },
+            onSuccess: function (file) {
+                me.uploadedFile = file.filePath;
+                me.uploadCompleted = true;
+                me.pendingFiles = false;
+                me.submit.click();
+            },
+            onError: function () {
+                me.pendingFiles = true;
+                me.uploadCompleted = false;
+                me.mode = '';
+                var upi = me.e.find('.uploadify').attr('id');
+                $('#' + upi).next().addClass('pending');
+                me.submit.show();
+                me.message.hide();
+            },
+            uploadifySettings: me.options.uploadifySettings
+        });*/
+        me.pendingFiles = false;
+        me.enableLiveValidation();
+        me.uploadCompleted = true;
+        me.mode = '';
+        me.submit.click(function (event) {
+            event.preventDefault();
+            if (me.validateForm()) {
+                me.submit.hide();
+                me.message.html('&nbsp;').show();
+                // check for file upload
+
+                if (me.pendingFiles) {
+                    me.mode = 'upload';
+                    var upi = me.e.find('.uploadify').attr('id');
+                    $('#' + upi).uploadifyUpload();
+                    $('#' + upi).next().removeClass('pending');
+                    me.uploadCompleted = false;
+                    return;
+                }
+
+                var controls = me.e.find('.field-value input,.field-value select, .field-value textarea');
+                var p = {};
+                controls.each(function () {
+                    var el = $(this);
+                    p[el.attr('name')] = el.val();
+                });
+                if (me.uploadedFile) {
+                    var upi = me.e.find('.uploadify').attr('id');
+                    p[upi] = me.uploadedFile;
+                }
+
+                if (me.options.postData && $.isFunction(me.options.postData)) {
+                    p = me.options.postData(p);
+                }
+                $.ajax({
+                    url: me.options.url,
+                    data: $.toJSON(p),
+                    success: function (response) {
+                        var d = response.d;
+                        var result = null;
+                        if (me.options.responseHandler) {
+                            result = me.options.responseHandler(d);
+                            if (result.processed) {
+                                me.e.hide();
+                                me.e.parent().find('div.success').html(result.message);
+                                me.e.parent().find('div.success').show();
+                                me.e.find('.field-value input, .field-value textarea').val('').change();
+                                me.e.find('.field-value select').val('0').change();
+                            } else {
+                                me.submit.show();
+                                me.message.removeClass('loading').text($.fi.resources.forms.generalError[$.fi.languageCode]);
+                            }
+                        } else {
+                            me.submit.show();
+                            me.message.removeClass('loading').text($.fi.resources.forms.generalError[$.fi.languageCode]);
+                        }
+                    },
+                    error: function () {
+                        me.submit.show();
+                        me.message.removeClass('loading').text($.fi.resources.forms.generalError[$.fi.languageCode]);
+                    },
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+                me.e.hide();
+                me.e.parent().find('div.success').show();
+                $('html, body').animate({ scrollTop: me.e.parent().offset().top }, 500);
+            } else {
+
+            }
+        });
+    };
+
+    $.fn.ajaxForm = function (options) {
+        var opts = $.extend({}, $.fn.ajaxForm.defaults, options);
+        return this.each(function () {
+            new AJAXFormSubmit($(this), opts);
+        });
+
+    };
+
+    $.fn.ajaxForm.defaults = {
+        url: 'services/AjaxHandler.asmx/SubmitQuestion',
+        postData: false,
+        responseHandler: false,
+        uploadifySettings: {},
+        resources: {
+            chooseFile: 'Choose file',
+            sizeError: 'The file <strong>"{0}"</strong>  exceeds the size limit <strong>{1}KB</strong>. Selected file size is: <strong>{2}KB</strong>.'
+        }
+    };
+})(jQuery);
