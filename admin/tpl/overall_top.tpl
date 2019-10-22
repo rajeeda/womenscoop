@@ -3,7 +3,7 @@
     <td><table width="100%" border="0" cellpadding="0" cellspacing="0" background="images/background.gif">
   <tr>
     <td width="44%" height="41">
-   <div id="header_title">Accu  Admin Panel</div>
+   <div id="header_title">Admin Panel</div>
     </td>
     <td width="56%" valign="top"><div align="right"><img src="images/header_blue.jpg" width="552" height="38" /></div></td>
   </tr>

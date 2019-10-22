@@ -82,7 +82,7 @@ function __Construct(){
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$this->data["vedio"] = $this->Gallery_model->fetch_vedio_data($config["per_page"], $page);
 		$this->data["links"] = $this->pagination->create_links();
-		$this->data["title"] ="AACCU Vedios";
+		$this->data["title"] ="Our Vedios";
 	
 		$this->load->view('Vedio',$this->data);
 		
@@ -123,7 +123,7 @@ function __Construct(){
 		$this->data["photos"] = $this->Gallery_model->fetch_album_data($config["per_page"], $page);
 		$this->data["links"] = $this->pagination->create_links();
 		$this->data["rows"] = $total_row;
-		$this->data["title"] ="AACCU Photos";
+		$this->data["title"] ="Our Photos";
 	
 		$this->load->view('Gallery',$this->data);
 		

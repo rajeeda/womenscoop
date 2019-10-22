@@ -64,107 +64,27 @@ function MM_swapImage() { //v3.0
 
 </table>
 <div class="row">
-  <div class="col-sm-3"><center><a href="country.php"><img src="images/browser.png" width="48" height="48" ></br>Country</a></center></div>
-  <div class="col-sm-3"><center><a href="member.php"><img src="images/usrgroups.png" width="48" height="48"></br>Members</a></center></div>
-  <div class="col-sm-3"><center><a href="publication_type.php"><img src="images/categories.png" width="48" height="48"></br>Publication Type</a></center></div>
-  <div class="col-sm-3"><center><a href="publication_doc.php"><img src="images/my_pro.png" width="48" height="48"></br>Publication Documents</a></center></div>
-</div>
-</br>
-<div class="row">
+  <div class="col-sm-3"><center><a href="about_us.php"><img src="images/langmanager.png" width="48" height="48"></br>about Us</a></center></div>
+  <div class="col-sm-3"><center><a href="member.php"><img src="images/usrgroups.png" width="48" height="48"></br>Services</a></center></div>
   <div class="col-sm-3"><center><a href="news.php"><img src="images/massemail.png" width="48" height="48"></br>News</a></center></div>
   <div class="col-sm-3"><center><a href="events.php"><img src="images/addedit.png" width="48" height="48"></br>Events</a></center></div>
+</div>
+</br>
+<div class="row">  
   <div class="col-sm-3"><center><a href="images.php"><img src="images/mediamanager.png" width="48" height="48"></br>Image Gallery</a></center></div>
-  <div class="col-sm-3"><center><a href="Credit_Union_Solution.php"><img src="images/menu.png" width="48" height="48"></br>Cu Solutions</a></center></div>
-</div>
-</br>
-<div class="row">
-  <div class="col-sm-3"><center><a href="about_us.php"><img src="images/langmanager.png" width="48" height="48"></br>about Us</a></center></div>
   <div class="col-sm-3"><center><a href="user_manager.php"><img src="images/user.png" width="48" height="48"></br>Users</a></center></div>
-  <div class="col-sm-3"><center><a href="accu_forum_posts.php"><img src="images/resource_forum.gif" width="48" height="48"></br>Internet Forum Posts</a></center></div>
-  <div class="col-sm-3"><center><a href="accu_forum_question.php"><img src="images/ph_quality.gif" width="48" height="48"></br>Internet fourm Questions</a></center></div>
-</div>
-</br>
-<div class="row">
-  <div class="col-sm-3"><center><a href="about_us_member.php"><img src="images/ph_community.gif" width="48" height="48"></br>New Username for ACCU Website</a></center></div>
-  <div class="col-sm-3"><center><a href="about_us_doc.php"><img src="images/ph_documentation.gif" width="48" height="48"></br>Board Member Documents</a></center></div>
-  <div class="col-sm-3"><center><a href="bord_member_folder.php"><img src="images/my_pro.png" width="48" height="48"></br>Board Member Folders</a></center></div>
-  <div class="col-sm-3"><center><a href="award.php"><img src="images/award.png" width="48" height="48"></br>Awardees</a></div>
-</div>
-</br>
-<div class="row">
   <div class="col-sm-3"><center><a href="o_structure.php"><img src="images/os.png" width="48" height="48"></br>Organizational Structure</a></center></div>
-  <div class="col-sm-3"><center><a href="core_value.php"><img src="images/Icon.png" width="48" height="48"></br>Core Value</a></center></div>
   <div class="col-sm-3"><center><a href="testimonials.php"><img src="images/Office.png" width="48" height="48"></br>Testimonials</a></center></div>
-  <div class="col-sm-3"><center><a href="network.php"><img src="images/My_Network_Places.png" width="48" height="48"></br>Network Strength</a></center></div>
 </div>
 </br>
 <div class="row">
-  <div class="col-sm-3"><center><a href="partners.php"><img src="images/handshake.png" width="48" height="48"></br>Development Partners</a></center></div>
+  <div class="col-sm-3"><center><a href="network.php"><img src="images/My_Network_Places.png" width="48" height="48"></br>Network Strength</a></center></div>
   <div class="col-sm-3"></div>
   <div class="col-sm-3"></div>
   <div class="col-sm-3"></div>
 </div>
-<!--
-<table width="100%" border="0" cellpadding="10" cellspacing="10" bgcolor="#F1F3F5" style="border-style: dotted;">
-            
-            <tr>
-             <td width="23%" align="center" valign="top" class="home_box"><a href="country.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('country','','images/impressions.png',1)"><img src="images/browser.png" alt="Country" name="country" width="48" height="48" border="0" id="country" /></a><br />
-                <a href="country.php" style="text-decoration:none">Country </a></td>
-              <td width="27%" align="center" valign="top" class="home_box"><a href="member.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Members','','images/usrgroups2.png',1)"><img src="images/usrgroups.png" alt="Members" name="Members" width="48" height="48" border="0" id="Members" /></a><br />
-                <a href="member.php" style="text-decoration:none">Members</a></td>
-              <td width="25%" align="center" valign="top" class="home_box"><a href="publication_type.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Publication Type','','images/sections2.png',1)"><img src="images/categories.png" alt="Publication Documents" name="Publication Type" width="48" height="48" border="0" id="Publication Type" /></a><br />
-                <a href="category_manager.php" style="text-decoration:none">Publication Type</a></td>
-              <td width="25%" align="center" valign="top" class="home_box"><a href="publication_doc.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Publication Document','','images/my_pro2.png',1)"><img src="images/my_pro.png" alt="Publication Document" name="Publication Document" width="48" height="48" border="0" id="Publication Document" /></a><br />
-                <a href="publication_doc.php" style="text-decoration:none">Publication Documents</a></td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" class="home_box"><a href="news.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('news','','images/generic.png',1)"><img src="images/massemail.png" alt="News" name="news" width="48" height="48" border="0" id="news" /></a><a href="news.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('pcm2','','images/addedit2.png',1)"></a><br />
-                News</td>
-              <td align="center" valign="top" class="home_box"><a href="events.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('event','','images/addedit2.png',1)"><img src="images/addedit.png" alt="Event" name="event" width="48" height="48" border="0" id="event" /></a><br />
-                <a href="events.php" style="text-decoration:none">Events</a></td>
-              <td align="center" valign="top" class="home_box"><a href="images.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('image','','images/query.png',1)"><img src="images/mediamanager.png" name="image" width="48" height="48" border="0" id="image" /></a><br />
-                Image Gallery</td>
-              <td align="center" valign="top" class="home_box"><a href="Credit_Union_Solution.php" class="home_box" onmouseover="MM_swapImage('cusolution','','images/menu2.png',1)" onmouseout="MM_swapImgRestore()"><img src="images/menu.png" alt="Cu Solution" name="cusolution" width="48" height="48" border="0" id="cusolution" /></a><br />
-                Cu Solutions</td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" class="home_box"><p><a href="about_us.php"><img src="images/langmanager.png" width="48" height="48" /></a><br />
-                about Us</p>
-                </td>
-              <td align="center" valign="top" class="home_box"><a href="user_manager.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image10','','images/user2.png',1)"><img src="images/user.png" alt="Users" name="Image10" width="48" height="48" border="0" id="Image10" /></a> <br />
-                Users</td>
-              <td align="center" valign="top" class="home_box"><a href="accu_forum_posts.php" class="home_box"><img src="images/resource_forum.gif" alt="Users" name="Image10" width="37" height="42" border="0" id="Image10" /></a><br />
-                Internet Forum Posts</td>
-              <td align="center" valign="top" class="home_box"><a href="accu_forum_question.php" class="home_box"><img src="images/ph_quality.gif" width="37" height="37" /></a><br />
-                Internet fourm Questions</td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" class="home_box"><a href="about_us_member.php"><img src="images/ph_community.gif" alt="Users" name="Image10" width="36" height="36" border="0" id="Image10" /></a><br />
-                Create New Username for ACCU Website
-</td>
-              <td align="center" valign="top" class="home_box"><a href="about_us_doc.php"><img src="images/ph_documentation.gif" alt="Users" name="Image10" width="36" height="36" border="0" id="Image" /></a><br /> 
-                Board Member Documents</td>
-              <td align="center" valign="top" class="home_box"><a href="bord_member_folder.php"><img src="images/my_pro.png" alt="Users" name="Image10" width="48" height="48" border="0" id="Image" /></a><br /> 
-                Board Member Folders</td>
-              <td align="center" valign="top" class="home_box"><a href="award.php"><img src="images/award.png" alt="Users" name="Image10" width="48" height="48" border="0" id="Image" /></a><br />Awardees</td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" class="home_box"><a href="o_structure.php"><img src="images/os.png" alt="Users" name="Image10" width="52" height="36" border="0" id="Image10" /></a><br />
-                Organizational Structure
-</td>
-              <td align="center" valign="top" class="home_box"><a href="core_value.php"><img src="images/Icon.png" alt="Users" name="Image10" width="36" height="36" border="0" id="Image10" /></a><br />Core Value</td>
-              <td align="center" valign="top" class="home_box"><a href="testimonials.php"><img src="images/Office.png" alt="Users" name="Image10" width="36" height="36" border="0" id="Image10" /></a><br />Testimonials</td>
-              <td align="center" valign="top" class="home_box"><a href="network.php"><img src="images/My_Network_Places.png" alt="Users" name="Image10" width="36" height="36" border="0" id="Image10" /></a><br />Network Strength</td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" class="home_box"><a href="partners.php"><img src="images/handshake.png" alt="Users" name="Image10" width="44" height="44" border="0" id="Image10" /></a><br />
-                Development Partners
-</td>
-              <td align="center" valign="top" class="home_box"></td>
-              <td align="center" valign="top" class="home_box"></td>
-              <td align="center" valign="top" class="home_box"></td>
-            </tr>
-          </table>-->
+</br>
+
 <div width="100%" border="0" cellspacing="0" cellpadding="0">
 </br>
 </br>

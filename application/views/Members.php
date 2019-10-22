@@ -41,145 +41,35 @@
 <?php include_once 'Header.php';?>
 	
 	<button onClick="topFunction()" id="myBtn" title="Go to top" class="owl-prev">Top</button>	
-	<section class="event-feature sec-padding" data-bg-color="#fafafa">
-		<div class="container">
-			<div class="row">
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#Regular_Members">Regular Members</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i>  <?php foreach($membersType as $val2){if($val2->member_type_id==1){echo $val2->sum;}}?> Members</li>
-		                      </ul>
-		                      <p class="mb_20">The membership is open to national federation of credit unions/cooperatives/savings and credit cooperatives representing at least 20,000 individual members or 2% of the country's population. The membership is minimum of US$ 2,000 and maximum US$ 5,000 per year computed based on the aggregated movement's assets.</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-				</div>
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#Associate_Members">Associate Members</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i> <?php foreach($membersType as $val2){if($val2->member_type_id==2){echo $val2->sum;}}?>     Members</li>
-		                      </ul>
-		                      <p class="mb_20">The membership is open to national organization or credit union league or federation which is not yet qualified to become a regular member. Annular due is US$ 1,500</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-				</div>
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#Affiliate_Member">Affiliate Member</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i>   <?php foreach($membersType as $val2){if($val2->member_type_id==3){echo $val2->sum;}}?>    Members</li>
-		                      </ul>
-		                      <p class="mb_20">The membership is open to organizations from both local and abroad promoting and supporting credit union development. The annual dues is US$ 1,000.</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-				</div>
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#Supporter_Members">Supporter Members</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i>   <?php foreach($membersType as $val2){if($val2->member_type_id==4){echo $val2->sum;}}?>    Members</li>
-		                      </ul>
-		                      <p class="mb_20">Open to any primary credit union willing to participate for international development. The membership would allow accelerated access to information, networking, cooperation among cooperatives and experience sharing at international level. The annual dues is US$ 500.</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-				</div>
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#ACCU_Development_Partners">Accu Development Partners</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i>    <?php foreach($membersType as $val2){if($val2->member_type_id==5){echo $val2->sum;}}?>    Members</li>
-		                      </ul>
-		                      <p class="mb_20">ACCU Development Partners</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-				</div>
-				
-				<div class="col-sm-12">
-		              <div class="event">
-		                <div class="row">
-		                  <div class="col-xs-11">
-		                    <div class="event-content p_20 pl_0 pt_0">
-		                      <h3 class="event-title"><a href="#Strategic_Partners">Strategic Partners</a></h3>
-		                      <ul class="event-held list-inline font-13 mb_20">
-		                        <li class="mr-10" data-text-color="#555"><i class="fa fa-users"></i>    <?php foreach($membersType as $val2){if($val2->member_type_id==6){echo $val2->sum;}}?>     Members</li>
-		                      </ul>
-		                      <p class="mb_20">Strategic Partners</p>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-	            </div>
-	        </div>
-		</div>
-	</section>
+	
 	<section class="blog-home sec-padding blog-page blog-details">
 
 		<div class="container" id="Regular_Members">
-			<h3><b>Regular Members</b></h3>
+			<h3><b>Our Services</b></h3>
 		<?php
 				foreach($members as $val){
 					if($val->member_type_id==1){?>
 				
 			<div class="row">
-				<div class="col-md-8 pull-left">
+				<div class=" pull-left">
 					
 					<div class="admin-info">
-						<div class="img-box">
+						<div class="col-md-6">
+						<div class="img-box  ">
 							<div class="inner-box">
-								<img src="<?php echo base_url(); ?>upload_images/member_logos/thumb/<?=$val->member_sign;?>" alt="Awesome Image"/>
+								<img src="<?php echo base_url(); ?>upload_images/member_logos/<?=$val->member_sign;?>" alt="Awesome Image" style="height: 350px !important"/>
 							</div>
 						</div>
-						<div class="content">
-							<?php
-                             $url=$val->url;
-                             if($url==""){
+					</div>
+					<div class="col-md-6">
+						<div class="content ">
+							                            
+                                 <h3><?=$val->member_name;?></h3>                           
 
-                             ?>
-                                 <h3><?=$val->country_name;?> - <?=$val->member_name;?></h3>
-                             <?php
-                             }else{
-                             ?>
-                                 <h3><a href="http://<?php echo $val->url;?>" target="_blank"><?=$val->country_name;?> - <?=$val->member_name;?></a></h3>
-                             <?php
-                             }
-                            ?>
-
-							<p class="member_p">Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></br>
-							Web : - <?=$val->url;?></p>
+							<p><?=$val->Address;?>						
+							</p>
 						</div>
+					</div>
                         <br><br><br>
 					</div>
 				</div>
@@ -188,173 +78,14 @@
 			}
 		}?>
 		</div>
-		<div class="container" id="Associate_Members">
-			<h3><b>Associate Members</b></h3>
-		<?php
-				foreach($members as $val){
-					if($val->member_type_id==2){?>
-				
-			<div class="row">
-				<div class="col-md-8 pull-left">
-					
-					<div class="admin-info">
-					
-
-
-						<div class="img-box">
-							<div class="inner-box">
-								<img src="<?php echo base_url(); ?>upload_images/member_logos/thumb/<?=$val->member_sign;?>" alt="Awesome Image"/>
-							</div>
-						</div>
-	
-						<div class="content">
-							
-							<h3><?=$val->country_name;?> - <?=$val->member_name;?></h3>
-							<p>Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></p>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
-			}
-		}?>
-		</div>
-		<div class="container" id="Affiliate_Member">
-			<h3><b>Affiliate Member</b></h3>
-		<?php
-				foreach($members as $val){
-					if($val->member_type_id==3){?>
-				
-			<div class="row">
-				<div class="col-md-8 pull-left">
-					
-					<div class="admin-info">
-						<div class="img-box">
-							<div class="inner-box">
-								<img src="<?php echo base_url(); ?>upload_images/member_logos/thumb/<?=$val->member_sign;?>" alt="Awesome Image"/>
-							</div>
-						</div>
-						<div class="content">
-							
-							<h3><?=$val->country_name;?> - <?=$val->member_name;?></h3>
-							<p>Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></p>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
-			}
-		}?>
-		</div>
-		<div class="container" id="Supporter_Members">
-			<h3><b>Supporter Members</b></h3>
-		<?php
-				foreach ($country as $key => $value) {?>
-					<h3><?=$value->country_name;?></h3>
-				<?php foreach($members as $val){
-					
-						
-					if($val->member_type_id==4){
-						if ($val->country_id==$value->country_id){
-					?>
-				
-			<div class="row">
-				<div class="col-md-8 pull-left">
-					
-					<div class="admin-info">
-						
-						<div class="content">
-							
-							<h3><?=$val->member_name;?></h3>
-							<p>Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></p>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
-		}
-		}
-			}
-		}?>
-		</div>
-		<div class="container" id="ACCU_Development_Partners">
-			<h3><b>ACCU Development Partners</b></h3>
-		<?php
-				foreach($members as $val){
-					if($val->member_type_id==5){?>
-				
-			<div class="row">
-				<div class="col-md-8 pull-left">
-					
-					<div class="admin-info">
-						<div class="img-box">
-							<div class="inner-box">
-								<img src="<?php echo base_url(); ?>upload_images/member_logos/thumb/<?=$val->member_sign;?>" alt="Awesome Image"/>
-							</div>
-						</div>
-						<div class="content">
-							
-							<h3><?=$val->country_name;?> - <?=$val->member_name;?></h3>
-							<p>Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></p>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
-			}
-		}?>
-		</div>
-		<div class="container" id="Strategic_Partners">
-			<h3><b>Strategic Partners</b></h3>
-		<?php
-				foreach($members as $val){
-					if($val->member_type_id==6){?>
-				
-			<div class="row">
-				<div class="col-md-8 pull-left">
-					
-					<div class="admin-info">
-						<div class="img-box">
-							<div class="inner-box">
-								<img src="<?php echo base_url(); ?>upload_images/member_logos/thumb/<?=$val->member_sign;?>" alt="Awesome Image"/>
-							</div>
-						</div>
-						<div class="content">
-							
-							<h3><?=$val->country_name;?> - <?=$val->member_name;?></h3>
-							<p>Address:-<?=$val->Address;?></br>
-							Tel:-<?=$val->phone_no;?></br>
-							Email:-<?=$val->email;?></p>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
-			}
-		}?>
-		</div>
+		
+		
+		
+		
 		
 	</section>
 	<?php include_once 'Footer.php';?>
-	<section class="footer-bottom">
-		<div class="container text-center">
-			<p>© 2017 Association of Asian Confederation of Credit Unions - All Rights Reserved <a href="#">Association of Asian Confederation</a></p>
-
-		</div>
-	</section>
+	
 
 
 	<!-- main jQuery -->

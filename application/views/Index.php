@@ -33,9 +33,12 @@
 	<!-- news -->
 	<section class="news-feature sec-padding pb_20" data-bg-color="#fafafa">
 		<div class="container">
-			<div class="sec-title text-center">
+			<div class="sec-title colored text-center">
 				<h2>News and Events</h2>
-
+				<!-- news -->
+<span class="decor">
+					<span class="inner"></span>
+				</span>
 			</div>
 
 			<div class="row ">
@@ -102,8 +105,11 @@
 
 	<section class="recent-causes sec-padding" id="vedio_gallery">
 		<div class="container">
-			<div class="sec-title text-center">
+			<div class="sec-title colored text-center">
 				<h2>Video Galary</h2>
+				<span class="decor">
+					<span class="inner"></span>
+				</span>
 			</div>
 
 			<div class="row">
@@ -131,8 +137,12 @@
 	</section>
 	<section class="recent-causes sec-padding" id="photo_gallery">
 		<div class="container">
-			<div class="sec-title text-center">
+			<div class="sec-title colored text-center">
 				<h2>Image Gallery</h2>
+				<!-- image_gallary_catogry -->
+				<span class="decor">
+					<span class="inner"></span>
+				</span>
 			</div>
 
 			<div class="row">
@@ -194,12 +204,7 @@
 		</div>
 	</section>
 	<?php include_once 'Footer.php';?>
-	<section class="footer-bottom">
-		<div class="container text-center">
-			<p>© 2017 Association of Asian Confederation of Credit Unions - All Rights Reserved <a href="#">Association of Asian Confederation</a></p>
 
-		</div>
-	</section>
 
 
 	<!-- main jQuery -->

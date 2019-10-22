@@ -71,6 +71,9 @@ class News extends CI_Controller {
 
        	//echo print_r($this->pagination->create_links()) ;
 
+       	// echo "<pre>";
+       	// print_r($this->data);
+       	// exit();
 		$this->load->view('News',$this->data);
 	}
 	public function getOldNews(){

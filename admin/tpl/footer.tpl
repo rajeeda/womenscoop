@@ -1,1 +1,1 @@
-<div id="footer">Copyright &copy; 2017. Association Of Asia Confederation Credit Union</div>
+<div id="footer">Copyright &copy; 2017 Rajeeda. All Rights Reserved.</div>

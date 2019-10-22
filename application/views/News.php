@@ -32,6 +32,8 @@
 
 				<div class="row">
 				 	<?php
+				 	if($allnews){				 
+
 					foreach ($allnews as $news) {
 					 	$location = $news->location_name; 
 					    $date = strtotime($news->news_date); 	        	
@@ -69,7 +71,7 @@
 		                </div>
 		              </div>
 		            </div>
-	           		<?php } ?>	
+	           		<?php } } ?>	
 				</div>
 						 
 			</div>

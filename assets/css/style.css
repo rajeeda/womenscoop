@@ -72,10 +72,20 @@
 body {
 	font-family: 'Poppins', sans-serif;
 	font-size: 14px;
-	color: #040404;
+	/*color: #040404;*/
+	color: #404040;
 }
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6{
 	font-family: 'Raleway', sans-serif;	
+	font-family: Arial, Helvetica, sans-serif;	
+	letter-spacing: 1px;
+	color: #737373;
+}
+p{
+	margin: 0 0 10px;
+	font-family: 'Open Sans', sans-serif;	
+	color:#475d6b;
+	letter-spacing: 1px;
 }
 a, a:hover, a:active {
 	text-decoration: none !important;
@@ -159,10 +169,10 @@ a.thm-btn.small.inverse.mt-sm-15 {
 	margin-bottom: 15px;
 }
 .sec-title h2 {
-	font-size: 32px;
+	font-size: 26px;
 	text-transform: capitalize;
-	color: #202A30;
-	font-weight: bold;
+	color: #3d505c;
+	/*font-weight: bold;*/
 	margin: 0;
 	margin-bottom: 15px;
 }
@@ -655,7 +665,7 @@ a.thm-btn.small.inverse.mt-sm-15 {
 	font-weight: 600;
 	color: #fbf7f7;
 	font-family: 'Poppins';
-	line-height: 27px;	
+	line-height: 60px;	
 }
 
 .rev_slider_wrapper .thm-banner-h1.heavy {
@@ -1205,8 +1215,10 @@ a.thm-btn.small.inverse.mt-sm-15 {
 .faq-home .accrodion .accrodion-title h4 {
 	margin: 0;
 	font-size: 20px;
-	color: #202A30;
-	font-weight: 600;
+	/*color: #202A30;*/
+	color: #737373;
+	letter-spacing: 1px;
+	font-weight: 300;
 	cursor: pointer;
 }
 .faq-home .accrodion .accrodion-title h4 span.decor {
@@ -1771,7 +1783,9 @@ a.thm-btn.small.inverse.mt-sm-15 {
 	vertical-align: top;
 }
 .blog-details .admin-info .inner-box {
-	width: 100px;
+	width: 600px;
+	height: 450px;
+	padding: 2px 2px 2px 2px;
 }
 .blog-details .admin-info .content {
 	padding-left: 45px;

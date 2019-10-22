@@ -12,7 +12,7 @@ $mode	=	isset( $_POST['mode'])?$_POST['mode']:$mode;
 $file_path				= "../../upload_images/Gallary/";
 $file_path_thumb		= "../../upload_images/Gallary/thumb/";
 $file_p		='';
-
+$image_name='';
 switch( $mode)
 {
 	case 'add_gallery':

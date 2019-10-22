@@ -1,3 +1,4 @@
+<hr>
 <footer class="footer sec-padding1">
 		<div class="container">
 			<div class="row">
@@ -8,11 +9,10 @@
 						</a>
 						
 						<ul class="contact">
-							<li><i class="fa fa-map-marker"></i> <span>5th Floor FSCT Building, </br>No. 199 Nakornin Rd.(Rama V), Bangsrithong </br>
-							Sub- District,Bangkruay District,Nonthaburi Province 11130</span></li>
-							<li><i class="fa fa-phone"></i> <span> +662-496-1262 / +662-496-1264</span></li>
-							<li><i class="fa fa-fax"></i> <span> +662-496-1263</span></li>
-							<li><i class="fa fa-envelope-o"></i> <span>aaccumail@aaccu.coop</span></li>
+							<li><i class="fa fa-map-marker"></i> <span>145/80, E-Zone, seevalipura, Colombo 08</span></li>
+							<li><i class="fa fa-phone"></i> <span>011/2875772, 011/2872090</span></li>
+							<li><i class="fa fa-fax"></i> <span>011/2872080</span></li>
+							<li><i class="fa fa-envelope-o"></i> <span>lankawomenco@sltnet.lk</span></li>
 						</ul>
 						<ul class="social">
 							<li><a href="https://www.facebook.com/accu.thailand" target="_blank" ><i class="fa fa-facebook"></i></a></li>
@@ -51,3 +51,10 @@
 			</div>
 		</div>
 	</footer>
+		<section class="footer-bottom">
+		<div class="container text-center">
+			<p>&copy; 2017 <a target="_blank" href="http://rajeeda.com/">Rajeeda</a>. All Rights Reserved.</p>
+
+		</div>
+	</section>
+

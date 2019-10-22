@@ -12,8 +12,8 @@ define('DB_TYPE','mysql');
 //define('DOC_ROOT', 'D:/Program Files/Apache Software Foundation/Apache2.2/htdocs/Accu_last/Accu_hosting/');
 //define('HTTP_ROOT', 'http://localhost/Accu_last/Accu_hosting/');
 
-define('DOC_ROOT', 'C:/xampp/htdocs/womenscoop/');
-define('HTTP_ROOT', 'C:/xampp/htdocs/womenscoop');
+define('DOC_ROOT', 'C:/xampp/htdocs/womens_coop/');
+define('HTTP_ROOT', 'C:/xampp/htdocs/womens_coop');
 define('CLASS_PATH', DOC_ROOT.'/admin/classes/');
 define('ADMIN_PATH', DOC_ROOT.'/admin/');
 define('ADMIN_MESSAGES', DOC_ROOT.'/admin/messages/');

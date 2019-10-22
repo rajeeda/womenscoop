@@ -36,7 +36,10 @@
         
         <div class="clearfix">       
             <!--Image Box-->
-            <?php foreach ($photos as $key => $value4) {?>
+            <?php 
+            if($photos){
+
+            foreach ($photos as $key => $value4) {?>
             <div class="image-box">
                 <div class="inner-box">
                 	<a href="<?php echo base_url(); ?>index.php/Gallery/alubm?id=<?=$value4->Category_name;?>"><img class="full-width" src="<?php echo base_url(); ?>upload_images/Gallary/<?=$value4->Category_image_name;?>" height="247" onerror=this.onerror=null;this.src="<?php echo base_url(); ?>assets/img/event/event.png">
@@ -46,7 +49,7 @@
 	                </div></a>
                 </div>
             </div>
-            <?php }?>
+            <?php } }?>
            
            
         </div>
@@ -60,12 +63,7 @@
 
 	
 	<?php include_once 'Footer.php';?>
-	<section class="footer-bottom">
-		<div class="container text-center">
-			<p>© 2017 Association of Asian Confederation of Credit Unions - All Rights Reserved <a href="#">Association of Asian Confederation</a></p>
-
-		</div>
-	</section>
+	
 
 
 	<!-- main jQuery -->

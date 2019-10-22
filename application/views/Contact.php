@@ -55,10 +55,10 @@ $sendermail = 'accumail@aaccu.coop';
 	<section class="contact-content sec-padding">
 		<div class="container">
 			<div class="sec-title text-center">
-				<p>Since Its Birth On 28 April 1971 To Date, We Serve More Than 21,947 Credit Unions With 38.1 Million Individual Members In 26 Countries In The Region Along With 34 Affiliates Promoting Credit Unionism In Asia.</p>
+				<p>Sri Lanka Women’s Development Services Cooperative Society Ltd</p>
 			</div>
 			<!--<div class="google-map" id="contact-page-google-map" data-icon-path="<?php echo base_url(); ?>assets/img/resources/map-marker.png" data-map-lat="13.759261" data-map-lng="100.649840" data-map-zoom="15" data-map-title="Envato HQ"></div>!-->
-            <div class="google-map" id="contact-page-google-map"><iframe src="https://maps.google.com/maps?q=Federation%20of%20Savingsand%20Credit%20Coop.%20of%20th%20%E0%B8%8A%E0%B8%B8%E0%B8%A1%E0%B8%99%E0%B8%B8%E0%B8%A1%E0%B8%AA%E0%B8%AB%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%AD%E0%B8%AD%E0%B8%A1%E0%B8%97%E0%B8%A3%E0%B8%B1%E0%B8%9E%E0%B8%A2%E0%B9%8C%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%84%E0%B8%97%E0%B8%A2%20%E0%B8%88%E0%B8%B3%E0%B8%81%E0%B8%B1%E0%B8%94&t=&z=13&ie=UTF8&iwloc=&output=embed" width="1200" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></div>
+            <div class="google-map" id="contact-page-google-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.269331212265!2d79.870190920368!3d6.9124321200858505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259a291b991db%3A0xe37fc789128a67fc!2sColombo+08%2C+Colombo!5e0!3m2!1sen!2slk!4v1491209613647=&output=embed" width="1200" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></div>
 
 
             
@@ -88,7 +88,8 @@ $sendermail = 'accumail@aaccu.coop';
 							</div>
 							<div class="content-box">
 								<h4>Address</h4>
-								<p>	Bangkok 10250 - Thailand</p>
+								<p>	145/80, E-Zone, seevalipura, Colombo 08</p>
+
 							</div>
 						</li>
 						<li>
@@ -98,9 +99,22 @@ $sendermail = 'accumail@aaccu.coop';
 								</div>
 							</div>
 							<div class="content-box">
-								<h4>Phone</h4>
-								<p>(66)-2-375-3225</p>
-								<p>(66)-2-375-3226</p>
+								<!-- <h4></h4> -->
+								<p>Contact Person : Nandasiri Gamage, General Manager</p>
+								<p>Phone :011/2875772, 011/2872090</p>
+								
+							</div>
+						</li>
+							<li>
+							<div class="icon-box">
+								<div class="inner">
+									<i class="fa fa-fax"></i>
+								</div>
+							</div>
+							<div class="content-box">
+								<h4>Fax</h4>
+								<p>011/2872080</p>								
+															
 							</div>
 						</li>
 						<li>
@@ -111,7 +125,7 @@ $sendermail = 'accumail@aaccu.coop';
 							</div>
 							<div class="content-box">
 								<h4>Email</h4>
-								<p>accumail@aaccu.coop</p>
+								<p>lankawomenco@sltnet.lk</p>
 							</div>
 						</li>
 					</ul>
@@ -121,12 +135,7 @@ $sendermail = 'accumail@aaccu.coop';
 	</section>
 
 	<?php include_once 'Footer.php';?>
-	<section class="footer-bottom">
-		<div class="container text-center">
-			<p>© 2017 Association of Asian Confederation of Credit Unions - All Rights Reserved <a href="#">Association of Asian Confederation</a></p>
-
-		</div>
-	</section>
+	
 
 
 	<!-- main jQuery -->

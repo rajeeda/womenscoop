@@ -3,11 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Members_model extends CI_Model{ 
 	function getmembers(){
-		$this->db->select('url,country_name,member_sign,member_name,Address,phone_no,email,member_id,member_type_id,member.country_id,member.member_abbrevation');
+		$this->db->select('member_sign,member_name,Address,phone_no,email,member_id,member_type_id,member.country_id,member.member_abbrevation');
         $this->db->from('member');
         $this->db->where('member.active',1);
-        $this->db->join('country','member.country_id=country.country_id');
-        $this->db->order_by('country_name');
+        
         $query = $this->db->get();
         if($query){
             return $query->result();

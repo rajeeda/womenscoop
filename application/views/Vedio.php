@@ -36,13 +36,14 @@
         <div class="clearfix">       
             <!--Image Box-->
             <?php 
+            if($vedio){
             foreach ($vedio as $key => $value) {?>
             <div class="image-box">
                 <div class="inner-box">
                  <iframe width="332" height="279" src="<?=$value->video_url;?>" frameborder="0" allowfullscreen></iframe>
              </div>
             </div>
-            <?php }?>
+            <?php }} ?>
            
         </div>
         <div class="pager-outer clearfix text-center mt_30 mb_0">
@@ -54,12 +55,7 @@
     </section>
 
 	<?php include_once 'Footer.php';?>
-	<section class="footer-bottom">
-		<div class="container text-center">
-			<p>© 2017 Association of Asian Confederation of Credit Unions - All Rights Reserved <a href="#">Association of Asian Confederation</a></p>
-
-		</div>
-	</section>
+	
 
 
 	<!-- main jQuery -->
