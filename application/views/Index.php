@@ -26,12 +26,12 @@
 <body>
 
 <?php include_once 'Header.php';?>
-	<section class="rev_slider_wrapper">
+	<section class="rev_slider_wrapper" >
 		<?php include_once 'Slideshow.php';?>
 	</section>
 <br/><br/>
 	<!-- news -->
-	<section class="news-feature sec-padding pb_20" data-bg-color="#fafafa">
+	<section class="event-feature sec-padding pb_60" data-bg-color="#fafafa">
 		<div class="container">
 			<div class="sec-title colored text-center">
 				<h2>News and Events</h2>
@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="row ">
-				<div class="news-carousel" id="slick1">
+				<!-- <div class="news-carousel" id="slick1"> -->
 
 	        	<?php
 	        	$i=1;
@@ -60,8 +60,8 @@
 
 
 	        ?>
-				<div class="item">
-				<div class="col-sm-12 col-md-12">
+				<!-- <div class="item"> -->
+				<div class="col-sm-6 col-md-4">
 	              <div class="news border-1px mb_30">
 
 	                <div class="row ">
@@ -90,13 +90,13 @@
 	                </div>
 	              </div>
 	              </div>
-	           		</div>
+	           		<!-- </div> -->
 	            <?php
 
 	             } ?>
 
 
-		</div>
+		<!-- </div> -->
 		<div class="pull-right"><a href="<?php echo base_url(); ?>index.php/News/getallnews" class="thm-btn small inverse mt-sm-15">View All</a></div>
 
 		</div>
@@ -118,7 +118,7 @@
             <div class="vedio-carousel owl-carousel owl-theme">
             <?php
             foreach ($vedios as $key => $value) {?>
-            <div class="item">
+            <div class="col-sm-6 col-md-4">
             <div class="">
 	            <div class="clearfix">
 	            <div class="causes sm-col-center">
@@ -128,7 +128,7 @@
             </div>
             </div>
 	          </div>
-	          </div>
+	          <!-- </div> -->
             <?php }?>
            </div>
 	            </div>
@@ -148,9 +148,9 @@
 			<div class="row">
 
             <!--Image Box-->
-            <div class="photos-carousel" id="slick2">
+            <!-- <div class="photos-carousel" id="slick2"> -->
             <?php foreach ($photos as $key => $value4) {?>
-            <div class="item">
+            <div class="col-sm-6 col-md-4">
 	            <div class="clearfix">
 	            <div class="causes sm-col-center">
 
@@ -165,14 +165,76 @@
             </div>
 	          </div>
             <?php }?>
-           </div>
+           <!-- </div> -->
 	            </div>
 		</div>
 
 	</section>
 
 	
+	<section class="fact-counter-wrapper sec-padding parallax-section network" id="network" hidden="">
+		<div class="container">
+			 <div class="auto-container">
+				<div class="sec-title colored text-center">
+					<h2>our capacity</h2>
+<span class="decor">
+					<span class="inner"></span>
+				</span>
+				</div>
+      </div>
+				<div class="col-lg-12 col-md-12 md-text-center " >
+					<?php foreach ($networkstrength as $key => $value) {?>
+					<div class="single-fact">
+						 <div class="icon-box">
+							<i class="fas fa-user"></i>
+						</div>
+						<span><?=number_format($value->individual_members);?></span>
+						<p>INDIVIDUAL MEMBERS</p>
+					</div>
+					<div class="single-fact">
+						 <div class="icon-box">
+							<i class="fas fa-hands-helping"></i>
+						</div>
+						<span><?=number_format($value->financial_cooperatives);?></span>
+						<p>Branches</p>
+					</div>
+					<div class="single-fact">
+						 <div class="icon-box">
+							<i class="fas fa-dollar-sign"></i>
+						</div>
+						<span><?=number_format($value->billion_asset);?></span>
+						<p>ASSETS Rs Billion</p>
+					</div>
+					<div class="single-fact">
+						 <div class="icon-box">
+							<i class="fas fa-people-carry"></i>
+						</div>
+						<span><?=number_format($value->volunteers);?></span>
+						<p>Women Leaders</p>
+					</div>
+					<!-- <div class="single-fact">
+						 <div class="icon-box">
+							<i class="fas fa-chalkboard-teacher"></i>
+						</div>
+						<span><?=number_format($value->employees);?></span>
+						<p>EMPLOYEES</p>
+					</div> -->
+					<?php }?>
+					<!-- <div class="single-fact">
+						<div class="icon-box">
+							<i class="flaticon-hands"></i>
+						</div>
+						<span class="timer" data-from="10" data-to="155" data-speed="5000" data-refresh-interval="50">2200</span>
+						<p>ASSIST</p>
+					</div> -->
+				</div>
 
+			</div>
+
+
+		</div>
+
+	</section>
 
 	</br>
 	<section class="sec-padding testimonials-wrapper parallax-section">

@@ -45,15 +45,15 @@
 							
 						</div>
 												<!-- <h4><b>Credit Unions in Asia </b></h4> -->
-						<p style="text-align: center;">The residents of low income families living in undeserved urban settlements in the areas of Colombo District were marginalised from the other communities live in the city of Colombo. These families were vulnerable to disaster mainly floods and living without even the basic fundamental rights that a human should entitle. These families were not organized but interested in finding lasting solution to the issues they have and face. </p>
+						<p>The residents of low income families living in undeserved urban settlements in the areas of Colombo District were marginalised from the other communities live in the city of Colombo. These families were vulnerable to disaster mainly floods and living without even the basic fundamental rights that a human should entitle. These families were not organized but interested in finding lasting solution to the issues they have and face. </p>
 						<br/>
 						<br/>
 
-						<p style="text-align: center;">In this situation the “Sri Lanka Women Development Services Cooperative Society Limited” started to work with the community slowly forming women groups to fight again their issues. The underserved women’s were organized and formed into groups. The main objective of these community organizations were to organize the low income me families to work as one team in a settlement with the ultimate goal being to find solutions to their own problems within those settlements. The first women’s cooperative group was established at Bandaranayakepura in Colombo City with a total membership of 8 women. In the stage the formed community groups have obtained assistance from the National Housing Development Authority (NHDA) and they have agreed to support for housing to the 08 members of the community group. However this society was limited to operate only within the district of Colombo during the initial period and later expanded its operations beyond the district of Colombo. Since the WOMEN’S COOP was registered as an Island wide Cooperative Society it has to expand its operation island wide.</p>
+						<p>In this situation the “Sri Lanka Women Development Services Cooperative Society Limited” started to work with the community slowly forming women groups to fight again their issues. The underserved women’s were organized and formed into groups. The main objective of these community organizations were to organize the low income me families to work as one team in a settlement with the ultimate goal being to find solutions to their own problems within those settlements. The first women’s cooperative group was established at Bandaranayakepura in Colombo City with a total membership of 8 women. In the stage the formed community groups have obtained assistance from the National Housing Development Authority (NHDA) and they have agreed to support for housing to the 08 members of the community group. However this society was limited to operate only within the district of Colombo during the initial period and later expanded its operations beyond the district of Colombo. Since the WOMEN’S COOP was registered as an Island wide Cooperative Society it has to expand its operation island wide.</p>
 						<br/>
 						<br/>
 
-						<p style="text-align: center;">The Women’s Cooperative is managed by the Highest National Executive Board (HNEB) consisted of 30 Executive Committee members appointed by Regional Cooperatives. As per By-laws of the cooperative, there has to be 10 National Executive Committees to manage each and every subject responsibilities of the society. Since one of the subject is Finance (or Finance and Institutional Development together), this National Executive Committee is named as the Highest National Executive Committee, which has the final authority for all of its activities. Accordingly, HNEB needs to have subject specific national committees consisted of appointed Subject Committee Leaders and appointed representatives from Regional Cooperatives of each district. Hence, HNEB and Subject National Boards consist of members as per the number of districts represented at the National Cooperative Centre. At the HNEB and Subject NEBs, members have to elect President, Vice President, Secretary, Assistant Secretary and Finance Secretary, all by secret ballot. In addition, an Audit Committee consisting of 7 members is appointed to assist HNEC and to function as an external auditor to Regional Cooperatives. Audit Committee reports directly to HNEB. The national subject committees are to advise, supervise and monitor the respective subjects and report to the HNEB. </p>
+						<p>The Women’s Cooperative is managed by the Highest National Executive Board (HNEB) consisted of 30 Executive Committee members appointed by Regional Cooperatives. As per By-laws of the cooperative, there has to be 10 National Executive Committees to manage each and every subject responsibilities of the society. Since one of the subject is Finance (or Finance and Institutional Development together), this National Executive Committee is named as the Highest National Executive Committee, which has the final authority for all of its activities. Accordingly, HNEB needs to have subject specific national committees consisted of appointed Subject Committee Leaders and appointed representatives from Regional Cooperatives of each district. Hence, HNEB and Subject National Boards consist of members as per the number of districts represented at the National Cooperative Centre. At the HNEB and Subject NEBs, members have to elect President, Vice President, Secretary, Assistant Secretary and Finance Secretary, all by secret ballot. In addition, an Audit Committee consisting of 7 members is appointed to assist HNEC and to function as an external auditor to Regional Cooperatives. Audit Committee reports directly to HNEB. The national subject committees are to advise, supervise and monitor the respective subjects and report to the HNEB. </p>
 						<br/>
 						<br/>
 					
@@ -61,8 +61,22 @@
 					
 
 					</div>
+						<div class="container">
+						<div class="sec-title">
+							<h3>The Objective</h3>
+							
+						</div>
+												<!-- <h4><b>Credit Unions in Asia </b></h4> -->
+						<p>The objective of the Women’s Co-op is to generate a community high in spiritual development based on the principles of Co-Operative movement by low income group women living in Sri Lanka, in keeping with the allies, values, and principles stipulated in Identity Declaration of “Women’s Co-op” which has been internationally recognized and thereby to satisfying economic social and cultural needs and to create among them qualities such as thrifty, mutual assistance and self support with a view to build up their home environment a place full of peace and communal good understanding, finally contributing towards the development of national economy and social structure </p>
+						
+					
+						
+					
+
+					</div>
 				</div>
-				 <!-- <div class="col-md-7 hidden-md text-right">
+
+	  				 <!-- <div class="col-md-7 hidden-md text-right">
 					<img src="<?php //echo base_url(); ?>assets/img/resources/about-1.jpg" alt="Awesome Image"/>
 				</div>  -->
 			</div>
@@ -86,10 +100,6 @@
 	                    		<p class="">The promotion of qualities among the members with a view to building up of a disciplined saving methodology and a secured loan granting culture and insurance schemes.</p>
 	                    		</center>
 
-	                    		<center><div class="sec-title colored"><h3 class="mb_20"><b>The Objective</b></h3>
-									<span class="decor"><span class="inner"></span></span></div>
-	                    		<p class="">The objective of the Women’s Co-op is to generate a community high in spiritual development based on the principles of Co-Operative movement by low income group women living in Sri Lanka, in keeping with the allies, values, and principles stipulated in Identity Declaration of “Women’s Co-op” which has been internationally recognized and thereby to satisfying economic social and cultural needs and to create among them qualities such as thrifty, mutual assistance and self support with a view to build up their home environment a place full of peace and communal good understanding, finally contributing towards the development of national economy and social structure</p>
-	                    		</center>
 	                    	
 
 					</div>
@@ -98,12 +108,93 @@
 	</section>
 	
 	
+<!-- <section id="Management1" class="sec-padding meet-Volunteer">
+		<div class="container">
+			<div class="row">
+				<div class="sec-title colored text-center">
+				
+				<h3><b>ManagemenT</b></h3>
+					
+					<span class="decor"><span class="inner"></span></span>
+				
+			</div>
+			</div>
+			<div class="">
+				<div class="team-carousel">
+					<?php foreach ($board_of_directors as $key => $value) {
+				?>
+					<div class="item">
+						<div class="single-team-member">
+							<div class="img-box">
+								<img src="<?php echo base_url(); ?>upload_images/AboutUS/<?=$value->image;?>" alt="">
+							</div>
+							<h3><?=$value->mem_name;?> </h3>
+						<span><?=$value->possion;?></span>
+						</div>
+					</div>
+					<?php
+				
+			}?>
+					
+					
+					
+				</div>
+				
+			</div>
+		
+			
+		</div>
+	</section> -->
 
+	<section class="event-feature sec-padding pb_60" data-bg-color="#fafafa">
+		<div class="container">
+			<div class="row">
+				<div class="sec-title colored text-center">
+					<h3>director board</h3>
+					<span class="decor">
+						<span class="inner"></span>
+					</span>
+				</div>
+
+				<div class="row">
+				 <?php foreach ($board_of_directors as $key => $value) {
+				?>
+					<div class="col-sm-6 col-md-4">
+		              <div class="event border-1px mb_30">
+
+<div class="row">
+	<div class="col-sm-12">
+		                    <div class="event-thumb">
+		                      <div class="thumb">
+		                        <img class="full-width" src="<?php echo base_url(); ?>upload_images/AboutUS/<?=$value->image;?>" alt="" height="247"  >
+		                      </div>
+		                     <h3><?=$value->mem_name;?> </h3>
+						<span><?=$value->possion;?></span>
+		                    </div>
+		                  </div>
+</div>
+
+						
+					</div>
+				</div>
+					<?php
+				
+			}?>	
+				</div>
+						 
+			</div>
+
+			
+				<!--Pagination-->
+			
+					
+		</div>
+	</section>
 
 	
 
 
-<hr>
+
 
 	<?php include_once 'Footer.php';?>
 

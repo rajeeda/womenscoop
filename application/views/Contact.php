@@ -101,7 +101,7 @@ $sendermail = 'accumail@aaccu.coop';
 							<div class="content-box">
 								<!-- <h4></h4> -->
 								<p>Contact Person : Nandasiri Gamage, General Manager</p>
-								<p>Phone :011/2875772, 011/2872090</p>
+								<p>Phone :+9411-2875772, <br>+9411-2872090</p>
 								
 							</div>
 						</li>
@@ -113,7 +113,7 @@ $sendermail = 'accumail@aaccu.coop';
 							</div>
 							<div class="content-box">
 								<h4>Fax</h4>
-								<p>011/2872080</p>								
+								<p>+9411-2872080</p>								
 															
 							</div>
 						</li>

@@ -58,10 +58,10 @@ function MM_swapImage() { //v3.0
               </a><span class="txt_ash">Home</span></div></td>
               <td width="41"><div align="center"><img src="images/icon_right_arrow.png" width="20" height="20" /><img src="images/icon_right_arrow.png" width="20" height="20" /></div></td>
               <td width="81"><div align="center"><a href="member.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image5','','images/user2.png',1)"><img src="images/user.png" alt="User Manager" name="Image5" width="48" height="48" border="0" id="Image5" /></a><br />
-                  <span class="txt_ash">Member Manager</span> </div></td>
+                  <span class="txt_ash">Service</span> </div></td>
               <td width="41"><div align="center"><img src="images/icon_right_arrow.png" width="20" height="20" /><img src="images/icon_right_arrow.png" width="20" height="20" /></div></td>
               <td width="52"><div align="center"><img src="images/rename_f2.png" /><br />
-                  Edit Member </div></td>
+                  Edit Service </div></td>
             </tr>
           </table>
     </div></td>
@@ -72,7 +72,7 @@ function MM_swapImage() { //v3.0
     <td><div id="content"><table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
         
         <tr>
-          <td bgcolor="#d8d8d8" class="adminlist"><h3>Edit Member Profile</h3></td>
+          <td bgcolor="#d8d8d8" class="adminlist"><h3>Edit Service Profile</h3></td>
         </tr>
         <tr>
           <td bgcolor="#F1F3F5"><form name="form1" id="form1" method="post" enctype="multipart/form-data" action="controlers/membercontroler.php?mode=update_basic&member_id=<?php echo $member_id;?>">
@@ -99,33 +99,29 @@ function MM_swapImage() { //v3.0
               </tr>
               <tr>
                 <td width="5%">&nbsp;</td>
-                <td width="16%">Member Type</td>
+                <td width="16%">Service Type</td>
                 <td width="1%">:</td>
                 <td colspan="2"><select class="txt_boxes" name="cmb_member_type" id="cmb_member_type" >
                  <!-- <option id="Select" value="Select" selected="selected">Select&gt;&gt;</option>-->
-                  <option id="Regular_Members" value="1" <?php if($member['member_type_id']  ==1){echo "selected=\"selected\" ";}?>>Regular Members</option>
-                  <option id="Associate_Members" value="2" <?php if($member['member_type_id']==2){echo "selected=\"selected\" ";}?>>Associate Members</option>
-                  <option id="Affiliate_Member" value="3" <?php if($member['member_type_id'] ==3){echo "selected=\"selected\" ";}?>>Affiliate Member</option>
-                  <option id="Supporter_Members" value="4" <?php if($member['member_type_id']==4){echo "selected=\"selected\" ";}?>>Supporter Members</option>
-                  <option id="Development Partners" value="5" <?php if($member['member_type_id']==5){echo "selected=\"selected\" ";}?>>Development Partners</option>
-                  <option id="Strategic Partners" value="6" <?php if($member['member_type_id']==6){echo "selected=\"selected\" ";}?>>Strategic Partners</option>
+                  <option id="Service" value="1" <?php if($member['member_type_id']  ==1){echo "selected=\"selected\" ";}?>>Service</option>
+                  
                 </select></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td>Member Name</td>
+                <td>Service Name</td>
                 <td>:</td>
                 <td colspan="2"><input name="txt_member_name" type="text" id="txt_member_name" size="50" value="<?php echo $member['member_name'];?>" /></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td>Member Abbrevation</td>
+                <td>Service Abbrevation</td>
                 <td>:</td>
                 <td colspan="2"><input name="txt_member_abbrevation" type="text" id="txt_member_abbrevation" size="20" value="<?php echo $member['member_abbrevation'];?>" /></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td valign="top">Member Logo </td>
+                <td valign="top">Service Logo </td>
                 <td valign="top">:</td>
                 <td width="9%">
                 <?php if($member['member_sign']!=NULL){?>

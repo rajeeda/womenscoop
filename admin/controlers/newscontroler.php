@@ -3,7 +3,7 @@ require_once('../config/config.php');
 require_once(CLASS_PATH . 'db.class.php');
 require_once('../classes/news.class.php');
 require_once('upload_controller.php');
-
+header("Content-type: text/html; charset=utf-8");
 $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 $mode = isset($_POST['mode']) ? $_POST['mode'] : $mode;
 
@@ -25,7 +25,7 @@ switch ($mode) {
         $news_description = isset($_POST['news_desc']) ? $_POST['news_desc'] : $event_description;
         $file_name = 'up_news_image';
         $page = "new_news.php";
-        $news_description=addslashes($news_description);
+        $news_description=strip_tags($news_description);
 
 
         if ($news_name == '') {
@@ -127,7 +127,8 @@ switch ($mode) {
         $news_date = isset($_POST['news_date']) ? $_POST['news_date'] : $end_date;
         $news_description = isset($_POST['news_desc']) ? $_POST['news_desc'] : $event_description;
         $img_file = isset($_POST['hdn_news_img']) ? $_POST['hdn_news_img'] : $img_file;
-        $news_description=addslashes($news_description);
+        $news_description=strip_tags($news_description);
+        $news_description= mb_convert_encoding($news_description, 'UTF-8', 'UTF-8');
         $file_name = 'up_news_image';
         $page = "edit_news.php";
 

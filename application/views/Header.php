@@ -2,14 +2,14 @@
 <header class="header">
 		<div class="container">
 			<div class="logo pull-left">
-				<a href="<?php echo base_url(); ?>index.html">
-					<img src="<?php echo base_url(); ?>assets/img/resources/logo.png" alt="Awesome Image" />
+				<a href="<?php echo base_url(); ?>index.php">
+					<img src="<?php echo base_url(); ?>assets/img/resources/logo.png" alt="Awesome Image"  style="width: 160px"/>
 				</a>
 			</div>
 			<div class="header-right-info pull-right clearfix">
 					<div class="social-icons pull-right">
 							<ul>
-								<li><a href="https://www.facebook.com/accu.thailand" target="_blank"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="https://www.facebook.com/Womens-COOP-1382762901782565/" target="_blank"><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
 								<li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
 								<li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
@@ -48,7 +48,7 @@
 			
 		</div>
 	</header> <!-- /.header -->
-	<nav class="mainmenu-area stricky style="height: 54px;"" >
+	<nav class="mainmenu-area stricky" style="height: 54px;" >
 		<div class="container" >
 			<div class="navigation" style="text-align: center;">
 				<div class="nav-header">

@@ -123,7 +123,7 @@ include(ADMIN_PATH . 'FCKeditor/fckeditor.php');
                 <table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
                     <tr>
                         <td bgcolor="#F1F3F5" class="adminlist">
-                            <div align="left" bgcolor="#d8d8d8"><h3>Add About Us Details</h3></div>
+                            <div align="left" bgcolor="#d8d8d8"><h3>Insert New Board Member</h3></div>
                         </td>
                     </tr>
                     <tr>

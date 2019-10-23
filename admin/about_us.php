@@ -57,7 +57,7 @@ function MM_swapImage() { //v3.0
               </a><span class="txt_ash">Home</span></div></td>
               <td><div align="center"><img src="images/icon_right_arrow.png" width="20" height="20" /><img src="images/icon_right_arrow.png" width="20" height="20" /></div></td>
               <td><div align="center"><img src="images/langmanager.png" width="48" height="48" /><br />
-              About Us</div></td>
+              Board Members</div></td>
             </tr>
           </table></div></td>
   </tr>
@@ -76,7 +76,7 @@ function MM_swapImage() { //v3.0
               </td>
             </tr>
             <tr>
-              <td><a href="new_aboutus.php" class="link1"><strong>Insert New Details</strong></a> </td>
+              <td><a href="new_aboutus.php" class="link1"><strong>Insert New Board Members</strong></a> </td>
             </tr>
             <tr>
               <td>
@@ -145,7 +145,7 @@ function MM_swapImage() { //v3.0
   <tr class="grid_heading" bgcolor="#d8d8d8">
     <th width="39%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"><span class="gridheadings" style="padding-left:5px; font-weight: bold;">  Name</span></th>
     <th width="13%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"><span class="gridheadings" style="padding-left:5px; font-weight: bold;"> Country</span></th>
-    <th width="13%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;">About us categary</th>
+    <th width="13%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;">Board member categary</th>
     <th width="19%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"><span class="gridheadings" style="padding-left:5px; font-weight: bold;">Date</span></th>
     <th height="25" colspan="2" align="left" class="adminlist" style="padding-left:5px;"><strong>Action</strong></th>
   </tr>

@@ -1,10 +1,10 @@
 
-<section class="rev_slider_wrapper ">
-		<div id="slider1" class="rev_slider"  data-version="5.0">
+<section class="rev_slider_wrapper">
+		<div id="slider1" class="rev_slider"  data-version="5.0" style="height:"1200px"">
 			<ul>
 
-				<li data-transition="parallaxvertical">
-					<img src="<?php echo base_url(); ?>assets/img/slides/1.jpg"  alt=""  width="2200" height="705"  data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="1" >
+				<li data-transition="parallaxvertical" >
+					<img src="<?php echo base_url(); ?>assets/img/slides/1.jpg"  alt=""  width="2200" height="1200"  data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="1" >
 					<div class="tp-caption sfl tp-resizeme thm-banner-h3 "  
 				        data-x="left" data-hoffset="0" 
 				        data-y="360" data-voffset="225" 
@@ -20,7 +20,7 @@
 				</li>
 				
 				<li data-transition="parallaxvertical">
-					<img src="<?php echo base_url(); ?>assets/img/slides/2.jpg"  alt=""  width="2200" height="705"  data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="2" >
+					<img src="<?php echo base_url(); ?>assets/img/slides/2.jpg"  alt=""  width="2200" height="1200"  data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="2" >
 					<div class="tp-caption sfl tp-resizeme thm-banner-h3 "  
 				        data-x="left" data-hoffset="0" 
 				        data-y="360" data-voffset="225" 

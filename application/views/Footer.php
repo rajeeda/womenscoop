@@ -10,12 +10,12 @@
 						
 						<ul class="contact">
 							<li><i class="fa fa-map-marker"></i> <span>145/80, E-Zone, seevalipura, Colombo 08</span></li>
-							<li><i class="fa fa-phone"></i> <span>011/2875772, 011/2872090</span></li>
-							<li><i class="fa fa-fax"></i> <span>011/2872080</span></li>
+							<li><i class="fa fa-phone"></i> <span>+9411-2875772, +9411-2872090</span></li>
+							<li><i class="fa fa-fax"></i> <span>+9411-2872080</span></li>
 							<li><i class="fa fa-envelope-o"></i> <span>lankawomenco@sltnet.lk</span></li>
 						</ul>
 						<ul class="social">
-							<li><a href="https://www.facebook.com/accu.thailand" target="_blank" ><i class="fa fa-facebook"></i></a></li>
+							<li><a href="https://www.facebook.com/Womens-COOP-1382762901782565/" target="_blank" ><i class="fa fa-facebook"></i></a></li>
 							<li><a href="#" target="_blank" ><i class="fa fa-twitter"></i></a></li>
 							<li><a href="#" target="_blank" ><i class="fa fa-google-plus"></i></a></li>
 							<li><a href="#" target="_blank" ><i class="fa fa-pinterest"></i></a></li>
@@ -53,7 +53,7 @@
 	</footer>
 		<section class="footer-bottom">
 		<div class="container text-center">
-			<p>&copy; 2017 <a target="_blank" href="http://rajeeda.com/">Rajeeda</a>. All Rights Reserved.</p>
+			<p>&copy; 2019 <a target="_blank" href="http://rajeeda.com/">Rajeeda</a>. All Rights Reserved.</p>
 
 		</div>
 	</section>

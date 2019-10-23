@@ -64,7 +64,7 @@ function MM_swapImage() { //v3.0
 
 </table>
 <div class="row">
-  <div class="col-sm-3"><center><a href="about_us.php"><img src="images/langmanager.png" width="48" height="48"></br>about Us</a></center></div>
+  <div class="col-sm-3"><center><a href="about_us.php"><img src="images/langmanager.png" width="48" height="48"></br>Board Members </a></center></div>
   <div class="col-sm-3"><center><a href="member.php"><img src="images/usrgroups.png" width="48" height="48"></br>Services</a></center></div>
   <div class="col-sm-3"><center><a href="news.php"><img src="images/massemail.png" width="48" height="48"></br>News</a></center></div>
   <div class="col-sm-3"><center><a href="events.php"><img src="images/addedit.png" width="48" height="48"></br>Events</a></center></div>

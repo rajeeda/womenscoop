@@ -58,7 +58,7 @@ function MM_swapImage() { //v3.0
               </a><span class="txt_ash">Home</span></div></td>
               <td width="51"><div align="center"><img src="images/icon_right_arrow.png" width="20" height="20" /><img src="images/icon_right_arrow.png" width="20" height="20" /></div></td>
               <td width="80"><div align="center"><a href="member.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('member','','images/usrgroups2.png',1)"><img src="images/usrgroups.png" alt="Member" name="member" width="48" height="48" border="0" id="member" /></a><br />
-              Member</div></td>
+              Service</div></td>
               <td width="105"></td>
               </tr>
           </table>
@@ -77,7 +77,7 @@ function MM_swapImage() { //v3.0
               <td></td>
             </tr>
             <tr>
-              <td><a href="new_member_basic_details.php" class="link1"><strong>Create new member</strong></a> </td>
+              <td><a href="new_member_basic_details.php" class="link1"><strong>Create new service</strong></a> </td>
             </tr>
             <tr>
               <td><?php			  
@@ -137,7 +137,7 @@ else
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
  
  <tr >
-   <td width="22%" height="35" align="left" class="grid_alternative_row">Total number of members - <?php echo $numrows;?></td>
+   <td width="22%" height="35" align="left" class="grid_alternative_row">Total number of services - <?php echo $numrows;?></td>
    <td width="51%" align="center" class="grid_alternative_row"> Page No :     <?php require(ADMIN_PATH."tpl/paging.tpl");?></td>
    <td width="27%" class="grid_alternative_row">Results per page: <a href="<?php echo $_SERVER['PHP_SELF']; ?>?pa=<?php echo $pa;?>&amp;limit=15">15</a> | <a href="<?php echo $_SERVER['PHP_SELF'];?>?pa=<?php echo $pa;?>&amp;limit=20">20</a> | <a href="<?php echo $_SERVER['PHP_SELF'];?>?pa=<?php echo $pa; ?>&amp;limit=25">25</a> | <a href="<?php echo $_SERVER['PHP_SELF'];?>?pa=<?php echo $pa;?>&amp;limit=30">30</a> </td>
  </tr>
@@ -147,9 +147,9 @@ else
     <th height="25" colspan="6" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;">&nbsp;</th>
     </tr>-->
   <tr class="grid_heading" bgcolor="#d8d8d8">
-    <th align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"><span class="gridheadings" style="padding-left:5px; font-weight: bold;">Member</span></th>
+    <th align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"><span class="gridheadings" style="padding-left:5px; font-weight: bold;">Service</span></th>
     <th width="14%" height="25" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"> Catagory</th>
-    <th width="13%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"> Country</th>
+    <!-- <th width="13%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;"> Country</th> -->
     <th width="8%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;">Active</th>
     <th width="11%" align="left" class="adminlist" style="padding-left:5px; font-weight: bold;">Registered Date</th>
     <th width="8%" height="25" class="adminlist" align="left" style="padding-left:5px;"><strong>Action</strong></th>
@@ -169,26 +169,12 @@ $row = each($results);
 			switch($row['value']['member_type_id'])
 			{
 				case '1':
-					echo "Regular Members";
+					echo "Service";
 				break;
-				case '2':
-					echo "Associate Members";
-				break;
-				case '3':
-					echo "Affiliate Member";
-				break;
-				case '4':
-					echo "Supporter Members";
-				break;
-        case '5':
-          echo "ACCU Development Partners";
-        break;
-        case '6':
-          echo "Strategic Partners";
-        break;
+				
 			}
 		?></td>
-    <td valign="middle" style="padding-left:5px;"><?php echo $row['value']['country_name'];?></td>
+    <!-- <td valign="middle" style="padding-left:5px;"><?php //echo $row['value']['country_name'];?></td> -->
     <td valign="middle" style="padding-left:5px;"><?php if($row['value']['active']=="0"){?><img src="images/tick2.png" alt="Edit" border="0"><?php }else{?><img src="images/tick.png" alt="Edit" border="0"><?php } ?></td>
     <td valign="middle" style="padding-left:5px;"><?php echo $row['value']['registered_date'];?></td>
     <td valign="middle" style="padding-left:5px;"><a href="edit_member_basic_details.php?member_id=<?php echo $row["value"]["member_id"];?>"><img src="images/edit.gif" alt="Edit" border="0"></a> <a onclick="deletemember('<?php echo $row["value"]["member_id"];?>');" href="#" ><img src="images/delete.gif" alt="Delete" border="0"></a></td>
@@ -203,7 +189,7 @@ $row = each($results);
   <td colspan="6" class="adminlist"></td>
 </tr>
 <tr>
-  <td colspan="6"><a href="new_member_basic_details.php"><strong>Create new member</strong></a></td>
+  <td colspan="6"><a href="new_member_basic_details.php"><strong>Create new service</strong></a></td>
 </tr>
 </table>
 <?php

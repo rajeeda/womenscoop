@@ -99,7 +99,7 @@ $result = AboutUS::Get_about_us($aboutus_id);
                                         <div align="center"><a href="about_us.php"><img src="images/langmanager.png"
                                                                                         width="48"
                                                                                         height="48"/></a><br/>
-                                            About Us
+                                            Board Members
                                         </div>
                                     </td>
                                     <td width="46">
@@ -111,7 +111,7 @@ $result = AboutUS::Get_about_us($aboutus_id);
                                         <div align="center"><a href="about_us.php"><img src="images/addedit.png"
                                                                                         width="41"
                                                                                         height="39"/></a><br/>
-                                            Edit About Us
+                                            Edit Board Members
                                         </div>
                                     </td>
                                 </tr>
@@ -128,7 +128,7 @@ $result = AboutUS::Get_about_us($aboutus_id);
                 <table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
                     <tr>
                         <td bgcolor="#F1F3F5" class="adminlist">
-                            <div align="left" bgcolor="#d8d8d8"><h3>Update About Us Details</h3></div>
+                            <div align="left" bgcolor="#d8d8d8"><h3>Update Board Member Details</h3></div>
                         </td>
                     </tr>
                     <tr>
