@@ -31,22 +31,22 @@
 	</section>
 <br/><br/>
 	<!-- news -->
-	<section class="event-feature sec-padding pb_60" data-bg-color="#fafafa">
+		<section class="recent-causes sec-padding" id="photo_gallery" data-bg-color="#fafafa">
 		<div class="container">
 			<div class="sec-title colored text-center">
 				<h2>News and Events</h2>
-				<!-- news -->
-<span class="decor">
+				<span class="decor">
 					<span class="inner"></span>
 				</span>
 			</div>
 
-			<div class="row ">
-				<!-- <div class="news-carousel" id="slick1"> -->
+			<div class="row">
 
-	        	<?php
-	        	$i=1;
-	        	 foreach($latestnews as $row){
+            <!--Image Box-->
+            <div class="vedio-carousel owl-carousel owl-theme">
+            <?php
+            $i=1;
+             foreach($latestnews as $row){
 	        	$location = $row->location_name;
 	        	$date = strtotime($row->news_date);
 	        	$description = $row->description;
@@ -58,26 +58,23 @@
 				$newsname = substr($newsname, 0,50);
 				$i=$i+1;
 
+            ?>
+            <div class="item">
+            <div class="">
+	            <div class="clearfix">
+	            <div class="causes sm-col-center">
 
-	        ?>
-				<!-- <div class="item"> -->
-				<div class="col-sm-6 col-md-4">
-	              <div class="news border-1px mb_30">
-
-	                <div class="row ">
-	                  <div class="col-sm-12">
-	                    <div class="news-thumb" >
-	                      <div class="thumb">
+<div class="news border-1px mb_30" >
+<div class=" news-thumb" >
+	   <div class=" thumb">
 	                        <img class="full-width" src="<?php echo base_url(); ?>upload_images/News_images/<?php echo $row->news_img ; ?>" height="247" onerror=this.onerror=null;this.src="<?php echo base_url(); ?>assets/img/event/event.png">
 	                      </div>
-	                      <ul class="news-date">
+	                      <ul class=" news-date">
 	                        <li class="date"><?php echo $newsdate ?></li>
 	                        <li class="month"><?php echo $newsmonth ?></li>
 	                      </ul>
-	                    </div>
-	                  </div>
-	                  <div class="col-sm-12">
-	                    <div class="news-content p_20">
+</div>
+   <div class="news-content p_20">
 	                      <h4 class="news-title"><a href="<?php echo base_url(); ?>index.php/News/getonenews?id=<?php echo $row->news_id ?> "><?php echo $newsname; ?></a></h4>
 	                      <ul class="news-held list-inline">
 	                        <!--<li class="mr-10" data-text-color="#555"><i class="fa fa-clock-o"></i> 6.00 pm - 8.30 pm</li> -->
@@ -86,22 +83,24 @@
 	                     <!-- <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi expedita perspiciatis soluta quidem, recusandae sapiente.</p>-->
 	                      <a href="<?php echo base_url(); ?>index.php/News/getonenews?id=<?php echo $row->news_id ?>" class="text-thm " > Read More </a>
 	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              </div>
-	           		<!-- </div> -->
-	            <?php
-
-	             } ?>
-
-
-		<!-- </div> -->
-		<div class="pull-right"><a href="<?php echo base_url(); ?>index.php/News/getallnews" class="thm-btn small inverse mt-sm-15">View All</a></div>
-
+</div>
+	            	         
+            </div>
+            </div>
+	          </div>
+	          </div>
+            <?php }?>
+           </div>
+	            </div>
+	            <div class="pull-right"><a href="<?php echo base_url(); ?>index.php/News/getallnews" class="thm-btn small inverse mt-sm-15">View All</a></div>
 		</div>
+
 	</section>
+
+
+
     <!-- end of news -->
+
 
 	<section class="recent-causes sec-padding" id="vedio_gallery">
 		<div class="container">
@@ -118,17 +117,17 @@
             <div class="vedio-carousel owl-carousel owl-theme">
             <?php
             foreach ($vedios as $key => $value) {?>
-            <div class="col-sm-6 col-md-4">
+            <div class="item">
             <div class="">
 	            <div class="clearfix">
 	            <div class="causes sm-col-center">
 	              <div class="thumb">
-                 <iframe width="365" height="279" src="<?=$value->video_url;?>" frameborder="0" allowfullscreen></iframe>
+                  <iframe width="365" height="279" src="<?=$value->video_url;?>" frameborder="0" allowfullscreen></iframe>
              </div>
             </div>
             </div>
 	          </div>
-	          <!-- </div> -->
+	          </div>
             <?php }?>
            </div>
 	            </div>
@@ -139,7 +138,6 @@
 		<div class="container">
 			<div class="sec-title colored text-center">
 				<h2>Image Gallery</h2>
-				<!-- image_gallary_catogry -->
 				<span class="decor">
 					<span class="inner"></span>
 				</span>
@@ -148,14 +146,15 @@
 			<div class="row">
 
             <!--Image Box-->
-            <!-- <div class="photos-carousel" id="slick2"> -->
-            <?php foreach ($photos as $key => $value4) {?>
-            <div class="col-sm-6 col-md-4">
+            <div class="vedio-carousel owl-carousel owl-theme">
+            <?php
+            foreach ($photos as $key => $value4) {?>
+            <div class="item">
+            <div class="">
 	            <div class="clearfix">
 	            <div class="causes sm-col-center">
-
-	              <div class="thumb" >
-                  <a href="<?php echo base_url(); ?>index.php/Gallery/alubm?id=<?=$value4->Category_name;?>"><img class="full-width" src="<?php echo base_url(); ?>upload_images/Gallary/<?=$value4->Category_image_name;?>" height="247" onerror=this.onerror=null;this.src="<?php echo base_url(); ?>assets/img/event/event.png">
+	              <div class="thumb">
+                 <a href="<?php echo base_url(); ?>index.php/Gallery/alubm?id=<?=$value4->Category_name;?>"><img class="full-width" src="<?php echo base_url(); ?>upload_images/Gallary/<?=$value4->Category_image_name;?>" height="247" onerror=this.onerror=null;this.src="<?php echo base_url(); ?>assets/img/event/event.png">
             	<div class="photos-content p_20">
 	                      <h4 class="photos-title img-title"><?=$value4->Category_name;?></h4>
 
@@ -164,12 +163,14 @@
             </div>
             </div>
 	          </div>
+	          </div>
             <?php }?>
-           <!-- </div> -->
+           </div>
 	            </div>
 		</div>
 
 	</section>
+
 
 	
 	<section class="fact-counter-wrapper sec-padding parallax-section network" id="network" hidden="">
